@@ -6,27 +6,40 @@ import eg.edu.alexu.csd.oop.db.Database;
 
 public class OurSql implements Database {
 
+	//Singleton pattern to only have one data manager.
+	
+	private static OurSql instance;
+	
+	private OurSql() {
+		dataBasePath = new String();
+	}
+		
+	public static OurSql getInstance() {
+		if (instance == null) {
+			instance = new OurSql();
+		}
+		return instance;
+	}
+	
+	private String dataBasePath;
+	
 	@Override
 	public String createDatabase(String databaseName, boolean dropIfExists) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public boolean executeStructureQuery(String query) throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public Object[][] executeQuery(String query) throws SQLException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public int executeUpdateQuery(String query) throws SQLException {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
