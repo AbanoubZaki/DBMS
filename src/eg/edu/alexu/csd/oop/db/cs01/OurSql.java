@@ -3,15 +3,15 @@ package eg.edu.alexu.csd.oop.db.cs01;
 import java.sql.SQLException;
 
 import eg.edu.alexu.csd.oop.db.Database;
+import eg.edu.alexu.csd.oop.db.cs01.modules.DataBase;
 
 public class OurSql implements Database {
 
 	//Singleton pattern to only have one data manager.
 	
 	private static OurSql instance;
-	
+	private DataBase database;
 	private OurSql() {
-		dataBasePath = new String();
 	}
 		
 	public static OurSql getInstance() {
@@ -21,10 +21,9 @@ public class OurSql implements Database {
 		return instance;
 	}
 	
-	private String dataBasePath;
-	
 	@Override
 	public String createDatabase(String databaseName, boolean dropIfExists) {
+		database = new DataBase(databaseName);
 		return null;
 	}
 

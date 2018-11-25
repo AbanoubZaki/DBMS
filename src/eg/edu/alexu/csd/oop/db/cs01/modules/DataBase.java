@@ -43,4 +43,13 @@ public class DataBase {
 		}
 		return null;
 	}
+	public void addTable(Table newTable) {
+		tables.add(newTable);
+	}
+	public void deleteTable(String nameTable) {
+		for(Table T:tables) {
+			if(T.getTableName().equals(nameTable))
+				tables.remove(T);
+		}
+	}
 }
