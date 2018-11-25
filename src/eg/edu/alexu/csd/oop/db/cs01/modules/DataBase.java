@@ -6,6 +6,7 @@ public class DataBase {
 
 	private String name;
 	private ArrayList<Table>tables;
+	
 	public DataBase(String dataBaseName){
 		this.name=dataBaseName;
 		tables = new ArrayList<Table>();
