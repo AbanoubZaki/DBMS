@@ -10,10 +10,13 @@ public class Table {
 	
 	private ArrayList<Row> table;
 	
+	private boolean isRead;
+	
 	public Table(String tableName) {
 		tableName = new String(tableName);
 		columnNames = new ArrayList<>();
 		table = new ArrayList<>();
+		isRead = false;
 	}
 	
 	public void setTableName(String tableName) {
@@ -40,5 +43,11 @@ public class Table {
 		return table.get(index);
 	}
 	
+	public void setIsRead (boolean isRead) {
+		this.isRead = isRead;
+	}
 	
+	public boolean getIsRead () {
+		return isRead;
+	}
 }
