@@ -4,11 +4,17 @@ import java.util.ArrayList;
 
 public class Table {
 	
-	private String tableName = new String();
+	private String tableName;
 	
 	private ArrayList<String> columnNames;
 	
-	private ArrayList<Row> table = new ArrayList<>();
+	private ArrayList<Row> table;
+	
+	public Table(String tableName) {
+		tableName = new String(tableName);
+		columnNames = new ArrayList<>();
+		table = new ArrayList<>();
+	}
 	
 	public void setTableName(String tableName) {
 		this.tableName = tableName;

@@ -1,9 +1,14 @@
 package eg.edu.alexu.csd.oop.db.cs01.modules;
 
 public class Cell {
-	private String type = new String();
+	private String type;
 	
-	private String vlaue = new String();
+	private String vlaue;
+	
+	public Cell(String type, String value) {
+		type = new String();
+		value = new String();
+	}
 	
 	public void setType(String type) {
 		this.type = type;
