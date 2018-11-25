@@ -1,6 +1,6 @@
 package eg.edu.alexu.csd.oop.db.cs01;
 
-public interface Query {
+public interface IQuery {
 
 	//Builder pattern i think.
 	

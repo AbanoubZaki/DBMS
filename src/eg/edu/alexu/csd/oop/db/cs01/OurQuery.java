@@ -1,6 +1,6 @@
 package eg.edu.alexu.csd.oop.db.cs01;
 
-public abstract class OurQuery implements Query{
+public abstract class OurQuery implements IQuery{
 
 	private String table = new String();
 	
