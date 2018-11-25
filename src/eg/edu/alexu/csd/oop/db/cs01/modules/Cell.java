@@ -6,8 +6,8 @@ public class Cell {
 	private String vlaue;
 	
 	public Cell(String type, String value) {
-		type = new String();
-		value = new String();
+		type = new String(type) ;
+		value = new String(value);
 	}
 	
 	public void setType(String type) {
