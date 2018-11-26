@@ -34,7 +34,9 @@ public class FileManager {
 		return db.getAbsolutePath();
 	}
 	/**
-	 * zabat de b 7es lw mala2ash el db asasasn yeb3at false.
+	 * it tries to fetch for the db
+	 * if it's not found it returns false
+	 * else it drops it returning true
 	 * @param databaseName
 	 */
 	public boolean dropDB(String databaseName) {
@@ -65,6 +67,13 @@ public class FileManager {
 		}
 		return true;
 	}
+	/**
+	 * it tries to fetch for the table
+	 * if it's not found it returns false
+	 * else it drops it returning true
+	 * @param table
+	 * @return
+	 */
 	public boolean dropTable(Table table) {
 		String pathTable = "databases"+System.getProperty("file.separator")+table.getDataBaseName();
 		pathTable+=System.getProperty("file.separator")+table.getTableName();
