@@ -15,15 +15,16 @@ public class InsertInto extends OurQuery {
 
 	public InsertInto(Table table, ArrayList<String> values) {
 		this.columnNames = null;
-		this.values = new ArrayList<>(values);
+		this.values = values;
+		setTable(table);
 		this.readTable();
-		// then read the table delegating the filemanager.
 	}
 
 	public InsertInto(Table table, ArrayList<String> columnNames, ArrayList<String> values) {
-		this.columnNames = new ArrayList<>(columnNames);
-		this.values = new ArrayList<>(values);
-		// then read the table delegating the filemanager.
+		this.columnNames = columnNames;
+		this.values = values;
+		setTable(table);
+		this.readTable();
 	}
 
 	/**
@@ -35,15 +36,16 @@ public class InsertInto extends OurQuery {
 		if (columnNames == null) {
 			columnNames = getTable().getColumnNames();
 		}
-		Row insertedRow = new Row();
+		Row insertedRow = new Row(getTable());
 		for (int i = 0; i < columnNames.size(); i++) {
-			if (columnNames.get(i) != null && getTable().getColumnTypes().get(columnNames.get(i))
+			if (getTable().getColumnTypes().get(columnNames.get(i))
 					.equals(dataChecker.getInstance().checkType(values.get(i)))) {
 				insertedRow.updateCell(columnNames.get(i), new Cell(values.get(i)));
 			} else {
 				return false;
 			}
 		}
+		getTable().addRow(insertedRow);
 		return true;
 	}
 }

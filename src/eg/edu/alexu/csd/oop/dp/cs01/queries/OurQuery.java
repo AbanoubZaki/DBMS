@@ -1,5 +1,6 @@
 package eg.edu.alexu.csd.oop.dp.cs01.queries;
 
+import eg.edu.alexu.csd.oop.db.cs01.fileManager.FileManager;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
 
 public abstract class OurQuery implements IQuery{
@@ -25,7 +26,7 @@ public abstract class OurQuery implements IQuery{
 
 	@Override
 	public boolean readTable() {
-		return false;
+		return FileManager.getInstance().readTable(table);
 	}
 
 }
