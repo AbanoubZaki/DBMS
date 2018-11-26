@@ -11,7 +11,7 @@ public class CreateDatabase extends OurQuery{
 	private boolean dropIfExists;
 	
 	public CreateDatabase(String databaseName, boolean dropIfExists) {
-		databaseName = new String(databaseName);
+		this.databaseName = new String(databaseName);
 		this.dropIfExists = dropIfExists;
 		databasePath = new String();
 	}
@@ -22,10 +22,10 @@ public class CreateDatabase extends OurQuery{
 	 */
 	@Override
 	public boolean execute() {
-		databasePath = FileManager.getInstance().createDB(databaseName, dropIfExists); 
 		if (databaseName == null) {
 			return false;
 		}
+		databasePath = FileManager.getInstance().createDB(databaseName, dropIfExists); 
 		return true;
 	}
 	

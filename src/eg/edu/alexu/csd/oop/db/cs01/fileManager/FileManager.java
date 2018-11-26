@@ -48,7 +48,7 @@ public class FileManager {
 		db.delete();
 		return true;
 	}
-	public void createTable(Table table) {
+	public boolean createTable(Table table) {
 		String pathTable = "databases"+System.getProperty("file.separator")+table.getDataBaseName();
 		pathTable+=System.getProperty("file.separator")+table.getTableName();
 		File tableFile = new File(pathTable+".Xml");
@@ -61,8 +61,9 @@ public class FileManager {
   	  	createDTD(table);
 		} catch (JAXBException e) {
 			e.printStackTrace();
+			return false;
 		}
-		
+		return true;
 	}
 	public boolean dropTable(Table table) {
 		String pathTable = "databases"+System.getProperty("file.separator")+table.getDataBaseName();
