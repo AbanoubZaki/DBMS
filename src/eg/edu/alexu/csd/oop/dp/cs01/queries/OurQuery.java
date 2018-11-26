@@ -1,4 +1,4 @@
-package eg.edu.alexu.csd.oop.db.cs01;
+package eg.edu.alexu.csd.oop.dp.cs01.queries;
 
 public abstract class OurQuery implements IQuery{
 

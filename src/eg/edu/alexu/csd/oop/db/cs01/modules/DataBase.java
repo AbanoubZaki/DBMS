@@ -4,31 +4,36 @@ import java.util.ArrayList;
 
 public class DataBase {
 
-	private String name;
+	private String dataBaseName;
+	
 	private ArrayList<Table>tables;
 	
 	public DataBase(String dataBaseName){
-		this.name=dataBaseName;
+		this.dataBaseName = dataBaseName;
 		tables = new ArrayList<Table>();
 	}
+	
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String dataBaseName) {
+		this.dataBaseName = dataBaseName;
+	}
+	
 	/**
 	 * @return the name
 	 */
 	public String getName() {
-		return name;
+		return dataBaseName;
 	}
-	/**
-	 * @param name the name to set
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
+	
 	/**
 	 * @return the tables
 	 */
 	public ArrayList<Table> getTables() {
 		return tables;
 	}
+	
 	/**
 	 * @param tables the tables to set
 	 */
@@ -42,14 +47,5 @@ public class DataBase {
 				return T;
 		}
 		return null;
-	}
-	public void addTable(Table newTable) {
-		tables.add(newTable);
-	}
-	public void deleteTable(String nameTable) {
-		for(Table T:tables) {
-			if(T.getTableName().equals(nameTable))
-				tables.remove(T);
-		}
 	}
 }

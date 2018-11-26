@@ -11,10 +11,13 @@ import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
 
 public class FileManager {
 	
+	//singleton pattern
 	private static FileManager instance;
 	
+	private FileManager() {
+	}
+	
 	public static FileManager getInstance() {
-		
 		if(instance==null) {
 			instance = new FileManager();
 		}
@@ -29,7 +32,6 @@ public class FileManager {
 			db.mkdirs();
 		}
 		return db.getAbsolutePath();
-		
 	}
 	public void dropDB(String databaseName) {
 	File db = new File("databases"+System.getProperty("file.separator")+databaseName);
@@ -51,7 +53,6 @@ public class FileManager {
   	  	jaxbMarshaller.marshal(table, System.out);
   	  	createDTD(table);
 		} catch (JAXBException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -79,7 +80,6 @@ public class FileManager {
 			pw.write(sb.toString());
 			pw.close();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
