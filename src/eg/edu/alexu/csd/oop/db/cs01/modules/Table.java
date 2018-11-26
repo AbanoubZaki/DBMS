@@ -1,6 +1,8 @@
 package eg.edu.alexu.csd.oop.db.cs01.modules;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
@@ -12,12 +14,15 @@ public class Table {
 		
 	private ArrayList<String> columnNames;
 	
-	private ArrayList<String> columnTypes;
+	private Map<String, String> columnTypes;
 	
 	private ArrayList<Row> tableRows;
 	
 	private boolean isRead;
 	
+	public Table() {
+		// TODO Auto-generated constructor stub
+	}
 	/**
 	 * for dropping a table.
 	 * @param databaseName
@@ -27,7 +32,7 @@ public class Table {
 		this.databaseName = new String(databaseName);
 		this.tableName = new String(tableName);
 		columnNames = null;
-		columnTypes = null;
+		columnTypes = new HashMap<String, String>();
 		tableRows = null;
 		isRead = false;
 	}
@@ -43,7 +48,10 @@ public class Table {
 		this.databaseName = new String(databaseName);
 		this.tableName = new String(tableName);
 		this.columnNames = new ArrayList<>(columnNames);
-		this.columnTypes = new ArrayList<>(columnTypes);
+		this.columnTypes = new HashMap<String, String>();
+		for(int i=0;i<columnNames.size();i++) {
+			this.columnTypes.put(columnNames.get(i), columnTypes.get(i));
+		}
 		tableRows = new ArrayList<>();
 		isRead = false;
 	}
@@ -72,11 +80,11 @@ public class Table {
 		return columnNames;
 	}
 	
-	public void setColumnTypes(ArrayList<String> columnTypes) {
-		this.columnTypes = new ArrayList<>(columnTypes);
+	public void setColumnTypes(Map<String, String> columnTypes) {
+		this.columnTypes = columnTypes;
 	}
 	
-	public ArrayList<String> getColumnTypes() {
+	public Map<String, String> getColumnTypes() {
 		return columnTypes;
 	}
 	

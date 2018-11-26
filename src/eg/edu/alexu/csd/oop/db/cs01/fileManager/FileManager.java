@@ -6,14 +6,16 @@ import java.io.PrintWriter;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 
+import eg.edu.alexu.csd.oop.db.cs01.modules.DataBase;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
 
 public class FileManager {
 	
 	//singleton pattern
 	private static FileManager instance;
-	
+	private DataBase currentDataBase;
 	private FileManager() {
 	}
 	
@@ -102,6 +104,22 @@ public class FileManager {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+	}
+	public Table readTable(Table table) {
+		String pathTable = "databases"+System.getProperty("file.separator")+table.getDatabaseName();
+		pathTable+=System.getProperty("file.separator")+table.getTableName();
+		File tableFile = new File(pathTable+".Xml");
+		JAXBContext jaxbContext;
+		try {
+			jaxbContext = JAXBContext.newInstance(table.getClass());
+			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+			table = (Table) unmarshaller.unmarshal(tableFile);
+		} catch (JAXBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return table;
+		
 	}
 	
 }

@@ -7,7 +7,9 @@ public class DataBase {
 	private String dataBaseName;
 	
 	private ArrayList<Table>tables;
-	
+	public DataBase() {
+		// TODO Auto-generated constructor stub
+	}
 	public DataBase(String dataBaseName){
 		this.dataBaseName = dataBaseName;
 		tables = new ArrayList<Table>();
