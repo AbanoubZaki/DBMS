@@ -11,6 +11,7 @@ public class CreateDatabase extends OurQuery{
 	private boolean dropIfExists;
 	
 	public CreateDatabase(String databaseName, boolean dropIfExists) {
+		super();
 		this.databaseName = new String(databaseName);
 		this.dropIfExists = dropIfExists;
 		databasePath = new String();

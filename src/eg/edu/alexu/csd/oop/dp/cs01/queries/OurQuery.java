@@ -1,19 +1,31 @@
 package eg.edu.alexu.csd.oop.dp.cs01.queries;
 
+import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
+
 public abstract class OurQuery implements IQuery{
 
-	private String tableName = new String();
-	
-	@Override
-	public void setTableName(String tableName) {
-		this.tableName = tableName;
+	private Table table;
+	public OurQuery() {
+		// TODO Auto-generated constructor stub
+	}
+	public OurQuery(Table table) {
+		// TODO Auto-generated constructor stub
+		this.table = table;
+	}
+	/**
+	 * @return the table
+	 */
+	public Table getTable() {
+		return table;
 	}
 
-	@Override
-	public String getTableName() {
-		return tableName;
-	}
 
+	/**
+	 * @param table the table to set
+	 */
+	public void setTable(Table table) {
+		this.table = table;
+	}	
 	@Override
 	public abstract boolean execute();
 

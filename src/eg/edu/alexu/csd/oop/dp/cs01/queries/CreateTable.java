@@ -5,17 +5,16 @@ import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
 
 public class CreateTable extends OurQuery {
 
-	Table table;
 	public CreateTable(Table table) {
 		// TODO Auto-generated constructor stub
-		this.table=table;
+		super(table);
 	}
 	@Override
 	public boolean execute() {
 		// TODO Auto-generated method stub
-		if(table==null)
+		if(getTable()==null)
 		return false;
-		return FileManager.getInstance().createTable(this.table);
+		return FileManager.getInstance().createTable(getTable());
 	}
 
 }

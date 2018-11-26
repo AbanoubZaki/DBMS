@@ -4,18 +4,16 @@ import eg.edu.alexu.csd.oop.db.cs01.fileManager.FileManager;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
 
 public class DropTable extends OurQuery {
-
-	Table table;
 	
 	public DropTable(Table table) {
-		this.table=table;
+		super(table);
 	}
 	
 	@Override
 	public boolean execute() {
-		if(table==null)
+		if(getTable()==null)
 			return false;
-		return FileManager.getInstance().dropTable(this.table);
+		return FileManager.getInstance().dropTable(getTable());
 	}
 
 }

@@ -7,6 +7,7 @@ public class DropDatabase extends OurQuery{
 	private String databaseName;
 	public DropDatabase(String databasaNme) {
 		// TODO Auto-generated constructor stub
+		super();
 		this.databaseName = databasaNme;
 	}
 	@Override

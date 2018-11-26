@@ -6,14 +6,12 @@ import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
 
 public class InsertInto extends OurQuery{
 
-	ArrayList<String> columnNames;
+	private ArrayList<String> columnNames;
 	
-	ArrayList<String> values;
+	private ArrayList<String> values;
 	
 	public InsertInto(Table table, ArrayList<String> columnNames, ArrayList<String> values) {
-		this.setTableName(table.getTableName());
-		
-		
+	super(table);
 	}
 	
 	@Override

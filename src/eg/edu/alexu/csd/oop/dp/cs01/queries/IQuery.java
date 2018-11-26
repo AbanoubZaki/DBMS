@@ -1,5 +1,7 @@
 package eg.edu.alexu.csd.oop.dp.cs01.queries;
 
+import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
+
 public interface IQuery {
 
 	//Builder pattern i think.
@@ -8,13 +10,13 @@ public interface IQuery {
 	 * sets the name of the table.
 	 * @param table
 	 */
-	public void setTableName(String tableName);
+	public void setTable(Table table);
 
 	/**
 	 * gets the name of the table.
 	 * @return
 	 */
-	public String getTableName();
+	public Table getTable();
 	
 	/**
 	 * Executes the query.
