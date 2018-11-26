@@ -4,18 +4,17 @@ import java.io.File;
 import java.sql.SQLException;
 
 import eg.edu.alexu.csd.oop.db.Database;
-import eg.edu.alexu.csd.oop.db.cs01.fileManager.FileManager;
+import eg.edu.alexu.csd.oop.dp.cs01.queries.CreateDatabase;
 
 public class OurSql implements Database {
 
 	//Singleton pattern to only have one data manager.
 	
 	private static OurSql instance;
-	private FileManager fileManager;
+
 	private OurSql() {
 		File dbs = new File("databases");
 		dbs.mkdirs();
-		fileManager = FileManager.getInstance();
 	}
 		
 	public static OurSql getInstance() {
@@ -27,7 +26,8 @@ public class OurSql implements Database {
 	
 	@Override
 	public String createDatabase(String databaseName, boolean dropIfExists) {
-		return fileManager.createDB(databaseName, dropIfExists);
+		CreateDatabase CDB = new CreateDatabase(databaseName, dropIfExists);
+		return CDB.getDatabasePath();
 	}
 
 	@Override

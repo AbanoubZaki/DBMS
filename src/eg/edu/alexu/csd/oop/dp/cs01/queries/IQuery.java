@@ -1,5 +1,7 @@
 package eg.edu.alexu.csd.oop.dp.cs01.queries;
 
+import eg.edu.alexu.csd.oop.db.cs01.fileManager.FileManager;
+
 public interface IQuery {
 
 	//Builder pattern i think.
@@ -15,7 +17,7 @@ public interface IQuery {
 	 * @return
 	 */
 	public String getTable();
-
+	
 	/**
 	 * Executes the query.
 	 * action that the query performs
