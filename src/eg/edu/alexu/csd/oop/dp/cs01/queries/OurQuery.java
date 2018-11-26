@@ -2,16 +2,16 @@ package eg.edu.alexu.csd.oop.dp.cs01.queries;
 
 public abstract class OurQuery implements IQuery{
 
-	private String table = new String();
+	private String tableName = new String();
 	
 	@Override
-	public void setTable(String table) {
-		this.table = table;
+	public void setTableName(String tableName) {
+		this.tableName = tableName;
 	}
 
 	@Override
-	public String getTable() {
-		return table;
+	public String getTableName() {
+		return tableName;
 	}
 
 	@Override

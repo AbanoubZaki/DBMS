@@ -51,7 +51,7 @@ public class FileManager {
 		return true;
 	}
 	public boolean createTable(Table table) {
-		String pathTable = "databases"+System.getProperty("file.separator")+table.getDataBaseName();
+		String pathTable = "databases"+System.getProperty("file.separator")+table.getDatabaseName();
 		pathTable+=System.getProperty("file.separator")+table.getTableName();
 		File tableFile = new File(pathTable+".Xml");
 		try {
@@ -75,7 +75,7 @@ public class FileManager {
 	 * @return
 	 */
 	public boolean dropTable(Table table) {
-		String pathTable = "databases"+System.getProperty("file.separator")+table.getDataBaseName();
+		String pathTable = "databases"+System.getProperty("file.separator")+table.getDatabaseName();
 		pathTable+=System.getProperty("file.separator")+table.getTableName();
 		File tableFile = new File(pathTable+".Xml");
 		File DTDFile = new File(pathTable+".dtd");
@@ -86,7 +86,7 @@ public class FileManager {
 		return true;
 	}
 	public void createDTD(Table table) {
-		String pathTable = "databases"+System.getProperty("file.separator")+table.getDataBaseName();
+		String pathTable = "databases"+System.getProperty("file.separator")+table.getDatabaseName();
 		pathTable+=System.getProperty("file.separator")+table.getTableName();
 		File DTDFile = new File(pathTable+".dtd");
 		try {

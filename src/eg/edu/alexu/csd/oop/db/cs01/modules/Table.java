@@ -6,41 +6,35 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Table {
 	
+	private String databaseName;
+	
 	private String tableName;
-	
-	private String dataBaseName;
-	
+		
 	private ArrayList<String> columnNames;
 	
-	private ArrayList<Row> rows;
+	private ArrayList<String> columnTypes;
+	
+	private ArrayList<Row> tableRows;
 	
 	private boolean isRead;
 	
-	public Table() {
-		
-	}
-	
-	public Table(String tableName) {
+	public Table(String databaseName, String tableName, ArrayList<String> columnNames, ArrayList<String> columnTypes) {
+		this.databaseName = new String(databaseName);
 		this.tableName = new String(tableName);
-		columnNames = new ArrayList<>();
-		rows = new ArrayList<>();
+		columnNames = new ArrayList<>(columnNames);
+		columnTypes = new ArrayList<>(columnTypes);
+		tableRows = new ArrayList<>();
 		isRead = false;
 	}
+
+	public void setDatabaseName(String databaseName) {
+		this.databaseName = databaseName;
+	}
 	
-	/**
-	 * @return the dataBaseName
-	 */
-	public String getDataBaseName() {
-		return dataBaseName;
+	public String getDatabaseName() {
+		return databaseName;
 	}
-
-	/**
-	 * @param dataBaseName the dataBaseName to set
-	 */
-	public void setDataBaseName(String dataBaseName) {
-		this.dataBaseName = dataBaseName;
-	}
-
+	
 	public void setTableName(String tableName) {
 		this.tableName = tableName;
 	}
@@ -57,26 +51,34 @@ public class Table {
 		return columnNames;
 	}
 	
+	public void setColumnTypes(ArrayList<String> columnTypes) {
+		this.columnTypes = new ArrayList<>(columnTypes);
+	}
+	
+	public ArrayList<String> getColumnTypes() {
+		return columnTypes;
+	}
+	
 	public void addRow(Row row) {
-		rows.add(row);
+		tableRows.add(row);
 	}
 	
 	public Row getRow(int index) {
-		return rows.get(index);
+		return tableRows.get(index);
 	}
 	
 	/**
 	 * @return the rows
 	 */
 	public ArrayList<Row> getRows() {
-		return rows;
+		return tableRows;
 	}
 
 	/**
 	 * @param rows the rows to set
 	 */
 	public void setRows(ArrayList<Row> rows) {
-		this.rows = rows;
+		this.tableRows = rows;
 	}
 
 	public void setIsRead (boolean isRead) {
