@@ -33,6 +33,10 @@ public class FileManager {
 		}
 		return db.getAbsolutePath();
 	}
+	/**
+	 * zabat de b 7es lw mala2ash el db asasasn yeb3at false.
+	 * @param databaseName
+	 */
 	public void dropDB(String databaseName) {
 	File db = new File("databases"+System.getProperty("file.separator")+databaseName);
 	File[]tableFiles = db.listFiles();
