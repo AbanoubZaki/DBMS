@@ -2,6 +2,7 @@ package eg.edu.alexu.csd.oop.db.cs01.fileManager;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -15,7 +16,6 @@ public class FileManager {
 	
 	//singleton pattern
 	private static FileManager instance;
-	private DataBase currentDataBase;
 	private FileManager() {
 	}
 	

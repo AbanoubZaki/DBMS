@@ -7,8 +7,6 @@ public class Row {
 
 	private Map<String, Cell>cells;
 	
-	private Table table;
-	
 	public Row() {
 	}
 	public Row(Table table) {
@@ -16,20 +14,6 @@ public class Row {
 		for(String s:table.getColumnNames()) {
 			cells.put(s, null);
 		}
-		this.table=table;
-	}
-
-	/**
-	 * @return the table
-	 */
-	public Table getTable() {
-		return table;
-	}
-	/**
-	 * @param table the table to set
-	 */
-	public void setTable(Table table) {
-		this.table = table;
 	}
 	/**
 	 * @return the cells

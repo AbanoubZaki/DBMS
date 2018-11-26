@@ -31,9 +31,9 @@ public class Table {
 	public Table(String databaseName, String tableName) {
 		this.databaseName = new String(databaseName);
 		this.tableName = new String(tableName);
-		columnNames = null;
+		columnNames = new ArrayList<String>();
 		columnTypes = new HashMap<String, String>();
-		tableRows = null;
+		tableRows = new ArrayList<Row>();
 		isRead = false;
 	}
 	
@@ -45,9 +45,9 @@ public class Table {
 	 * @param columnTypes
 	 */
 	public Table(String databaseName, String tableName, ArrayList<String> columnNames, ArrayList<String> columnTypes) {
-		this.databaseName = new String(databaseName);
-		this.tableName = new String(tableName);
-		this.columnNames = new ArrayList<>(columnNames);
+		this.databaseName = databaseName;
+		this.tableName = tableName;
+		this.columnNames = columnNames;
 		this.columnTypes = new HashMap<String, String>();
 		for(int i=0;i<columnNames.size();i++) {
 			this.columnTypes.put(columnNames.get(i), columnTypes.get(i));
@@ -73,7 +73,7 @@ public class Table {
 	}
 	
 	public void setColumnNames(ArrayList<String> columnNames) {
-		this.columnNames = new ArrayList<>(columnNames);
+		this.columnNames = columnNames;
 	}
 	
 	public ArrayList<String> getColumnNames() {

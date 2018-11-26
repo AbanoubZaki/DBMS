@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<table>
+    <columnNames>c1</columnNames>
+    <columnNames>c2</columnNames>
+    <columnNames>c3</columnNames>
+    <columnTypes>
+        <entry>
+            <key>c3</key>
+            <value>varchar</value>
+        </entry>
+        <entry>
+            <key>c1</key>
+            <value>int</value>
+        </entry>
+        <entry>
+            <key>c2</key>
+            <value>varchar</value>
+        </entry>
+    </columnTypes>
+    <databaseName>testDB</databaseName>
+    <isRead>false</isRead>
+    <rows>
+        <cells>
+            <entry>
+                <key>c3</key>
+                <value>
+                    <value>b</value>
+                </value>
+            </entry>
+            <entry>
+                <key>c1</key>
+                <value>
+                    <value>1</value>
+                </value>
+            </entry>
+            <entry>
+                <key>c2</key>
+                <value>
+                    <value>a</value>
+                </value>
+            </entry>
+        </cells>
+    </rows>
+    <tableName>t1</tableName>
+</table>
