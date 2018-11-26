@@ -37,13 +37,16 @@ public class FileManager {
 	 * zabat de b 7es lw mala2ash el db asasasn yeb3at false.
 	 * @param databaseName
 	 */
-	public void dropDB(String databaseName) {
+	public boolean dropDB(String databaseName) {
 	File db = new File("databases"+System.getProperty("file.separator")+databaseName);
+	if(!db.exists())
+		return false;
 	File[]tableFiles = db.listFiles();
 		for(File f:tableFiles) {
 		f.delete();
 		}
 		db.delete();
+		return true;
 	}
 	public void createTable(Table table) {
 		String pathTable = "databases"+System.getProperty("file.separator")+table.getDataBaseName();
@@ -61,13 +64,16 @@ public class FileManager {
 		}
 		
 	}
-	public void dropTable(Table table) {
+	public boolean dropTable(Table table) {
 		String pathTable = "databases"+System.getProperty("file.separator")+table.getDataBaseName();
 		pathTable+=System.getProperty("file.separator")+table.getTableName();
 		File tableFile = new File(pathTable+".Xml");
 		File DTDFile = new File(pathTable+".dtd");
+		if(!tableFile.exists()||!DTDFile.exists())
+			return false;
 		tableFile.delete();
 		DTDFile.delete();
+		return true;
 	}
 	public void createDTD(Table table) {
 		String pathTable = "databases"+System.getProperty("file.separator")+table.getDataBaseName();
