@@ -18,6 +18,27 @@ public class Table {
 	
 	private boolean isRead;
 	
+	/**
+	 * for dropping a table.
+	 * @param databaseName
+	 * @param tableName
+	 */
+	public Table(String databaseName, String tableName) {
+		this.databaseName = new String(databaseName);
+		this.tableName = new String(tableName);
+		columnNames = null;
+		columnTypes = null;
+		tableRows = null;
+		isRead = false;
+	}
+	
+	/**
+	 * for creating new table.
+	 * @param databaseName
+	 * @param tableName
+	 * @param columnNames
+	 * @param columnTypes
+	 */
 	public Table(String databaseName, String tableName, ArrayList<String> columnNames, ArrayList<String> columnTypes) {
 		this.databaseName = new String(databaseName);
 		this.tableName = new String(tableName);
