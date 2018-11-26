@@ -25,5 +25,11 @@ public interface IQuery {
 	 * returns false if a problem occurred. 
 	 * @return
 	 */
-	public boolean execute ();
+	public boolean execute();
+	
+	/**
+	 * reads the table from files in the folder of the chosen database.
+	 * @return
+	 */
+	public boolean readTable();
 }
