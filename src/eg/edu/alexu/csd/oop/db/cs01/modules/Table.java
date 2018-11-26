@@ -42,8 +42,8 @@ public class Table {
 	public Table(String databaseName, String tableName, ArrayList<String> columnNames, ArrayList<String> columnTypes) {
 		this.databaseName = new String(databaseName);
 		this.tableName = new String(tableName);
-		columnNames = new ArrayList<>(columnNames);
-		columnTypes = new ArrayList<>(columnTypes);
+		this.columnNames = new ArrayList<>(columnNames);
+		this.columnTypes = new ArrayList<>(columnTypes);
 		tableRows = new ArrayList<>();
 		isRead = false;
 	}
