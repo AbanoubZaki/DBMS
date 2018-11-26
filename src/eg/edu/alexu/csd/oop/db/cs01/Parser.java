@@ -1,6 +1,6 @@
 package eg.edu.alexu.csd.oop.db.cs01;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,19 +29,22 @@ public class Parser {
 	private String theMainDataBase = null;
 	
 	public IQuery parseQuery(String theQuery) {
-		final String createDataBasePattern = "create database (\\S+);";
-		final String drobDataBasePattern = "drob database (\\S+);";
-		final String createTablePattern = "create table (\\S+) \\(((S+) (int | varChar)),?+\\);";
-		final String drobTablePattern = "drob table (\\S+);";
+		final String createDataBasePattern = "create database (\\S+) ?;";
+		final String drobDataBasePattern = "drob database (\\S+) ?;";
+		final String createTablePattern = "create table (\\S+) \\((( ?\\S+ (int|varchar),?)+)\\) ?;";
+		final String drobTablePattern = "drob table (\\S+) ?;";
+		final String insertIntoTable = "";
 		
-		List<String> allPatternStrings = null;
+		
+		ArrayList<String> allPatternStrings = new ArrayList<>();
 		allPatternStrings.add(createDataBasePattern);
 		allPatternStrings.add(drobDataBasePattern);
 		allPatternStrings.add(createTablePattern);
 		allPatternStrings.add(drobTablePattern);
+		allPatternStrings.add(insertIntoTable);
 		
-		List<Pattern> thePatterns = null;
-		List<Matcher> theMatchers = null;
+		ArrayList<Pattern> thePatterns = new ArrayList<>();
+		ArrayList<Matcher> theMatchers = new ArrayList<>() ;
 		for (int i = 0; i < allPatternStrings.size(); i++) {
 			Pattern pattern;
 			Matcher matcher;
@@ -50,6 +53,7 @@ public class Parser {
 			thePatterns.add(pattern);
 			theMatchers.add(matcher);
 		}
+		theQuery = theQuery.replaceAll("( +)", " ");
 		if (theMatchers.get(0).find()) {// if the query match create data base.
 			IQuery createDataBaseQuery = new CreateDatabase(theMatchers.get(0).group(1), false);
 			theMainDataBase = theMatchers.get(0).group(1);
@@ -62,8 +66,19 @@ public class Parser {
 				System.out.println("There is NO DataBase selected");
 				return null;
 			}
-			Table createTable = new Table(theMainDataBase, theMatchers.get(2).group(1), null, null);
-			
+			String[] coulmns;
+			coulmns = theMatchers.get(2).group(2).split(", ");
+			ArrayList<String> coulmnsName = new ArrayList<>();
+			ArrayList<String> coulmnsType = new ArrayList<>();
+			Pattern p = Pattern.compile("(\\S+) (\\S+)");
+			for (int i = 0; i < coulmns.length; i++) {
+				Matcher coulmnsNameAndTypeMatcher = p.matcher(coulmns[i]);
+				if (coulmnsNameAndTypeMatcher.find()) {
+					coulmnsName.add((String) coulmnsNameAndTypeMatcher.group(1));
+					coulmnsType.add((String) coulmnsNameAndTypeMatcher.group(2));
+				}
+			}
+			Table createTable = new Table(theMainDataBase, theMatchers.get(2).group(1), coulmnsName, coulmnsType);
 			IQuery createTableQuery = new CreateTable(createTable);
 			return createTableQuery;
 		} else if (theMatchers.get(3).find()) {// if the query match drop table.
