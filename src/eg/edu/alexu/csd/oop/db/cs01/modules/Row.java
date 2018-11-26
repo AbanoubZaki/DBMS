@@ -6,6 +6,8 @@ public class Row {
 
 	private ArrayList<Cell>cells;
 	
+	public Row() {
+	}
 	public Row(ArrayList<Cell>cells) {
 		this.cells = cells;
 	}

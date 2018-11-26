@@ -1,17 +1,21 @@
 package eg.edu.alexu.csd.oop.db.cs01;
 
+import java.io.File;
 import java.sql.SQLException;
 
 import eg.edu.alexu.csd.oop.db.Database;
-import eg.edu.alexu.csd.oop.db.cs01.modules.DataBase;
+import eg.edu.alexu.csd.oop.db.cs01.fileManager.FileManager;
 
 public class OurSql implements Database {
 
 	//Singleton pattern to only have one data manager.
 	
 	private static OurSql instance;
-	private DataBase database;
+	private FileManager fileManager;
 	private OurSql() {
+		File dbs = new File("databases");
+		dbs.mkdirs();
+		fileManager = FileManager.getInstance();
 	}
 		
 	public static OurSql getInstance() {
@@ -23,8 +27,7 @@ public class OurSql implements Database {
 	
 	@Override
 	public String createDatabase(String databaseName, boolean dropIfExists) {
-		database = new DataBase(databaseName);
-		return null;
+		return fileManager.createDB(databaseName, dropIfExists);
 	}
 
 	@Override

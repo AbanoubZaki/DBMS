@@ -2,17 +2,19 @@ package eg.edu.alexu.csd.oop.db.cs01.modules;
 
 public class Cell {
 	
-	private String vlaue;
+	private String value;
 	
+	public Cell() {
+	}
 	public Cell(String value) {
-		value = new String(value);
+		this.value = new String(value);
 	}
 	
 	public void setValue(String value) {
-		this.vlaue = value;
+		this.value = value;
 	}
 	
 	public String getValue() {
-		return vlaue;
+		return value;
 	}
 }
