@@ -9,11 +9,14 @@ public class SelectFrom extends OurQuery {
 	
 	public SelectFrom(Table table, Condition condition) {
 		setTable(table);
+		setCondition(condition);
 		
 	}
 
 	public SelectFrom(Table table, String column, Condition condition) {
 		setTable(table);
+		setCondition(condition);
+		setColumn(column);
 	}
 
 	@Override
