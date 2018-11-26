@@ -105,20 +105,21 @@ public class FileManager {
 			e.printStackTrace();
 		}
 	}
-	public Table readTable(Table table) {
+	public boolean readTable(Table table) {
 		String pathTable = "databases"+System.getProperty("file.separator")+table.getDatabaseName();
 		pathTable+=System.getProperty("file.separator")+table.getTableName();
 		File tableFile = new File(pathTable+".Xml");
-		JAXBContext jaxbContext;
+		if(!tableFile.exists())
+			return false;
 		try {
-			jaxbContext = JAXBContext.newInstance(table.getClass());
+			JAXBContext jaxbContext = JAXBContext.newInstance(table.getClass());
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 			table = (Table) unmarshaller.unmarshal(tableFile);
 		} catch (JAXBException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return table;
+		return true;
 		
 	}
 	
