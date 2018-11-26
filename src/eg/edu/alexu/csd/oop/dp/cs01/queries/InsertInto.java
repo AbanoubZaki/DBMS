@@ -17,14 +17,12 @@ public class InsertInto extends OurQuery {
 		this.columnNames = null;
 		this.values = values;
 		setTable(table);
-		this.readTable();
 	}
 
 	public InsertInto(Table table, ArrayList<String> columnNames, ArrayList<String> values) {
 		this.columnNames = columnNames;
 		this.values = values;
 		setTable(table);
-		this.readTable();
 	}
 
 	/**

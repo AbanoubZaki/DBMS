@@ -23,6 +23,7 @@ public abstract class OurQuery implements IQuery {
 
 	public void setTable(Table table) {
 		this.table = table;
+		readTable();
 	}	
 	
 	@Override
