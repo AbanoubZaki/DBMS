@@ -2,14 +2,12 @@ package eg.edu.alexu.csd.oop.db.cs01.fileManager;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.PrintWriter;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-import eg.edu.alexu.csd.oop.db.cs01.modules.DataBase;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
 
 public class FileManager {
@@ -87,7 +85,7 @@ public class FileManager {
 		DTDFile.delete();
 		return true;
 	}
-	public void createDTD(Table table) {
+	private void createDTD(Table table) {
 		String pathTable = "databases"+System.getProperty("file.separator")+table.getDatabaseName();
 		pathTable+=System.getProperty("file.separator")+table.getTableName();
 		File DTDFile = new File(pathTable+".dtd");
@@ -114,7 +112,10 @@ public class FileManager {
 		try {
 			JAXBContext jaxbContext = JAXBContext.newInstance(table.getClass());
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-			table = (Table) unmarshaller.unmarshal(tableFile);
+			Table loadTable = (Table) unmarshaller.unmarshal(tableFile);
+			table.setColumnNames(loadTable.getColumnNames());
+			table.setColumnTypes(loadTable.getColumnTypes());
+			table.setRows(loadTable.getRows());
 		} catch (JAXBException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

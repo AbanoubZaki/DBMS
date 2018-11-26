@@ -29,11 +29,11 @@ public class Table {
 	 * @param tableName
 	 */
 	public Table(String databaseName, String tableName) {
-		this.databaseName = new String(databaseName);
-		this.tableName = new String(tableName);
-		columnNames = new ArrayList<String>();
+		this.databaseName = databaseName;
+		this.tableName = tableName;
+		columnNames = new ArrayList<>();
 		columnTypes = new HashMap<String, String>();
-		tableRows = new ArrayList<Row>();
+		tableRows = new ArrayList<>();
 		isRead = false;
 	}
 	
