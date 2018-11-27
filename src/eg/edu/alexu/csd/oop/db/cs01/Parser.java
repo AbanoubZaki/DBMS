@@ -171,8 +171,18 @@ public class Parser {
 			Condition selectAllFromTableCondition = new Condition(theMatchers.get(6).group(4));
 			IQuery selectAllFromTableQuery = new SelectFrom(tableSelectAllFromTable, selectAllFromTableCondition);
 			return selectAllFromTableQuery;
-		} else if (theQuery.contains(";") && theMatchers.get(7).find()) {
-
+		} else if (theQuery.contains(";") && theMatchers.get(7).find()) {// select column from tabel_name where condition.
+			if (theMainDataBase == null) {
+				System.out.println("There is NO DataBase selected");
+				return null;
+			}
+			// group(2) is the table name.
+			Table tableSelectColumnFromTable = new Table(theMainDataBase, theMatchers.get(7).group(2));
+			// group(5) is the condition it may equals null.
+			Condition selectColumnFromTableCondition = new Condition(theMatchers.get(7).group(5));
+			// group(1) is the column name.
+			IQuery selectColumnFromTableQuery = new SelectFrom(tableSelectColumnFromTable, theMatchers.get(7).group(1), selectColumnFromTableCondition);
+			return selectColumnFromTableQuery;
 		}
 		return null;
 	}
