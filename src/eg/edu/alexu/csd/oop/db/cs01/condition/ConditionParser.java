@@ -17,10 +17,10 @@ public class ConditionParser {
 			parser = new ConditionParser();
 		return parser;
 	}
-	public RelationalCondition stringToRelationalCondition(String stringCondition , Table table) {
+	public RelationalCondition stringToRelationalCondition(String relationalCondition , Table table) {
 		String stringConditionPattern = " ?(['\"]? ?\\w+ ?['\"]?) ?([><=!]{1,2})? ?(['\"]? ?\\w+['\"]?)? ?";
 		Pattern thePattern = Pattern.compile(stringConditionPattern);
-		Matcher theMatcher = thePattern.matcher(stringCondition);
+		Matcher theMatcher = thePattern.matcher(relationalCondition);
 		if (theMatcher.find()) {
 			String op1  = theMatcher.group(1);
 			op1 = op1.replaceAll("'", "");
@@ -32,6 +32,11 @@ public class ConditionParser {
 			RelationalOperand rightAgrument = new RelationalOperand(op2, !table.getColumnNames().contains(theMatcher.group(3)),dataChecker.getInstance().checkType(theMatcher.group(1)));;
 			return new RelationalCondition(leftAgrument, rightAgrument, theMatcher.group(2));
 		}
+		return null;
+	}
+	
+	public RelationalCondition stringToLogicalCondition(String logicalCondition , Table table) {
+		
 		return null;
 	}
 }
