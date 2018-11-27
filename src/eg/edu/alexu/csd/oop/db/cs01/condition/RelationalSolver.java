@@ -17,7 +17,7 @@ public class RelationalSolver {
 		}
 		return solver;
 	}
-	public boolean isRowSolvingCondition(Row row , RelationalCondition condition) {
+	public boolean isRowSolvingCondition(Row row , RelationalCondition condition){
 		// value , value
 		if(condition.getLeftAgrument().isVariable()&&condition.getRightAgrument().isVariable())
 			return compareTwoValue(condition);
@@ -45,7 +45,7 @@ public class RelationalSolver {
 		}
 		return false;
 	}
-	private boolean compareValueCol(Row row , RelationalCondition condition) {
+	private boolean compareValueCol(Row row , RelationalCondition condition){
 		if(!condition.getLeftAgrument().isVariable()) {
 			condition.getLeftAgrument().setOperand(row.getCellByColumn(condition.getLeftAgrument().getOperand()));
 			return getRelationResult(condition.getLeftAgrument(),condition.getRightAgrument(), condition.getOperation());
