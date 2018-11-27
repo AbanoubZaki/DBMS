@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.xml.bind.annotation.XmlRootElement;
+
+import eg.edu.alexu.csd.oop.db.cs01.fileManager.FileManager;
 @XmlRootElement
 public class Table {
 	
@@ -116,5 +118,24 @@ public class Table {
 	
 	public boolean getIsRead () {
 		return isRead;
+	}
+	
+	public Object[][] getData() {
+		FileManager.getInstance().readTable(this);
+		ArrayList< ArrayList<Object> > data = new ArrayList<>();
+		for (int i = 0; i < getRows().size(); i++) {
+			//row of data to be filled with objects.
+			ArrayList<Object> dataRow = new ArrayList<>();
+			Row r = getRows().get(i);
+			for (int j = 0; j <getColumnNames().size() ; j++) {
+				if (getColumnTypes().get(getColumnNames().get(j)).equals("int")) {
+					dataRow.add((Integer.parseInt(r.getCells().get(getColumnNames().get(j)).getValue())));
+				} else if (getColumnTypes().get(getColumnNames().get(j)).equals("varchar")) {
+					dataRow.add(r.getCells().get(getColumnNames().get(j)).getValue());
+				}
+			}
+			data.add(dataRow);
+		}
+		return (Object[][]) data.toArray();
 	}
 }
