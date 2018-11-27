@@ -1,8 +1,9 @@
 package eg.edu.alexu.csd.oop.dp.cs01.queries;
 
 import java.util.ArrayList;
+import java.util.concurrent.locks.Condition;
 
-import eg.edu.alexu.csd.oop.db.cs01.Condition;
+import eg.edu.alexu.csd.oop.db.cs01.condition.RelationalCondition;
 import eg.edu.alexu.csd.oop.db.cs01.fileManager.FileManager;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Row;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
@@ -22,7 +23,7 @@ public class SelectFrom extends OurQuery {
 	 * @param table
 	 * @param condition
 	 */
-	public SelectFrom(Table table, Condition condition) {
+	public SelectFrom(Table table, RelationalCondition condition) {
 		setTable(table);
 		setCondition(condition);
 	}
@@ -35,7 +36,7 @@ public class SelectFrom extends OurQuery {
 	 * @param column
 	 * @param condition
 	 */
-	public SelectFrom(Table table, String column, Condition condition) {
+	public SelectFrom(Table table, String column, RelationalCondition condition) {
 		setTable(table);
 		setCondition(condition);
 		setColumn(column);

@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import eg.edu.alexu.csd.oop.db.cs01.condition.RelationalCondition;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
 import eg.edu.alexu.csd.oop.dp.cs01.queries.CreateDatabase;
 import eg.edu.alexu.csd.oop.dp.cs01.queries.CreateTable;
@@ -173,7 +174,11 @@ public class Parser {
 			Table tableSelectAllFromTable = new Table(theMainDataBase, theMatchers.get(6).group(1));
 			// group(4) is the condition it may equals null.
 			Condition selectAllFromTableCondition = new Condition(theMatchers.get(6).group(4));
-			IQuery selectAllFromTableQuery = new SelectFrom(tableSelectAllFromTable, selectAllFromTableCondition);
+			/**
+			 * henaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+			 */
+			RelationalCondition condition = new RelationalCondition(null, null, null);
+			IQuery selectAllFromTableQuery = new SelectFrom(tableSelectAllFromTable, condition);
 			return selectAllFromTableQuery;
 		} else if (theQuery.contains(";") && theMatchers.get(7).find()) {// select column from tabel_name where
 																			// condition.
@@ -186,8 +191,12 @@ public class Parser {
 			// group(5) is the condition it may equals null.
 			Condition selectColumnFromTableCondition = new Condition(theMatchers.get(7).group(5));
 			// group(1) is the column name.
+			/**
+			 * henaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+			 */
+			RelationalCondition condition = new RelationalCondition(null, null, null);
 			IQuery selectColumnFromTableQuery = new SelectFrom(tableSelectColumnFromTable, theMatchers.get(7).group(1),
-					selectColumnFromTableCondition);
+					condition);
 			return selectColumnFromTableQuery;
 		} else if (theQuery.contains(";") && theMatchers.get(8).find()) {// update tabel name set c1 = v1, ... where
 																			// condition.
@@ -216,7 +225,11 @@ public class Parser {
 			Table tableUpdateTableSetColumn = new Table(theMainDataBase, theMatchers.get(8).group(1));
 			// group(8) is the condition it may equals null.
 			Condition updateTableSetColumnCondition = new Condition(theMatchers.get(8).group(8));
-			IQuery updateTableSetColumnQuery = new UpdateSet(tableUpdateTableSetColumn, columnNames, values, updateTableSetColumnCondition);
+			/**
+			 * henaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+			 */
+			RelationalCondition condition = new RelationalCondition(null, null, null);
+			IQuery updateTableSetColumnQuery = new UpdateSet(tableUpdateTableSetColumn, columnNames, values, condition);
 			return updateTableSetColumnQuery;
 		}
 		return null;

@@ -2,7 +2,7 @@ package eg.edu.alexu.csd.oop.dp.cs01.queries;
 
 import java.util.ArrayList;
 
-import eg.edu.alexu.csd.oop.db.cs01.Condition;
+import eg.edu.alexu.csd.oop.db.cs01.condition.RelationalCondition;
 import eg.edu.alexu.csd.oop.db.cs01.fileManager.FileManager;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Cell;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
@@ -14,7 +14,7 @@ public class UpdateSet extends OurQuery {
 	private ArrayList<String> values;
 	
 	
-	public UpdateSet(Table table, ArrayList<String> columnNames, ArrayList<String> values, Condition condition) {
+	public UpdateSet(Table table, ArrayList<String> columnNames, ArrayList<String> values, RelationalCondition condition) {
 		this.columnNames = columnNames;
 		this.values = values;
 		setTable(table);

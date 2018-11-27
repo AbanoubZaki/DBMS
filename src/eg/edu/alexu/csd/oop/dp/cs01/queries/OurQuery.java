@@ -1,13 +1,15 @@
 package eg.edu.alexu.csd.oop.dp.cs01.queries;
 
-import eg.edu.alexu.csd.oop.db.cs01.Condition;
+import java.util.concurrent.locks.Condition;
+
+import eg.edu.alexu.csd.oop.db.cs01.condition.RelationalCondition;
 import eg.edu.alexu.csd.oop.db.cs01.fileManager.FileManager;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
 
 public abstract class OurQuery implements IQuery {
 
 	private Table table;
-	private Condition condition;
+	private RelationalCondition condition;
 	private String column;
 	
 	public OurQuery() {
@@ -45,12 +47,12 @@ public abstract class OurQuery implements IQuery {
 	}
 
 	@Override
-	public void setCondition(Condition condition) {
+	public void setCondition(RelationalCondition condition) {
 		this.condition = condition;
 	}
 
 	@Override
-	public Condition getCondition() {
+	public RelationalCondition getCondition() {
 		return condition;
 	}
 

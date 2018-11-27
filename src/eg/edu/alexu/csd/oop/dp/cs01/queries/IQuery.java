@@ -1,6 +1,6 @@
 package eg.edu.alexu.csd.oop.dp.cs01.queries;
 
-import eg.edu.alexu.csd.oop.db.cs01.Condition;
+import eg.edu.alexu.csd.oop.db.cs01.condition.RelationalCondition;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
 
 public interface IQuery {
@@ -40,7 +40,7 @@ public interface IQuery {
 
 	public String getColumn();
 
-	public void setCondition(Condition condition);
+	public void setCondition(RelationalCondition condition);
 
-	public Condition getCondition();
+	public RelationalCondition getCondition();
 }

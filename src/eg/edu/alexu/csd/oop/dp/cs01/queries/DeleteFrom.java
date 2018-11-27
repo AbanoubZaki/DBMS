@@ -1,12 +1,12 @@
 package eg.edu.alexu.csd.oop.dp.cs01.queries;
 
-import eg.edu.alexu.csd.oop.db.cs01.Condition;
+import eg.edu.alexu.csd.oop.db.cs01.condition.RelationalCondition;
 import eg.edu.alexu.csd.oop.db.cs01.fileManager.FileManager;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
 
 public class DeleteFrom extends OurQuery {
 
-	public DeleteFrom(Table table, Condition condition) {
+	public DeleteFrom(Table table, RelationalCondition condition) {
 		setTable(table);
 		setCondition(condition);
 	}
