@@ -52,7 +52,7 @@ public class SelectFrom extends OurQuery {
 
 	public void setColumnIndexAndType() {
 		for (int i = 0; i < getTable().getColumnNames().size(); i++) {
-			if (getTable().getColumnNames().equals(getColumn())) {
+			if (getTable().getColumnNames().contains(getColumn().toLowerCase())) {
 				this.columnIndex = i;
 				break;
 			}
@@ -80,7 +80,7 @@ public class SelectFrom extends OurQuery {
 			/**
 			 * if its a imaginary column the return false.
 			 */
-			if (!getTable().getColumnNames().contains(getColumn())) {
+			if (!getTable().getColumnNames().contains(getColumn().toLowerCase())) {
 				return false;
 			}
 			FileManager.getInstance().readTable(getTable());
@@ -112,7 +112,7 @@ public class SelectFrom extends OurQuery {
 			/**
 			 * if its a imaginary column the return false.
 			 */
-			if (!getTable().getColumnNames().contains(getColumn())) {
+			if (!getTable().getColumnNames().contains(getColumn().toLowerCase())) {
 				return false;
 			}
 			

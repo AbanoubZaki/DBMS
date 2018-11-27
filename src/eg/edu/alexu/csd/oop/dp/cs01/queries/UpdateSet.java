@@ -25,7 +25,7 @@ public class UpdateSet extends OurQuery {
 	public boolean execute() {
 		FileManager.getInstance().readTable(getTable());
 		for(int i = 0; i < getTable().getColumnNames().size(); i++) {
-			if(!getTable().getColumnNames().contains(columnNames.get(i))) {
+			if(!getTable().getColumnNames().contains(columnNames.get(i).toLowerCase())) {
 				return false;
 			}	
 		}
@@ -34,7 +34,7 @@ public class UpdateSet extends OurQuery {
 			int index = -1;
 			if(getCondition() == null) {
 				for (int j = 0; j < getTable().getColumnNames().size(); j++) {
-					if(columnNames.get(k).equals(getTable().getColumnNames().get(j))) {
+					if(columnNames.get(k).equals(getTable().getColumnNames().get(j).toLowerCase())) {
 						index = j;
 						break;
 					}

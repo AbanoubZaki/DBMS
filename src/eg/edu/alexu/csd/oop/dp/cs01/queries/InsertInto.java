@@ -36,8 +36,7 @@ public class InsertInto extends OurQuery {
 		}
 		Row insertedRow = new Row(getTable());
 		for (int i = 0; i < columnNames.size(); i++) {
-			if (getTable().getColumnTypes().get(columnNames.get(i))
-					.equals(dataChecker.getInstance().checkType(values.get(i)))) {
+			if (getTable().getColumnTypes().get(columnNames.get(i).toLowerCase()).equals(dataChecker.getInstance().checkType(values.get(i)))) {
 				insertedRow.updateCell(columnNames.get(i), new Cell(values.get(i)));
 			} else {
 				return false;
