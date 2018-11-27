@@ -43,7 +43,7 @@ public class Parser {
 		final String insertIntoTableValuesOnlyPattern = "(?i)\\binsert\\b (?i)\\binto\\b (\\w+) (?i)\\bvalues\\b \\( ?(( ?\\w+ ?,?)+)\\) ?; ?";
 		final String selectAllFromTablePattern = "(?i)\\bselect\\b \\* (?i)\\bfrom\\b (\\w+) ?(((?i)\\bwhere\\b) ?(((?i)\\bnot\\b)? ?([^;\\s]) ?(([!=><]{1,2}) ?([^;\\s]+))? ?(((?i)\\bor\\b|(?i)\\band\\b) ?((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?)?))? ?; ?";
 		final String selectColumnFromTablePattern = "(?i)\\bselect\\b (\\w+) (?i)\\bfrom\\b (\\w+) ?(((?i)\\bwhere\\b) ?(((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?(((?i)\\bor\\b|(?i)\\band\\b) ?((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?)?))? ?; ?";
-		final String updateTableSetColumnPattern = "(?i)\\bupdate\\b (\\w+) (?i)\\bset\\b (( ?(\\w+) = ['\"]? ?(\\w)+ ?['\"] ?,?)+)(((?i)\\bwhere\\b) ?(((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?(((?i)\\bor\\b|(?i)\\band\\b) ?((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?)?))? ?; ?";
+		final String updateTableSetColumnPattern = "(?i)\\bupdate\\b (\\w+) (?i)\\bset\\b (( ?(\\w+) = ['\"]? ?(\\w)+ ?['\"]? ?,?)+)(((?i)\\bwhere\\b) ?(((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?(((?i)\\bor\\b|(?i)\\band\\b) ?((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?)?))? ?; ?";
 
 		// Adding regex-es to the ArrayList.
 		ArrayList<String> allPatternStrings = new ArrayList<>();
