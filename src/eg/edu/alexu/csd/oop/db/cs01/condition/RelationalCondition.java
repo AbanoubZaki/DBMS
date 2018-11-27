@@ -5,12 +5,28 @@ public class RelationalCondition {
 	private RelationalOperand leftAgrument;
 	private RelationalOperand rightAgrument;
 	private String operation;
-	
+	private String stringCondition;
+	/**
+	 * @return the stringCondition
+	 */
+	public String getStringCondition() {
+		return stringCondition;
+	}
+	/**
+	 * @param stringCondition the stringCondition to set
+	 */
+	public void setStringCondition(String stringCondition) {
+		this.stringCondition = stringCondition;
+	}
 	/**
 	 * @param leftAgrument
 	 * @param rightAgrument
 	 * @param operation
 	 */
+	public RelationalCondition(String stringCondition) {
+		// TODO Auto-generated constructor stub
+		this.stringCondition=stringCondition;
+	}
 	public RelationalCondition(RelationalOperand leftAgrument, RelationalOperand rightAgrument, String operation){
 		if(!leftAgrument.getType().equals(rightAgrument.getType()))
 			return;
