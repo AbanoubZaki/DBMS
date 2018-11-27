@@ -39,8 +39,8 @@ public class Parser {
 		final String drobTablePattern = "(?i)\\bdrob\\b (?i)\\btable\\b (\\w+) ?; ?";
 		final String insertIntoTableColumnsAndValuesPattern = "(?i)\\binsert\\b (?i)\\binto\\b (\\w+) (\\( ?(( ?\\w+ ?,?)+)\\)) (?i)\\bvalues\\b \\((( ?\\w+ ?,?)+)\\) ?; ?";
 		final String insertIntoTableValuesOnlyPattern = "(?i)\\binsert\\b (?i)\\binto\\b (\\w+) (?i)\\bvalues\\b \\( ?(( ?\\w+ ?,?)+)\\) ?; ?";
-		final String selectAllFromTablePattern = "(?i)\\bselect\\b \\* (?i)\\bfrom\\b (\\w+) ?(((?i)\\bwhere\\b) ?(((?i)\\bnot\\b)? ?(\\S+) ? [!=><]+ ?(\\S+) ?((?i)\\bor\\b|(?i)\\band\\b)? ?((?i)\\bnot\\b)? ?(\\S+) ? [!=><]+ ?(\\S+) ?))? ?; ?";
-		final String selectColumnFromTablePattern = "(?i)\\bselect\\b (\\w+) (?i)\\bfrom\\b (\\w+) ?(((?i)\\bwhere\\b) ?(((?i)\\bnot\\b)? ?(\\S+) ? [!=><]+ ?(\\S+) ?((?i)\\bor\\b|(?i)\\band\\b)? ?((?i)\\bnot\\b)? ?(\\S+) ? [!=><]+ ?(\\S+) ?))? ?; ?";
+		final String selectAllFromTablePattern = "(?i)\\bselect\\b \\* (?i)\\bfrom\\b (\\w+) ?(((?i)\\bwhere\\b) ?(((?i)\\bnot\\b)? ?([^;\\s]+)? ?[!=><]+ ?([^;\\s]+)? ?((?i)\\bor\\b|(?i)\\band\\b)? ?((?i)\\bnot\\b)? ?([^;\\s]+) ?([!=><]+)? ?([^;\\s]+)? ?))? ?; ?";
+		final String selectColumnFromTablePattern = "(?i)\\bselect\\b (\\w+) (?i)\\bfrom\\b (\\w+) ?(((?i)\\bwhere\\b) ?(((?i)\\bnot\\b)? ?([^;\\s]+) ?[!=><]+ ?([^;\\s]+) ?((?i)\\bor\\b|(?i)\\band\\b)? ?((?i)\\bnot\\b)? ?([^;\\s]+)? ?([!=><]+)? ?([^;\\s]+)? ?))? ?; ?";
 
 		// Adding regex-es to the ArrayList.
 		ArrayList<String> allPatternStrings = new ArrayList<>();
