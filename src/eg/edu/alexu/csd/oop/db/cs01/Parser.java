@@ -13,6 +13,7 @@ import eg.edu.alexu.csd.oop.dp.cs01.queries.DropTable;
 import eg.edu.alexu.csd.oop.dp.cs01.queries.IQuery;
 import eg.edu.alexu.csd.oop.dp.cs01.queries.InsertInto;
 import eg.edu.alexu.csd.oop.dp.cs01.queries.SelectFrom;
+import eg.edu.alexu.csd.oop.dp.cs01.queries.UpdateSet;
 
 public class Parser {
 
@@ -20,6 +21,7 @@ public class Parser {
 	private static Parser instance;
 
 	private Parser() {
+		theMainDataBase = null;
 	}
 
 	public static Parser getInstance() {
@@ -29,7 +31,7 @@ public class Parser {
 		return instance;
 	}
 
-	private String theMainDataBase = null;
+	private String theMainDataBase;
 
 	public IQuery parseQuery(String theQuery) {
 		// Creating regex-es for queries.
@@ -39,8 +41,9 @@ public class Parser {
 		final String drobTablePattern = "(?i)\\bdrob\\b (?i)\\btable\\b (\\w+) ?; ?";
 		final String insertIntoTableColumnsAndValuesPattern = "(?i)\\binsert\\b (?i)\\binto\\b (\\w+) (\\( ?(( ?\\w+ ?,?)+)\\)) (?i)\\bvalues\\b \\((( ?\\w+ ?,?)+)\\) ?; ?";
 		final String insertIntoTableValuesOnlyPattern = "(?i)\\binsert\\b (?i)\\binto\\b (\\w+) (?i)\\bvalues\\b \\( ?(( ?\\w+ ?,?)+)\\) ?; ?";
-		final String selectAllFromTablePattern = "(?i)\\bselect\\b \\* (?i)\\bfrom\\b (\\w+) ?(((?i)\\bwhere\\b) ?(((?i)\\bnot\\b)? ?([^;\\s]+)? ?[!=><]+ ?([^;\\s]+)? ?((?i)\\bor\\b|(?i)\\band\\b)? ?((?i)\\bnot\\b)? ?([^;\\s]+) ?([!=><]+)? ?([^;\\s]+)? ?))? ?; ?";
-		final String selectColumnFromTablePattern = "(?i)\\bselect\\b (\\w+) (?i)\\bfrom\\b (\\w+) ?(((?i)\\bwhere\\b) ?(((?i)\\bnot\\b)? ?([^;\\s]+) ?[!=><]+ ?([^;\\s]+) ?((?i)\\bor\\b|(?i)\\band\\b)? ?((?i)\\bnot\\b)? ?([^;\\s]+)? ?([!=><]+)? ?([^;\\s]+)? ?))? ?; ?";
+		final String selectAllFromTablePattern = "(?i)\\bselect\\b \\* (?i)\\bfrom\\b (\\w+) ?(((?i)\\bwhere\\b) ?(((?i)\\bnot\\b)? ?([^;\\s]) ?(([!=><]{1,2}) ?([^;\\s]+))? ?(((?i)\\bor\\b|(?i)\\band\\b) ?((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?)?))? ?; ?";
+		final String selectColumnFromTablePattern = "(?i)\\bselect\\b (\\w+) (?i)\\bfrom\\b (\\w+) ?(((?i)\\bwhere\\b) ?(((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?(((?i)\\bor\\b|(?i)\\band\\b) ?((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?)?))? ?; ?";
+		final String updateTableSetColumnPattern = "(?i)\\bupdate\\b (\\w+) (?i)\\bset\\b (( ?(\\w+) = ['\"]? ?(\\w)+ ?['\"] ?,?)+)(((?i)\\bwhere\\b) ?(((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?(((?i)\\bor\\b|(?i)\\band\\b) ?((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?)?))? ?; ?";
 
 		// Adding regex-es to the ArrayList.
 		ArrayList<String> allPatternStrings = new ArrayList<>();
@@ -52,6 +55,7 @@ public class Parser {
 		allPatternStrings.add(insertIntoTableValuesOnlyPattern);// 5.
 		allPatternStrings.add(selectAllFromTablePattern);// 6.
 		allPatternStrings.add(selectColumnFromTablePattern);// 7.
+		allPatternStrings.add(updateTableSetColumnPattern);// 8
 
 		// ArrayLists for patterns and matchers.
 		ArrayList<Pattern> thePatterns = new ArrayList<>();
@@ -171,7 +175,8 @@ public class Parser {
 			Condition selectAllFromTableCondition = new Condition(theMatchers.get(6).group(4));
 			IQuery selectAllFromTableQuery = new SelectFrom(tableSelectAllFromTable, selectAllFromTableCondition);
 			return selectAllFromTableQuery;
-		} else if (theQuery.contains(";") && theMatchers.get(7).find()) {// select column from tabel_name where condition.
+		} else if (theQuery.contains(";") && theMatchers.get(7).find()) {// select column from tabel_name where
+																			// condition.
 			if (theMainDataBase == null) {
 				System.out.println("There is NO DataBase selected");
 				return null;
@@ -181,8 +186,38 @@ public class Parser {
 			// group(5) is the condition it may equals null.
 			Condition selectColumnFromTableCondition = new Condition(theMatchers.get(7).group(5));
 			// group(1) is the column name.
-			IQuery selectColumnFromTableQuery = new SelectFrom(tableSelectColumnFromTable, theMatchers.get(7).group(1), selectColumnFromTableCondition);
+			IQuery selectColumnFromTableQuery = new SelectFrom(tableSelectColumnFromTable, theMatchers.get(7).group(1),
+					selectColumnFromTableCondition);
 			return selectColumnFromTableQuery;
+		} else if (theQuery.contains(";") && theMatchers.get(8).find()) {// update tabel name set c1 = v1, ... where
+																			// condition.
+			if (theMainDataBase == null) {
+				System.out.println("There is NO DataBase selected");
+				return null;
+			}
+			String[] sets;
+			ArrayList<String> columnNames = new ArrayList<>();
+			ArrayList<String> values = new ArrayList<>();
+			// pattern to split column name from the new value.
+			String setsPattern = " ?(\\w+) ?= ?['\"]? ?(\\w+) ?['\"] ?";
+			// group(2) is the all of the sets.
+			sets = theMatchers.get(8).group(2).split(" ?, ?");
+			// compiling sets pattern
+			Pattern p = Pattern.compile(setsPattern);
+			// filling ArrayLists columnNames & values.
+			for (int i = 0; i < sets.length; i++) {
+				Matcher setsMatcher = p.matcher(sets[i]);
+				if (setsMatcher.find()) {
+					columnNames.add(setsMatcher.group(1));
+					values.add(setsMatcher.group(2));
+				}
+			}
+			// group(1) is the table name.
+			Table tableUpdateTableSetColumn = new Table(theMainDataBase, theMatchers.get(8).group(1));
+			// group(8) is the condition it may equals null.
+			Condition updateTableSetColumnCondition = new Condition(theMatchers.get(8).group(8));
+			IQuery updateTableSetColumnQuery = new UpdateSet(tableUpdateTableSetColumn, columnNames, values, updateTableSetColumnCondition);
+			return updateTableSetColumnQuery;
 		}
 		return null;
 	}
