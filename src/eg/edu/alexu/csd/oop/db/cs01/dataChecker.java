@@ -2,6 +2,7 @@ package eg.edu.alexu.csd.oop.db.cs01;
 
 public class dataChecker {
 
+	//singleton pattern
 	private static dataChecker instance = new dataChecker();
 
 	private dataChecker() {

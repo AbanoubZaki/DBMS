@@ -1,5 +1,8 @@
 package eg.edu.alexu.csd.oop.dp.cs01.queries;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import eg.edu.alexu.csd.oop.db.cs01.fileManager.FileManager;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
 
@@ -10,8 +13,14 @@ public class CreateTable extends OurQuery {
 	}
 	@Override
 	public boolean execute() {
-		if(getTable()==null)
-		return false;
+		Set<String> columnsSet = new HashSet<>(super.getTable().getColumnNames()); 
+		if(getTable()==null) {
+			return false;
+		}
+		if(columnsSet.size() != super.getTable().getColumnNames().size()) {
+			System.out.println("Duplicates found in column names.");
+			return false;
+		}
 		return FileManager.getInstance().createTable(getTable());
 	}
 
