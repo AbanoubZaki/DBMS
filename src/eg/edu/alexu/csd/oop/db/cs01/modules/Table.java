@@ -16,6 +16,21 @@ public class Table {
 		
 	private ArrayList<String> columnNames;
 	
+	private ArrayList<String> columnNamesMain;
+	
+	/**
+	 * @return the columnNamesMain
+	 */
+	public ArrayList<String> getColumnNamesMain() {
+		return columnNamesMain;
+	}
+	/**
+	 * @param columnNamesMain the columnNamesMain to set
+	 */
+	public void setColumnNamesMain(ArrayList<String> columnNamesMain) {
+		this.columnNamesMain = columnNamesMain;
+	}
+
 	private Map<String, String> columnTypes;
 	
 	private ArrayList<Row> tableRows;
@@ -49,10 +64,12 @@ public class Table {
 	public Table(String databaseName, String tableName, ArrayList<String> columnNames, ArrayList<String> columnTypes) {
 		this.databaseName = databaseName;
 		this.tableName = tableName;
-		this.columnNames = columnNames;
+		this.columnNamesMain = columnNames;
 		this.columnTypes = new HashMap<String, String>();
+		this.columnNames = new ArrayList<String>();
 		for(int i=0;i<columnNames.size();i++) {
-			this.columnTypes.put(columnNames.get(i), columnTypes.get(i));
+			this.columnTypes.put(columnNames.get(i).toLowerCase(), columnTypes.get(i));
+			this.columnNames.add(columnNames.get(i).toLowerCase());
 		}
 		tableRows = new ArrayList<>();
 		isRead = false;

@@ -1,7 +1,5 @@
 package eg.edu.alexu.csd.oop.db.cs01.condition;
 
-import java.sql.SQLException;
-
 public class RelationalCondition {
 	
 	private RelationalOperand leftAgrument;
@@ -13,9 +11,9 @@ public class RelationalCondition {
 	 * @param rightAgrument
 	 * @param operation
 	 */
-	public RelationalCondition(RelationalOperand leftAgrument, RelationalOperand rightAgrument, String operation)throws SQLException {
+	public RelationalCondition(RelationalOperand leftAgrument, RelationalOperand rightAgrument, String operation){
 		if(!leftAgrument.getType().equals(rightAgrument.getType()))
-			new SQLException();
+			return;
 		this.leftAgrument = leftAgrument;
 		this.rightAgrument = rightAgrument;
 		this.operation = operation;
