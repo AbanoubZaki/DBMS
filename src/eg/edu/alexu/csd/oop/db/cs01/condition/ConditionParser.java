@@ -35,8 +35,8 @@ public class ConditionParser {
 		return null;
 	}
 	
-	public RelationalCondition stringToLogicalCondition(String logicalCondition , Table table) {
+	public boolean stringToLogicalCondition(String logicalCondition , Table table) {
 		
-		return null;
+		return false;
 	}
 }
