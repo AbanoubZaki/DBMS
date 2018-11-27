@@ -35,4 +35,7 @@ public class Row {
 	public void deleteCell(String columnName) {
 		updateCell(columnName, null);
 	}
+	public String getCellByColumn(String columnName) {
+		return cells.get(columnName).getValue();
+	}
 }
