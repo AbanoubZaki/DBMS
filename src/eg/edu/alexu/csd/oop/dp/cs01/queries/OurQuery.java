@@ -86,4 +86,9 @@ public class OurQuery implements IQuery {
 		return 0;
 	}
 
+	public void setColumnType() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

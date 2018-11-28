@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import eg.edu.alexu.csd.oop.db.cs01.dataChecker;
 import eg.edu.alexu.csd.oop.db.cs01.fileManager.FileManager;
 
 public class Table {
@@ -173,6 +174,19 @@ public class Table {
 			}
 		}
 		return data;
+	}
+	
+	public boolean checkDataTypeMatch (ArrayList<String> columnNames, ArrayList<String> values) {
+		for (int i = 0; i < columnNames.size(); i++) {
+			if (getColumnTypes().get(columnNames.get(i).toLowerCase()).equals("int")) {
+				if (dataChecker.getInstance().checkType(values.get(i)).equals("int")) {
+				} else {
+					System.out.println("datatype mismatch");
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 
 }

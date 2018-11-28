@@ -56,6 +56,8 @@ public interface IQuery {
 	public String getColumnType();
 	
 	public int getColumnIndex();
+
+	void setColumnType();
 	
 	
 }

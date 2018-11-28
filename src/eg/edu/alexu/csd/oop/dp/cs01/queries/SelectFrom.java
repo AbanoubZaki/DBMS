@@ -1,9 +1,9 @@
 package eg.edu.alexu.csd.oop.dp.cs01.queries;
 
 import java.util.ArrayList;
+
 import eg.edu.alexu.csd.oop.db.cs01.condition.RelationalCondition;
 import eg.edu.alexu.csd.oop.db.cs01.condition.RelationalSolver;
-import eg.edu.alexu.csd.oop.db.cs01.fileManager.FileManager;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Row;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
 
@@ -53,14 +53,8 @@ public class SelectFrom extends OurQuery {
 	}
 
 	@Override
-	public void setColumnIndexAndType() {
-		for (int i = 0; i < getTable().getColumnNamesToLowerCase().size(); i++) {
-			if (getTable().getColumnNamesToLowerCase().contains(getColumn().toLowerCase())) {
-				this.columnIndex = i;
-				break;
-			}
-		}
-		this.columnType  = getTable().getColumnTypes().get(getTable().getColumnNamesToLowerCase().get(getColumnIndex()));
+	public void setColumnType() {
+		this.columnType  = getTable().getColumnTypes().get(getColumn());
 	}
 
 	@Override
@@ -82,17 +76,17 @@ public class SelectFrom extends OurQuery {
 
 		} else if (getColumn() != null && getCondition() == null) {
 			// 2nd constructor
+			//return a whole column.
 			/**
 			 * if its a imaginary column the return false.
 			 */
 			if (!getTable().getColumnNamesToLowerCase().contains(getColumn().toLowerCase())) {
+				System.out.println("column \"" + getColumn() + "\" not found");
 				return false;
 			}
-			FileManager.getInstance().readTable(getTable());
-			ArrayList<ArrayList<Object>> data = new ArrayList<>();
+			selected = new Object[getTable().getRows().size()][1];
 			for (int i = 0; i < getTable().getRows().size(); i++) {
 				// row of data to be filled with objects.
-				selected = new Object[data.size()][1];
 				if (getColumnType().equals("varchar")) {
 					selected[i][1] = getTable().getRow(i).getCells().get(getColumn().toLowerCase()).getValue();
 				} else {
