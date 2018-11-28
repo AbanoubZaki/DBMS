@@ -85,13 +85,13 @@ public class Parser {
 
 		// Creating the right query.
 		if (theQuery.contains(";") && theMatchers.get(0).find()) {// if the query match create data base.
-			IQuery createDataBaseQuery = new CreateDatabase(theMatchers.get(0).group(1), false);
+			IQuery createDataBaseQuery = new CreateDatabase(theMatchers.get(0).group(1).toLowerCase(), false);
 			// group(1) is the name of the data base.
-			theMainDataBase = theMatchers.get(0).group(1);
+			theMainDataBase = theMatchers.get(0).group(1).toLowerCase();
 			return createDataBaseQuery;
 		} else if (theQuery.contains(";") && theMatchers.get(1).find()) {// if the query match drop data base.
 			// group(1) is the name of the data base.
-			IQuery drobDataBaseQuery = new DropDatabase(theMatchers.get(1).group(1));
+			IQuery drobDataBaseQuery = new DropDatabase(theMatchers.get(1).group(1).toLowerCase());
 			return drobDataBaseQuery;
 		} else if (theQuery.contains(";") && theMatchers.get(2).find()) {// if the query match create table.
 			if (theMainDataBase == null) {
