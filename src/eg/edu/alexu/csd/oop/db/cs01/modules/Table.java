@@ -18,8 +18,8 @@ public class Table {
 		this.databaseName = new String();
 		this.tableName = new String();
 		currentTableName = new String();
-		this.columnNamesMain = new ArrayList<>();
-		this.columnNames = new ArrayList<>();
+		this.columnNamesAsGiven = new ArrayList<>();
+		this.columnNamesToLowerCase = new ArrayList<>();
 		this.columnTypes = new HashMap<String, String>();
 		this.tableRows = new ArrayList<>();
 	}
@@ -56,9 +56,9 @@ public class Table {
 
 	private String tableName;
 
-	private ArrayList<String> columnNames;
+	private ArrayList<String> columnNamesToLowerCase;
 
-	private ArrayList<String> columnNamesMain;
+	private ArrayList<String> columnNamesAsGiven;
 
 	private Map<String, String> columnTypes;
 
@@ -67,24 +67,24 @@ public class Table {
 	public void setAllColumnNamesAndTypes (ArrayList<String> columnNames, ArrayList<String> columnTypes) {
 		for (int i = 0; i < columnNames.size(); i++) {
 			this.columnTypes.put(columnNames.get(i).toLowerCase(), columnTypes.get(i));
-			this.columnNamesMain.add(columnNames.get(i));
-			this.columnNames.add(columnNames.get(i).toLowerCase());
+			this.columnNamesAsGiven.add(columnNames.get(i));
+			this.columnNamesToLowerCase.add(columnNames.get(i).toLowerCase());
 		}
 	}
 	
 	/**
-	 * @return the columnNamesMain
+	 * @return the columnNamesAsGiven
 	 */
-	public ArrayList<String> getColumnNamesMain() {
-		return columnNamesMain;
+	public ArrayList<String> getColumnNamesAsGiven() {
+		return columnNamesAsGiven;
 	}
 
 	/**
-	 * @param columnNamesMain
-	 *            the columnNamesMain to set
+	 * @param columnNamesAsGiven
+	 *            the columnNamesAsGiven to set
 	 */
-	public void setColumnNamesMain(ArrayList<String> columnNamesMain) {
-		this.columnNamesMain = columnNamesMain;
+	public void setColumnNamesAsGiven(ArrayList<String> columnNamesAsGiven) {
+		this.columnNamesAsGiven = columnNamesAsGiven;
 	}
 
 	public void setDatabaseName(String databaseName) {
@@ -103,12 +103,12 @@ public class Table {
 		return tableName;
 	}
 
-	public void setColumnNames(ArrayList<String> columnNames) {
-		this.columnNames = columnNames;
+	public void setColumnNamesToLowerCase(ArrayList<String> columnNames) {
+		this.columnNamesToLowerCase = columnNames;
 	}
 
-	public ArrayList<String> getColumnNames() {
-		return columnNames;
+	public ArrayList<String> getColumnNamesToLowerCase() {
+		return columnNamesToLowerCase;
 	}
 
 	public void setColumnTypes(Map<String, String> columnTypes) {
@@ -153,11 +153,11 @@ public class Table {
 			// row of data to be filled with objects.
 			ArrayList<Object> dataRow = new ArrayList<>();
 			Row r = getRows().get(i);
-			for (int j = 0; j < getColumnNames().size(); j++) {
-				if (getColumnTypes().get(getColumnNames().get(j)).equals("int")) {
-					dataRow.add((Integer.parseInt(r.getCells().get(getColumnNames().get(j)).getValue())));
-				} else if (getColumnTypes().get(getColumnNames().get(j)).equals("varchar")) {
-					dataRow.add(r.getCells().get(getColumnNames().get(j)).getValue());
+			for (int j = 0; j < getColumnNamesToLowerCase().size(); j++) {
+				if (getColumnTypes().get(getColumnNamesToLowerCase().get(j)).equals("int")) {
+					dataRow.add((Integer.parseInt(r.getCells().get(getColumnNamesToLowerCase().get(j)).getValue())));
+				} else if (getColumnTypes().get(getColumnNamesToLowerCase().get(j)).equals("varchar")) {
+					dataRow.add(r.getCells().get(getColumnNamesToLowerCase().get(j)).getValue());
 				}
 			}
 			data.add(dataRow);
