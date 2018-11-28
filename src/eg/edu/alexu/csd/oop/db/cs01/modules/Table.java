@@ -40,7 +40,7 @@ public class Table {
 		}
 		// to save the table before select anther one.
 		if(table!=null) {
-			FileManager.getInstance().createTable(table);
+			FileManager.getInstance().writeTable(table);
 		}
 		table = new Table();
 		table.setTableName(tableName);

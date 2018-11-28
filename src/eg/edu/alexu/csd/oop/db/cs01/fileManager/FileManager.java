@@ -121,7 +121,6 @@ public class FileManager {
 		            table = null;
 			 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			System.out.println("error");
 			e.printStackTrace();
 		}
@@ -212,6 +211,56 @@ public class FileManager {
 		} 
 		return true;
 		
+	}
+	public boolean writeTable(Table table) {
+		if (table.getDatabaseName() == null) {
+			System.out.println("database is unknown");
+			return false;
+		}
+		String pathTable = table.getDatabaseName();
+		if(!pathTable.contains(System.getProperty("file.separator")))
+			pathTable="databases"+System.getProperty("file.separator")+pathTable;
+		pathTable+=System.getProperty("file.separator")+table.getTableName();
+		File tableFile = new File(pathTable+".Xml");
+		if(!tableFile.exists()) {
+			return false;
+		}
+	    DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        try {
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			 Document dom = db.newDocument();
+			 Element rootEle = dom.createElement("table");
+			 Element typesElement = dom.createElement("dataTypes");
+			 for(String col:table.getColumnNamesAsGiven()) {
+				 Element typeElement = dom.createElement(col);
+				 typeElement.appendChild(dom.createTextNode(table.getColumnTypes().get(col.toLowerCase())));
+				 typesElement.appendChild(typeElement);
+			 }
+			 rootEle.appendChild(typesElement);
+			 	for(Row r:table.getRows()) {
+			 		Element e = dom.createElement("row");
+			 		for(String col:table.getColumnNamesAsGiven()) {
+			 			Element elementCell = dom.createElement(col);
+			 			elementCell.appendChild(dom.createTextNode(r.getCellByColumn(col.toLowerCase())));
+			 			e.appendChild(elementCell);
+			 		}
+			 		rootEle.appendChild(e);
+			 }
+		 		dom.appendChild(rootEle);
+		 	      Transformer tr = TransformerFactory.newInstance().newTransformer();
+		            tr.setOutputProperty(OutputKeys.INDENT, "yes");
+		            tr.setOutputProperty(OutputKeys.METHOD, "xml");
+		            tr.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+		            tr.transform(new DOMSource(dom), 
+                            new StreamResult(new FileOutputStream(tableFile)));
+		            createDTD(table);
+		            table = null;
+			 
+		} catch (Exception e) {
+			System.out.println("error");
+			e.printStackTrace();
+		}
+		return true;
 	}
 	private static Map<String, ArrayList<String>> parseXml(File tableFile) throws XMLStreamException, IOException {
 		    StringBuilder content = null;
