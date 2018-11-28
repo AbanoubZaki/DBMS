@@ -37,16 +37,16 @@ public class Parser {
 
 	public IQuery parseQuery(String theQuery) {
 		// Creating regex-es for queries.
-		final String createDataBasePattern = "(?i)\\bcreate\\b (?i)\\bdatabase\\b (\\w+) ?; ?";
-		final String drobDataBasePattern = "(?i)\\bdrob\\b (?i)\\bdatabase\\b (\\w+) ?; ?";
-		final String createTablePattern = "(?i)\\bcreate\\b (?i)\\btable\\b (\\w+) \\( ?(( ?\\w+ (int|varchar) ?,?)+)\\) ?; ?";
-		final String drobTablePattern = "(?i)\\bdrob\\b (?i)\\btable\\b (\\w+) ?; ?";
-		final String insertIntoTableColumnsAndValuesPattern = "(?i)\\binsert\\b (?i)\\binto\\b (\\w+) (\\( ?(( ?\\w+ ?,?)+)\\)) (?i)\\bvalues\\b \\((( ?['\"]? ?\\w+ ?['\"]? ?,?)+)\\) ?; ?";
-		final String insertIntoTableValuesOnlyPattern = "(?i)\\binsert\\b (?i)\\binto\\b (\\w+) (?i)\\bvalues\\b \\( ?(( ?['\"]? ?\\w+ ?['\"]? ?,?)+)\\) ?; ?";
-		final String selectAllFromTablePattern = "(?i)\\bselect\\b \\* (?i)\\bfrom\\b (\\w+) ?(((?i)\\bwhere\\b) ?(((?i)\\bnot\\b)? ?([^;\\s]) ?(([!=><]{1,2}) ?([^;\\s]+))? ?(((?i)\\bor\\b|(?i)\\band\\b) ?((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?)?))? ?; ?";
-		final String selectColumnFromTablePattern = "(?i)\\bselect\\b (\\w+) (?i)\\bfrom\\b (\\w+) ?(((?i)\\bwhere\\b) ?(((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?(((?i)\\bor\\b|(?i)\\band\\b) ?((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?)?))? ?; ?";
-		final String updateTableSetColumnPattern = "(?i)\\bupdate\\b (\\w+) (?i)\\bset\\b (( ?(\\w+) = ['\"]? ?(\\w)+ ?['\"]? ?,?)+)(((?i)\\bwhere\\b) ?(((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?(((?i)\\bor\\b|(?i)\\band\\b) ?((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?)?))? ?; ?";
-		final String deleteFromTablePattern = "(?i)\\bdelete\\b (?i)\\bfrom\\b (\\w+) ?(((?i)\\bwhere\\b) ?(((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?(((?i)\\bor\\b|(?i)\\band\\b) ?((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?)?))? ?; ?";
+		final String createDataBasePattern = "(?i)\\bcreate\\b (?i)\\bdatabase\\b (\\w+) ?;? ?";
+		final String drobDataBasePattern = "(?i)\\bdrob\\b (?i)\\bdatabase\\b (\\w+) ?;? ?";
+		final String createTablePattern = "(?i)\\bcreate\\b (?i)\\btable\\b (\\w+) ?\\( ?(( ?\\w+ (int|varchar) ?,?)+) ?\\) ?;? ?";
+		final String drobTablePattern = "(?i)\\bdrob\\b (?i)\\btable\\b (\\w+) ?;? ?";
+		final String insertIntoTableColumnsAndValuesPattern = "(?i)\\binsert\\b (?i)\\binto\\b (\\w+) ?(\\( ?(( ?\\w+ ?,? ?)+)\\)) (?i)\\bvalues\\b ?\\((( ?['\"]? ?\\w+ ?['\"]? ?,?)+)\\) ?;? ?";
+		final String insertIntoTableValuesOnlyPattern = "(?i)\\binsert\\b (?i)\\binto\\b (\\w+) (?i)\\bvalues\\b ?\\( ?(( ?['\"]? ?\\w+ ?['\"]? ?,?)+)\\) ?;? ?";
+		final String selectAllFromTablePattern = "(?i)\\bselect\\b \\* (?i)\\bfrom\\b (\\w+) ?(((?i)\\bwhere\\b) ?(((?i)\\bnot\\b)? ?([^;\\s]) ?(([!=><]{1,2}) ?([^;\\s]+))? ?(((?i)\\bor\\b|(?i)\\band\\b) ?((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?)?))? ?;? ?";
+		final String selectColumnFromTablePattern = "(?i)\\bselect\\b (\\w+) (?i)\\bfrom\\b (\\w+) ?(((?i)\\bwhere\\b) ?(((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?(((?i)\\bor\\b|(?i)\\band\\b) ?((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?)?))? ?;? ?";
+		final String updateTableSetColumnPattern = "(?i)\\bupdate\\b (\\w+) (?i)\\bset\\b (( ?(\\w+) = ['\"]? ?(\\w)+ ?['\"]? ?,?)+)(((?i)\\bwhere\\b) ?(((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?(((?i)\\bor\\b|(?i)\\band\\b) ?((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?)?))? ?;? ?";
+		final String deleteFromTablePattern = "(?i)\\bdelete\\b (?i)\\bfrom\\b (\\w+) ?(((?i)\\bwhere\\b) ?(((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?(((?i)\\bor\\b|(?i)\\band\\b) ?((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?)?))? ?;? ?";
 
 		// Adding regex-es to the ArrayList.
 		ArrayList<String> allPatternStrings = new ArrayList<>();
@@ -84,17 +84,17 @@ public class Parser {
 		theQuery = theQuery.replaceAll("( +)", " ");
 
 		// Creating the right query.
-		if (theQuery.contains(";") && theMatchers.get(0).find()) {// if the query match create data base.
+		if (theMatchers.get(0).find()) {// if the query match create data base.
 			IQuery createDataBaseQuery = new CreateDatabase(theMatchers.get(0).group(1).toLowerCase(), false);
 			// group(1) is the name of the data base.
 			theMainDataBase = theMatchers.get(0).group(1).toLowerCase();
 			return createDataBaseQuery;
-		} else if (theQuery.contains(";") && theMatchers.get(1).find()) {// if the query match drop data base.
+		} else if (theMatchers.get(1).find()) {// if the query match drop data base.
 			// group(1) is the name of the data base.
 			IQuery drobDataBaseQuery = new DropDatabase(theMatchers.get(1).group(1).toLowerCase());
 			theMainDataBase = null;
 			return drobDataBaseQuery;
-		} else if (theQuery.contains(";") && theMatchers.get(2).find()) {// if the query match create table.
+		} else if (theMatchers.get(2).find()) {// if the query match create table.
 			if (theMainDataBase == null) {
 				System.out.println("There is NO DataBase selected");
 				return null;
@@ -121,7 +121,7 @@ public class Parser {
 			Table.getInstance().setAllColumnNamesAndTypes(columnsName, columnsType);
 			IQuery createTableQuery = new CreateTable(Table.getInstance());
 			return createTableQuery;
-		} else if (theQuery.contains(";") && theMatchers.get(3).find()) {// if the query match drop table.
+		} else if (theMatchers.get(3).find()) {// if the query match drop table.
 			if (theMainDataBase == null) {
 				System.out.println("There is NO DataBase selected");
 				return null;
@@ -131,7 +131,7 @@ public class Parser {
 			Table.getInstance().setDatabaseName(theMainDataBase);
 			IQuery dropTableQuery = new DropTable(Table.getInstance());
 			return dropTableQuery;
-		} else if (theQuery.contains(";") && theMatchers.get(4).find()) {// if the query match insert Into Table Columns
+		} else if (theMatchers.get(4).find()) {// if the query match insert Into Table Columns
 																			// And Values.
 			if (theMainDataBase == null) {
 				System.out.println("There is NO DataBase selected");
@@ -156,7 +156,7 @@ public class Parser {
 			Table.getInstance().setDatabaseName(theMainDataBase);
 			IQuery insertIntoTableColumnsAndValuesQuery = new InsertInto(Table.getInstance(), columnNames, values);
 			return insertIntoTableColumnsAndValuesQuery;
-		} else if (theQuery.contains(";") && theMatchers.get(5).find()) {// if the query match insert Into Table Values
+		} else if (theMatchers.get(5).find()) {// if the query match insert Into Table Values
 																			// Only.
 			if (theMainDataBase == null) {
 				System.out.println("There is NO DataBase selected");
@@ -172,7 +172,7 @@ public class Parser {
 			Table.getInstance().setDatabaseName(theMainDataBase);
 			IQuery insertIntoTableValuesOnlyQuery = new InsertInto(Table.getInstance(), values);
 			return insertIntoTableValuesOnlyQuery;
-		} else if (theQuery.contains(";") && theMatchers.get(6).find()) {// select * from tabel_name where condition.
+		} else if (theMatchers.get(6).find()) {// select * from tabel_name where condition.
 			if (theMainDataBase == null) {
 				System.out.println("There is NO DataBase selected");
 				return null;
@@ -184,7 +184,7 @@ public class Parser {
 			RelationalCondition selectAllFromTableCondition = new RelationalCondition(theMatchers.get(6).group(4));
 			IQuery selectAllFromTableQuery = new SelectFrom(Table.getInstance(), selectAllFromTableCondition);
 			return selectAllFromTableQuery;
-		} else if (theQuery.contains(";") && theMatchers.get(7).find()) {// select column from tabel_name where
+		} else if (theMatchers.get(7).find()) {// select column from tabel_name where
 																			// condition.
 			if (theMainDataBase == null) {
 				System.out.println("There is NO DataBase selected");
@@ -199,7 +199,7 @@ public class Parser {
 			IQuery selectColumnFromTableQuery = new SelectFrom(Table.getInstance(), theMatchers.get(7).group(1),
 					selectColumnFromTableCondition);
 			return selectColumnFromTableQuery;
-		} else if (theQuery.contains(";") && theMatchers.get(8).find()) {// update tabel name set c1 = v1, ... where
+		} else if (theMatchers.get(8).find()) {// update tabel name set c1 = v1, ... where
 																			// condition.
 			if (theMainDataBase == null) {
 				System.out.println("There is NO DataBase selected");
@@ -230,7 +230,7 @@ public class Parser {
 			IQuery updateTableSetColumnQuery = new UpdateSet(Table.getInstance(), columnNames, values,
 					updateTableSetColumnCondition);
 			return updateTableSetColumnQuery;
-		} else if (theQuery.contains(";") && theMatchers.get(9).find()) {// DELETE FROM table_name WHERE condition.
+		} else if (theMatchers.get(9).find()) {// DELETE FROM table_name WHERE condition.
 			if (theMainDataBase == null) {
 				System.out.println("There is NO DataBase selected");
 				return null;
