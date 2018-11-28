@@ -25,8 +25,8 @@ public class Parser {
 	private Parser() {
 		theMainDataBase = null;
 		// Creating regex-es for queries.
-		final String createDataBasePattern = "(?i)\\bcreate\\b (?i)\\bdatabase\\b (\\w+) ?;? ?";
-		final String drobDataBasePattern = "(?i)\\bdrop\\b (?i)\\bdatabase\\b (\\w+) ?;? ?";
+		final String createDataBasePattern = "(?i)\\bcreate\\b (?i)\\bdatabase\\b ([\\w\\]+) ?;? ?";
+		final String drobDataBasePattern = "(?i)\\bdrop\\b (?i)\\bdatabase\\b ([\\w\\]+) ?;? ?";
 		final String createTablePattern = "(?i)\\bcreate\\b (?i)\\btable\\b (\\w+) ?\\( ?(( ?\\w+ (int|varchar) ?,?)+) ?\\) ?;? ?";
 		final String drobTablePattern = "(?i)\\bdrop\\b (?i)\\btable\\b (\\w+) ?;? ?";
 		final String insertIntoTableColumnsAndValuesPattern = "(?i)\\binsert\\b (?i)\\binto\\b (\\w+) ?(\\( ?(( ?\\w+ ?,? ?)+)\\)) (?i)\\bvalues\\b ?\\((( ?['\"]? ?\\w+ ?['\"]? ?,?)+)\\) ?;? ?";
