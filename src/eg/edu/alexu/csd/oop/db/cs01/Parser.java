@@ -92,6 +92,7 @@ public class Parser {
 		} else if (theQuery.contains(";") && theMatchers.get(1).find()) {// if the query match drop data base.
 			// group(1) is the name of the data base.
 			IQuery drobDataBaseQuery = new DropDatabase(theMatchers.get(1).group(1).toLowerCase());
+			theMainDataBase = null;
 			return drobDataBaseQuery;
 		} else if (theQuery.contains(";") && theMatchers.get(2).find()) {// if the query match create table.
 			if (theMainDataBase == null) {
