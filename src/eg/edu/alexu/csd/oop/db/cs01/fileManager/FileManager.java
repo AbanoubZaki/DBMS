@@ -7,9 +7,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -76,23 +80,25 @@ public class FileManager {
 		String pathTable = "databases"+System.getProperty("file.separator")+table.getDatabaseName();
 		pathTable+=System.getProperty("file.separator")+table.getTableName();
 		File tableFile = new File(pathTable+".Xml");
+		if(tableFile.exists())
+			tableFile.delete();
 	    DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         try {
 			DocumentBuilder db = dbf.newDocumentBuilder();
 			 Document dom = db.newDocument();
 			 Element rootEle = dom.createElement("table");
 			 Element typesElement = dom.createElement("dataTypes");
-			 for(Entry<String, String>type:table.getColumnTypes().entrySet()) {
-				 Element typeElement = dom.createElement(type.getKey());
-				 typeElement.appendChild(dom.createTextNode(type.getValue()));
+			 for(String col:table.getColumnNamesAsGiven()) {
+				 Element typeElement = dom.createElement(col);
+				 typeElement.appendChild(dom.createTextNode(table.getColumnTypes().get(col.toLowerCase())));
 				 typesElement.appendChild(typeElement);
 			 }
 			 rootEle.appendChild(typesElement);
 			 	for(Row r:table.getRows()) {
 			 		Element e = dom.createElement("row");
-			 		for(Entry<String, Cell>cell:r.getCells().entrySet()) {
-			 			Element elementCell = dom.createElement(cell.getKey());
-			 			elementCell.appendChild(dom.createTextNode(cell.getValue().getValue()));
+			 		for(String col:table.getColumnNamesAsGiven()) {
+			 			Element elementCell = dom.createElement(col);
+			 			elementCell.appendChild(dom.createTextNode(r.getCellByColumn(col.toLowerCase())));
 			 			e.appendChild(elementCell);
 			 		}
 			 		rootEle.appendChild(e);
@@ -106,6 +112,7 @@ public class FileManager {
 		            tr.transform(new DOMSource(dom), 
                             new StreamResult(new FileOutputStream(tableFile)));
 		            createDTD(table);
+		            table = null;
 			 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -166,10 +173,10 @@ public class FileManager {
 		try {
 			Map<String, ArrayList<String> > map = parseXml(tableFile);
 			int numberOfRow = map.get(map.keySet().toArray()[0]).size();
-			ArrayList<String> columns = new ArrayList<>(map.keySet());
+			ArrayList<String> columns = readDTD(new File(tableFile.getAbsolutePath().replaceAll(".Xml", ".dtd")));
 			ArrayList<String>types = new ArrayList<String>();
-			for(Entry<String, ArrayList<String>>e:map.entrySet()) {
-				types.add(e.getValue().get(0));
+			for(String s:columns) {
+				types.add(map.get(s).get(0));
 			}
 			table.setAllColumnNamesAndTypes(columns, types);
 			for(int i=1;i<numberOfRow;i++) {
@@ -187,7 +194,7 @@ public class FileManager {
 		return true;
 		
 	}
-	  public static Map<String, ArrayList<String>> parseXml(File tableFile) throws XMLStreamException, IOException {
+	private static Map<String, ArrayList<String>> parseXml(File tableFile) throws XMLStreamException, IOException {
 		    StringBuilder content = null;
 		    Map<String, ArrayList<String>> dataMap = new HashMap<>();
 		    XMLInputFactory factory = XMLInputFactory.newInstance();
@@ -229,4 +236,28 @@ public class FileManager {
 		    }
 		    return dataMap;
 		}
+	private ArrayList<String> readDTD(File tableFile) {
+	    List<String> lines = Collections.emptyList(); 
+	    try
+	    { 
+	      lines = 
+	       Files.readAllLines(Paths.get(tableFile.getAbsolutePath()), StandardCharsets.UTF_8); 
+	    } 
+	  
+	    catch (IOException e) 
+	    { 
+	  
+	      // do something 
+	      e.printStackTrace(); 
+	    }
+	    ArrayList<String> cols = new ArrayList<String>();
+	    for(int i=3;i<lines.size();i++)
+	    {
+	    	String s = lines.get(i);
+	    	s=s.replace(" (#PCDATA)>", "");
+	    	s=s.replace("<!ELEMENT ", "");
+	    	cols.add(s);
+	    }
+	    return cols;
+	}
 }

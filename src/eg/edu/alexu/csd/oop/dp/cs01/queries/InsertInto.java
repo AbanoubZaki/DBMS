@@ -35,12 +35,14 @@ public class InsertInto extends OurQuery {
 			columnNames = getTable().getColumnNamesToLowerCase();
 		}
 		Row insertedRow = new Row(getTable());
-		for (int i = 0; i < columnNames.size(); i++) {
-			if (getTable().getColumnTypes().get(columnNames.get(i).toLowerCase()).equals(dataChecker.getInstance().checkType(values.get(i)))) {
+		for (int i = 0; i < values.size(); i++) {
+			if(getTable().getColumnTypes().get(columnNames.get(i)).equals("int")) {
+				if (getTable().getColumnTypes().get(columnNames.get(i)).equals(dataChecker.getInstance().checkType(values.get(i)))) {
 				insertedRow.updateCell(columnNames.get(i), new Cell(values.get(i)));
-			} else {
-				return false;
-			}
+				}else
+					return false;
+			}else
+				insertedRow.updateCell(columnNames.get(i), new Cell(values.get(i)));	
 		}
 		getTable().addRow(insertedRow);
 		return true;

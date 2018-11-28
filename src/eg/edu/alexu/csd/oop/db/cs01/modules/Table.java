@@ -71,6 +71,9 @@ public class Table {
 	private ArrayList<Row> tableRows;
 
 	public void setAllColumnNamesAndTypes (ArrayList<String> columnNames, ArrayList<String> columnTypes) {
+		this.columnNamesAsGiven = new ArrayList<String>();
+		this.columnNamesToLowerCase=new ArrayList<String>();
+		this.columnTypes = new HashMap<String, String>();
 		for (int i = 0; i < columnNames.size(); i++) {
 			this.columnTypes.put(columnNames.get(i).toLowerCase(), columnTypes.get(i));
 			this.columnNamesAsGiven.add(columnNames.get(i));
@@ -154,21 +157,22 @@ public class Table {
 	 * @return
 	 */
 	public Object[][] getData() {
-		ArrayList<ArrayList<Object>> data = new ArrayList<>();
+		Object[][]data = new Object[getRows().size()][getColumnNamesToLowerCase().size()];
 		for (int i = 0; i < getRows().size(); i++) {
 			// row of data to be filled with objects.
-			ArrayList<Object> dataRow = new ArrayList<>();
 			Row r = getRows().get(i);
 			for (int j = 0; j < getColumnNamesToLowerCase().size(); j++) {
 				if (getColumnTypes().get(getColumnNamesToLowerCase().get(j)).equals("int")) {
-					dataRow.add((Integer.parseInt(r.getCells().get(getColumnNamesToLowerCase().get(j)).getValue())));
+					if(r.getCells().get(getColumnNamesToLowerCase().get(j))!=null)
+					data[i][j]=(Integer.parseInt(r.getCells().get(getColumnNamesToLowerCase().get(j)).getValue()));
+					else
+						data[i][j]=null;
 				} else if (getColumnTypes().get(getColumnNamesToLowerCase().get(j)).equals("varchar")) {
-					dataRow.add(r.getCells().get(getColumnNamesToLowerCase().get(j)).getValue());
+					data[i][j] = r.getCells().get(getColumnNamesToLowerCase().get(j)).getValue();
 				}
 			}
-			data.add(dataRow);
 		}
-		return (Object[][]) data.toArray();
+		return data;
 	}
 
 }
