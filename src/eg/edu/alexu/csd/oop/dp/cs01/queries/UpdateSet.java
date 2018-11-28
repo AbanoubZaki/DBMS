@@ -30,17 +30,17 @@ public class UpdateSet extends OurQuery {
 			}	
 		}
 		
-		int index = -1;
 		for (int k = 0; k < columnNames.size(); k++) {
+			int index = -1;
 			if(getCondition() == null) {
 				for (int j = 0; j < getTable().getColumnNames().size(); j++) {
-					if(columnNames.get(index).equals(getTable().getColumnNames().get(j))) {
+					if(columnNames.get(k).equals(getTable().getColumnNames().get(j))) {
 						index = j;
 						break;
 					}
 				}
 				for (int i = 0; i < getTable().getRows().size(); i++) {
-						getTable().getRows().get(index).updateCell(columnNames.get(k), new Cell(values.get(k)));
+						getTable().getRows().get(i).updateCell(getTable().getColumnNames().get(index), new Cell(values.get(k)));
 				}
 			}else {
 				
