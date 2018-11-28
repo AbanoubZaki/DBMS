@@ -62,11 +62,12 @@ public class Parser {
 	 * carry all patterns.
 	 */
 	ArrayList<String> allPatternStrings = new ArrayList<>();
-	// ArrayLists for patterns and matchers.
-	ArrayList<Pattern> thePatterns = new ArrayList<>();
-	ArrayList<Matcher> theMatchers = new ArrayList<>();
+	
 
 	public IQuery parseQuery(String theQuery) {
+		// ArrayLists for patterns and matchers.
+		ArrayList<Pattern> thePatterns = new ArrayList<>();
+		ArrayList<Matcher> theMatchers = new ArrayList<>();
 		/**
 		 * Editing the given string (the Query) to match the regex by replacing multiple
 		 * spaces with one space. To CREATE you need names as they were entered. on
