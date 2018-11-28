@@ -40,15 +40,18 @@ public class SelectFrom extends OurQuery {
 		setColumn(column);
 		setColumnIndexAndType();
 	}
-
+	
+	@Override
 	public void setSelected(Object[][] selected) {
 		this.selected = selected;
 	}
-
+	
+	@Override
 	public Object[][] getSelected() {
 		return selected;
 	}
 
+	@Override
 	public void setColumnIndexAndType() {
 		for (int i = 0; i < getTable().getColumnNamesToLowerCase().size(); i++) {
 			if (getTable().getColumnNamesToLowerCase().contains(getColumn().toLowerCase())) {
@@ -59,16 +62,18 @@ public class SelectFrom extends OurQuery {
 		this.columnType  = getTable().getColumnTypes().get(getTable().getColumnNamesToLowerCase().get(getColumnIndex()));
 	}
 
+	@Override
 	public String getColumnType() {
 		return columnType;
 	}
 
+	@Override
 	public int getColumnIndex() {
 		return columnIndex;
 	}
 
 	@Override
-	public boolean execute() {
+	public boolean execute1() {
 		if (getColumn() == null && getCondition() == null) {
 			// 1st constructor
 			setSelected(getTable().getData());

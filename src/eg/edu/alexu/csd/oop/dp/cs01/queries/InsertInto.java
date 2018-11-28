@@ -30,7 +30,7 @@ public class InsertInto extends OurQuery {
 	 * table in the file using file manager.
 	 */
 	@Override
-	public boolean execute() {
+	public int execute2() {
 		if (columnNames == null) {
 			columnNames = getTable().getColumnNamesToLowerCase();
 		}
@@ -40,11 +40,11 @@ public class InsertInto extends OurQuery {
 				if (getTable().getColumnTypes().get(columnNames.get(i)).equals(dataChecker.getInstance().checkType(values.get(i)))) {
 				insertedRow.updateCell(columnNames.get(i), new Cell(values.get(i)));
 				}else
-					return false;
+					return 0;
 			}else
 				insertedRow.updateCell(columnNames.get(i), new Cell(values.get(i)));	
 		}
 		getTable().addRow(insertedRow);
-		return true;
+		return 1;
 	}
 }

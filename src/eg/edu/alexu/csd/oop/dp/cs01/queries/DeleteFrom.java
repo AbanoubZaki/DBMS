@@ -12,15 +12,17 @@ public class DeleteFrom extends OurQuery {
 	}
 	
 	@Override
-	public boolean execute() {
+	public int execute2() {
 		FileManager.getInstance().readTable(getTable());
 		if (getCondition() == null) {
+			int effectedRows = getTable().getRows().size(); 
 			getTable().setRows(null);
+			return effectedRows;
 		}else if (getCondition() != null) {
 			
 		}
 		
-		return true;
+		return 0;
 	}
 
 }

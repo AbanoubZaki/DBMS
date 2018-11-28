@@ -27,7 +27,10 @@ public interface IQuery {
 	 * 
 	 * @return
 	 */
-	public boolean execute();
+	public boolean execute1();
+	
+	
+	public int execute2();
 
 	/**
 	 * reads the table from files in the folder of the chosen database.
@@ -43,4 +46,16 @@ public interface IQuery {
 	public void setCondition(RelationalCondition condition);
 
 	public RelationalCondition getCondition();
+	
+	public void setSelected(Object[][] selected);
+	
+	public Object[][] getSelected();
+	
+	public void setColumnIndexAndType();
+	
+	public String getColumnType();
+	
+	public int getColumnIndex();
+	
+	
 }

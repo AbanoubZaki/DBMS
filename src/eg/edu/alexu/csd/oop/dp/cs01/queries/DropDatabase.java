@@ -11,7 +11,7 @@ public class DropDatabase extends OurQuery{
 		this.databaseName = databasaNme;
 	}
 	@Override
-	public boolean execute() {
+	public boolean execute1() {
 		if (databaseName == null) {
 			return false;
 		}

@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import eg.edu.alexu.csd.oop.db.Database;
 import eg.edu.alexu.csd.oop.dp.cs01.queries.CreateDatabase;
+import eg.edu.alexu.csd.oop.dp.cs01.queries.IQuery;
 
 public class OurSql implements Database {
 
@@ -27,23 +28,27 @@ public class OurSql implements Database {
 	@Override
 	public String createDatabase(String databaseName, boolean dropIfExists) {
 		CreateDatabase CDB = new CreateDatabase(databaseName, dropIfExists);
-		CDB.execute();
+		CDB.execute1();
 		return CDB.getDatabasePath();
 	}
 
 	@Override
 	public boolean executeStructureQuery(String query) throws SQLException {
-		return false;
+		IQuery objectQquery = Parser.getInstance().parseQuery(query);
+		return objectQquery.execute1();
 	}
 
 	@Override
 	public Object[][] executeQuery(String query) throws SQLException {
-		return null;
+		IQuery selectQuery = Parser.getInstance().parseQuery(query);
+		selectQuery.execute1();
+		return selectQuery.getSelected();
 	}
 
 	@Override
 	public int executeUpdateQuery(String query) throws SQLException {
-		return 0;
+		IQuery objectQquery = Parser.getInstance().parseQuery(query);
+		return objectQquery.execute2();
 	}
 
 }

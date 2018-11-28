@@ -10,7 +10,7 @@ public class DropTable extends OurQuery {
 	}
 	
 	@Override
-	public boolean execute() {
+	public boolean execute1() {
 		if(getTable()==null)
 			return false;
 		return FileManager.getInstance().dropTable(getTable());

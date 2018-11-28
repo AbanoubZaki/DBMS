@@ -22,13 +22,16 @@ public class UpdateSet extends OurQuery {
 	}
 	
 	@Override
-	public boolean execute() {
+	public int execute2() {
 		FileManager.getInstance().readTable(getTable());
 		for(int i = 0; i < getTable().getColumnNamesToLowerCase().size(); i++) {
 			if(!getTable().getColumnNamesToLowerCase().contains(columnNames.get(i).toLowerCase())) {
-				return false;
+				System.out.println("Column names not found.");
+				return 0;
 			}	
 		}
+		
+		int effectedRows = 0;
 		
 		for (int k = 0; k < columnNames.size(); k++) {
 			int index = -1;
@@ -41,15 +44,14 @@ public class UpdateSet extends OurQuery {
 				}
 				for (int i = 0; i < getTable().getRows().size(); i++) {
 						getTable().getRows().get(i).updateCell(getTable().getColumnNamesToLowerCase().get(index), new Cell(values.get(k)));
+						effectedRows++;
 				}
 			}else {
 				
 			}
-		
 		}
 		
-		
-		return true;
+		return effectedRows;
 	}
 
 }

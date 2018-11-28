@@ -12,7 +12,7 @@ public class CreateTable extends OurQuery {
 		super(table);
 	}
 	@Override
-	public boolean execute() {
+	public boolean execute1() {
 		Set<String> columnsSet = new HashSet<>(super.getTable().getColumnNamesToLowerCase()); 
 		if(getTable()==null) {
 			return false;

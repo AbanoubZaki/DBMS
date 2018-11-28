@@ -22,7 +22,7 @@ public class CreateDatabase extends OurQuery{
 	 * @return
 	 */
 	@Override
-	public boolean execute() {
+	public boolean execute1() {
 		if (databaseName == null) {
 			return false;
 		}
