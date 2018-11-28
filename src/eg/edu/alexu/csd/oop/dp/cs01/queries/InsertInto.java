@@ -3,6 +3,7 @@ package eg.edu.alexu.csd.oop.dp.cs01.queries;
 import java.util.ArrayList;
 
 import eg.edu.alexu.csd.oop.db.cs01.dataChecker;
+import eg.edu.alexu.csd.oop.db.cs01.fileManager.FileManager;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Cell;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Row;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
@@ -31,6 +32,17 @@ public class InsertInto extends OurQuery {
 	 */
 	@Override
 	public int execute2() {
+		/**
+		 * 
+		 */
+		if (!FileManager.getInstance().readTable(getTable())) {
+			System.out.println("Table not found.");
+			return 0;
+		}
+		if (getTable().getColumnTypes() == null) {
+			System.out.println("column types dismatch happened");
+			return 0;
+		}
 		if (columnNames == null) {
 			columnNames = getTable().getColumnNamesToLowerCase();
 			// no of values must be equal to no of columns.
@@ -42,7 +54,7 @@ public class InsertInto extends OurQuery {
 		}
 		Row insertedRow = new Row(getTable());
 		for (int i = 0; i < values.size(); i++) {
-			if (getTable().getColumnTypes().get(columnNames.get(i)).equals("int")) {
+			if (getTable().getColumnTypes().get(columnNames.get(i).toLowerCase()).equals("int")) {
 				if (getTable().getColumnTypes().get(columnNames.get(i))
 						.equals(dataChecker.getInstance().checkType(values.get(i)))) {
 					insertedRow.updateCell(columnNames.get(i), new Cell(values.get(i)));

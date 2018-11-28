@@ -40,7 +40,6 @@ public class RelationalSolver {
 		try {
 			return (boolean) sm.eval(var1.getOperand()+operation+var2.getOperand());
 		} catch (ScriptException e) {
-			// TODO Auto-generated catch block
 			System.out.println("error");
 			
 		}

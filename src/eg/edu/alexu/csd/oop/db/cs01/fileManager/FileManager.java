@@ -80,13 +80,18 @@ public class FileManager {
 		return true;
 	}
 	public boolean createTable(Table table) {
+		if (table.getDatabaseName() == null) {
+			System.out.println("database is unknown");
+			return false;
+		}
 		String pathTable = table.getDatabaseName();
 		if(!pathTable.contains(System.getProperty("file.separator")))
 			pathTable="databases"+System.getProperty("file.separator")+pathTable;
 		pathTable+=System.getProperty("file.separator")+table.getTableName();
 		File tableFile = new File(pathTable+".Xml");
-		if(tableFile.exists())
+		if(tableFile.exists()) {
 			tableFile.delete();
+		}
 	    DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         try {
 			DocumentBuilder db = dbf.newDocumentBuilder();
@@ -133,6 +138,10 @@ public class FileManager {
 	 * @return
 	 */
 	public boolean dropTable(Table table) {
+		if (table.getDatabaseName() == null) {
+			System.out.println("database is unknown");
+			return false;
+		}
 		String pathTable = table.getDatabaseName();
 		if(!pathTable.contains(System.getProperty("file.separator")))
 			pathTable="databases"+System.getProperty("file.separator")+pathTable;
@@ -173,6 +182,10 @@ public class FileManager {
 		}
 	}
 	public boolean readTable(Table table) {
+		if (table.getDatabaseName() == null) {
+			System.out.println("database is unknown");
+			return false;
+		}
 		String pathTable = table.getDatabaseName();
 		if(!pathTable.contains(System.getProperty("file.separator")))
 			pathTable="databases"+System.getProperty("file.separator")+pathTable;		pathTable+=System.getProperty("file.separator")+table.getTableName();
