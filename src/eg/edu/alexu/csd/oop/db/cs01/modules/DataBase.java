@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class DataBase {
 
+	//redundant design pattern.
+	
 	private String dataBaseName;
 	
 	private ArrayList<Table>tables;
