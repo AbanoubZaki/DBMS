@@ -22,21 +22,15 @@ public class ConditionParser {
 		Pattern thePattern = Pattern.compile(stringConditionPattern);
 		Matcher theMatcher = thePattern.matcher(relationalCondition);
 		if (theMatcher.find()) {
-			String op1  = theMatcher.group(1);
-			op1 = op1.replaceAll("'", "");
-			op1 = op1.replaceAll("\"", "");
-			String op2  = theMatcher.group(3);
-			op2 = op2.replaceAll("'", "");
-			op2 = op2.replaceAll("\"", "");
-			RelationalOperand leftAgrument = new RelationalOperand(op1, !table.getColumnNames().contains(theMatcher.group(1)),dataChecker.getInstance().checkType(theMatcher.group(1)));
-			RelationalOperand rightAgrument = new RelationalOperand(op2, !table.getColumnNames().contains(theMatcher.group(3)),dataChecker.getInstance().checkType(theMatcher.group(1)));;
+			RelationalOperand leftAgrument = new RelationalOperand(theMatcher.group(1), !table.getColumnNames().contains(theMatcher.group(1).toLowerCase()),dataChecker.getInstance().checkType(theMatcher.group(1)));
+			RelationalOperand rightAgrument = new RelationalOperand(theMatcher.group(3), !table.getColumnNames().contains(theMatcher.group(3).toLowerCase()),dataChecker.getInstance().checkType(theMatcher.group(3)));
 			return new RelationalCondition(leftAgrument, rightAgrument, theMatcher.group(2));
 		}
 		return null;
 	}
 	
-	public boolean stringToLogicalCondition(String logicalCondition , Table table) {
+	public LogicalCondition stringToLogicalCondition(String logicalCondition , Table table) {
 		
-		return false;
+		return null;
 	}
 }

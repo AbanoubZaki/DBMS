@@ -4,11 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
-import eg.edu.alexu.csd.oop.db.cs01.fileManager.FileManager;
-
-@XmlRootElement
 public class Table {
 
 	//object pool pattern.
@@ -16,11 +11,13 @@ public class Table {
 	private static Table table;
 
 	private static ArrayList<Table> tables;
+	
+	private static String currentTableName;
 
 	private Table() {
 		this.databaseName = new String();
 		this.tableName = new String();
-		this.currentTable = new Table();
+		currentTableName = new String();
 		this.columnNamesMain = new ArrayList<>();
 		this.columnNames = new ArrayList<>();
 		this.columnTypes = new HashMap<String, String>();
@@ -33,32 +30,31 @@ public class Table {
 		}
 		for (Table t : tables) {
 			if (t.getTableName().equals(tableName)) {
-				setCurrentTable(t);
+				table = t;
+				currentTableName = tableName;
 				return t;
 			}
 		}
 		table = new Table();
 		table.setTableName(tableName);
 		tables.add(table);
-		setCurrentTable(table);
+		currentTableName = tableName;
 		return table;
 	}
 
-	public Table getInstance() {
+	public static Table getInstance() {
 		if (tables == null) {
-			tables = null;
-		}
-		if (getCurrentTable() == null) {
 			return null;
 		}
-		return getCurrentTable();
+		if (currentTableName == null) {
+			return null;
+		}
+		return table;
 	}
 	
 	private String databaseName;
 
 	private String tableName;
-
-	private static Table currentTable;
 
 	private ArrayList<String> columnNames;
 
@@ -107,14 +103,6 @@ public class Table {
 		return tableName;
 	}
 
-	public Table getCurrentTable() {
-		return currentTable;
-	}
-
-	public void setCurrentTable(Table currentTable) {
-		this.currentTable = currentTable;
-	}
-
 	public void setColumnNames(ArrayList<String> columnNames) {
 		this.columnNames = columnNames;
 	}
@@ -160,7 +148,6 @@ public class Table {
 	 * @return
 	 */
 	public Object[][] getData() {
-		FileManager.getInstance().readTable(this);
 		ArrayList<ArrayList<Object>> data = new ArrayList<>();
 		for (int i = 0; i < getRows().size(); i++) {
 			// row of data to be filled with objects.

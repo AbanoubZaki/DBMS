@@ -44,8 +44,6 @@ public class UpdateSet extends OurQuery {
 				}
 			}else {
 				
-				
-				
 			}
 		
 		}

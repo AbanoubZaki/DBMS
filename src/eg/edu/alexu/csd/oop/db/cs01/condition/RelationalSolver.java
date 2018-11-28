@@ -27,21 +27,22 @@ public class RelationalSolver {
 			return compareValueCol(row, condition);
 		
 	}
-	private boolean compareTwoValue(RelationalCondition condition) {
+	public boolean compareTwoValue(RelationalCondition condition) {
 		if(!condition.getLeftAgrument().getType().equals(condition.getRightAgrument().getType())) {
-			// throw error;
+			System.out.println("error");
 		}
 		return getRelationResult(condition.getLeftAgrument(), condition.getRightAgrument(), condition.getOperation());
 		
 	}
-	private boolean getRelationResult(RelationalOperand var1 ,RelationalOperand var2 ,String operation) {
+	public boolean getRelationResult(RelationalOperand var1 ,RelationalOperand var2 ,String operation) {
 		ScriptEngineManager sem = new ScriptEngineManager();
 		ScriptEngine sm = sem.getEngineByName("JavaScript");
 		try {
 			return (boolean) sm.eval(var1.getOperand()+operation+var2.getOperand());
 		} catch (ScriptException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("error");
+			
 		}
 		return false;
 	}
