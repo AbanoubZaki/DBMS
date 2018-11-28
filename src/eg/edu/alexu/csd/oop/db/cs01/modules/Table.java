@@ -31,7 +31,7 @@ public class Table {
 			tables = new ArrayList<>();
 		}
 		for (Table t : tables) {
-			if (t.getTableName().equals(tableName)) {
+			if (t.getTableName().equals(tableName.toLowerCase())) {
 				table = t;
 				currentTableName = tableName;
 				return t;
@@ -75,7 +75,7 @@ public class Table {
 		this.columnNamesToLowerCase=new ArrayList<String>();
 		this.columnTypes = new HashMap<String, String>();
 		for (int i = 0; i < columnNames.size(); i++) {
-			this.columnTypes.put(columnNames.get(i).toLowerCase(), columnTypes.get(i));
+			this.columnTypes.put(columnNames.get(i).toLowerCase(), columnTypes.get(i).toLowerCase());
 			this.columnNamesAsGiven.add(columnNames.get(i));
 			this.columnNamesToLowerCase.add(columnNames.get(i).toLowerCase());
 		}

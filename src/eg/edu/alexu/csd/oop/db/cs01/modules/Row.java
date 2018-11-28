@@ -30,12 +30,12 @@ public class Row {
 	}
 	
 	public void updateCell(String columnName , Cell cell) {
-		cells.put(columnName, cell);
+		cells.put(columnName.toLowerCase(), cell);
 	}
 	public void deleteCell(String columnName) {
-		updateCell(columnName, null);
+		updateCell(columnName.toLowerCase(), null);
 	}
 	public String getCellByColumn(String columnName) {
-		return cells.get(columnName).getValue();
+		return cells.get(columnName.toLowerCase()).getValue();
 	}
 }

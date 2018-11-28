@@ -1,6 +1,5 @@
 package eg.edu.alexu.csd.oop.db.cs01;
 
-import java.io.File;
 import java.sql.SQLException;
 
 import eg.edu.alexu.csd.oop.db.Database;
@@ -14,8 +13,6 @@ public class OurSql implements Database {
 	private static OurSql instance;
 
 	private OurSql() {
-		File dbs = new File("databases");
-		dbs.mkdirs();
 	}
 		
 	public static OurSql getInstance() {
@@ -27,9 +24,19 @@ public class OurSql implements Database {
 
 	@Override
 	public String createDatabase(String databaseName, boolean dropIfExists) {
-		CreateDatabase CDB = new CreateDatabase(databaseName, dropIfExists);
-		CDB.execute1();
-		return CDB.getDatabasePath();
+		String query = "CREATE DATABASE "+databaseName;
+		try {
+			if(!executeStructureQuery(query)&&dropIfExists) {
+				query = query.replace("CREATE", "drop");
+				executeStructureQuery(query);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(databaseName.contains(System.getProperty("file.separator")))
+			return databaseName;
+		return "databases"+System.getProperty("file.separator")+databaseName;
 	}
 
 	@Override

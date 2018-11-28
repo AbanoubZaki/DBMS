@@ -5,16 +5,13 @@ import eg.edu.alexu.csd.oop.db.cs01.fileManager.FileManager;
 public class CreateDatabase extends OurQuery{
 	
 	private String databaseName;
-	
-	private String databasePath;
-	
+		
 	private boolean dropIfExists;
 	
 	public CreateDatabase(String databaseName, boolean dropIfExists) {
 		super();
-		this.databaseName = new String(databaseName);
+		this.databaseName = databaseName;
 		this.dropIfExists = dropIfExists;
-		databasePath = new String();
 	}
 	
 	/**
@@ -26,12 +23,7 @@ public class CreateDatabase extends OurQuery{
 		if (databaseName == null) {
 			return false;
 		}
-		databasePath = FileManager.getInstance().createDB(databaseName, dropIfExists); 
-		return true;
-	}
-	
-	public String getDatabasePath() {
-		return databasePath;
+		return 	FileManager.getInstance().createDB(databaseName); 
 	}
 
 }

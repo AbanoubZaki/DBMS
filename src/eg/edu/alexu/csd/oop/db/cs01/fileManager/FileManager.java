@@ -50,14 +50,15 @@ public class FileManager {
 		return instance;
 	}
 	
-	public String createDB(String databaseName, boolean dropIfExists) {
-		File db = new File("databases"+System.getProperty("file.separator")+databaseName);
+	public boolean createDB(String databaseName) {
+		if(!databaseName.contains(System.getProperty("file.separator")))
+			databaseName="databases"+System.getProperty("file.separator")+databaseName;
+		File db = new File(databaseName);
 		boolean isExists = !db.mkdirs();
-		if(isExists&&dropIfExists) {
-			dropDB(databaseName);
-			db.mkdirs();
+		if(isExists) {
+			return false;
 		}
-		return db.getAbsolutePath();
+		return true;
 	}
 	/**
 	 * it tries to fetch for the db
@@ -66,7 +67,9 @@ public class FileManager {
 	 * @param databaseName
 	 */
 	public boolean dropDB(String databaseName) {
-	File db = new File("databases"+System.getProperty("file.separator")+databaseName);
+		if(!databaseName.contains(System.getProperty("file.separator")))
+			databaseName="databases"+System.getProperty("file.separator")+databaseName;
+	File db = new File(databaseName);
 	if(!db.exists())
 		return false;
 	File[]tableFiles = db.listFiles();
@@ -77,7 +80,9 @@ public class FileManager {
 		return true;
 	}
 	public boolean createTable(Table table) {
-		String pathTable = "databases"+System.getProperty("file.separator")+table.getDatabaseName();
+		String pathTable = table.getDatabaseName();
+		if(!pathTable.contains(System.getProperty("file.separator")))
+			pathTable="databases"+System.getProperty("file.separator")+pathTable;
 		pathTable+=System.getProperty("file.separator")+table.getTableName();
 		File tableFile = new File(pathTable+".Xml");
 		if(tableFile.exists())
@@ -108,7 +113,6 @@ public class FileManager {
 		            tr.setOutputProperty(OutputKeys.INDENT, "yes");
 		            tr.setOutputProperty(OutputKeys.METHOD, "xml");
 		            tr.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-		            tr.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, table.getTableName()+".dtd");
 		            tr.transform(new DOMSource(dom), 
                             new StreamResult(new FileOutputStream(tableFile)));
 		            createDTD(table);
@@ -129,7 +133,9 @@ public class FileManager {
 	 * @return
 	 */
 	public boolean dropTable(Table table) {
-		String pathTable = "databases"+System.getProperty("file.separator")+table.getDatabaseName();
+		String pathTable = table.getDatabaseName();
+		if(!pathTable.contains(System.getProperty("file.separator")))
+			pathTable="databases"+System.getProperty("file.separator")+pathTable;
 		pathTable+=System.getProperty("file.separator")+table.getTableName();
 		File tableFile = new File(pathTable+".Xml");
 		File DTDFile = new File(pathTable+".dtd");
@@ -140,7 +146,9 @@ public class FileManager {
 		return true;
 	}
 	private void createDTD(Table table) {
-		String pathTable = "databases"+System.getProperty("file.separator")+table.getDatabaseName();
+		String pathTable = table.getDatabaseName();
+		if(!pathTable.contains(System.getProperty("file.separator")))
+			pathTable="databases"+System.getProperty("file.separator")+pathTable;		
 		pathTable+=System.getProperty("file.separator")+table.getTableName();
 		File DTDFile = new File(pathTable+".dtd");
 		try {
@@ -165,8 +173,9 @@ public class FileManager {
 		}
 	}
 	public boolean readTable(Table table) {
-		String pathTable = "databases"+System.getProperty("file.separator")+table.getDatabaseName();
-		pathTable+=System.getProperty("file.separator")+table.getTableName();
+		String pathTable = table.getDatabaseName();
+		if(!pathTable.contains(System.getProperty("file.separator")))
+			pathTable="databases"+System.getProperty("file.separator")+pathTable;		pathTable+=System.getProperty("file.separator")+table.getTableName();
 		File tableFile = new File(pathTable+".Xml");
 		if(!tableFile.exists())
 			return false;
