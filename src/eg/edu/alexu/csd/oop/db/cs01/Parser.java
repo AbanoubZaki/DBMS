@@ -38,9 +38,9 @@ public class Parser {
 	public IQuery parseQuery(String theQuery) {
 		// Creating regex-es for queries.
 		final String createDataBasePattern = "(?i)\\bcreate\\b (?i)\\bdatabase\\b (\\w+) ?;? ?";
-		final String drobDataBasePattern = "(?i)\\bdrob\\b (?i)\\bdatabase\\b (\\w+) ?;? ?";
+		final String drobDataBasePattern = "(?i)\\bdrop\\b (?i)\\bdatabase\\b (\\w+) ?;? ?";
 		final String createTablePattern = "(?i)\\bcreate\\b (?i)\\btable\\b (\\w+) ?\\( ?(( ?\\w+ (int|varchar) ?,?)+) ?\\) ?;? ?";
-		final String drobTablePattern = "(?i)\\bdrob\\b (?i)\\btable\\b (\\w+) ?;? ?";
+		final String drobTablePattern = "(?i)\\bdrop\\b (?i)\\btable\\b (\\w+) ?;? ?";
 		final String insertIntoTableColumnsAndValuesPattern = "(?i)\\binsert\\b (?i)\\binto\\b (\\w+) ?(\\( ?(( ?\\w+ ?,? ?)+)\\)) (?i)\\bvalues\\b ?\\((( ?['\"]? ?\\w+ ?['\"]? ?,?)+)\\) ?;? ?";
 		final String insertIntoTableValuesOnlyPattern = "(?i)\\binsert\\b (?i)\\binto\\b (\\w+) (?i)\\bvalues\\b ?\\( ?(( ?['\"]? ?\\w+ ?['\"]? ?,?)+)\\) ?;? ?";
 		final String selectAllFromTablePattern = "(?i)\\bselect\\b \\* (?i)\\bfrom\\b (\\w+) ?(((?i)\\bwhere\\b) ?(((?i)\\bnot\\b)? ?([^;\\s]) ?(([!=><]{1,2}) ?([^;\\s]+))? ?(((?i)\\bor\\b|(?i)\\band\\b) ?((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?)?))? ?;? ?";
