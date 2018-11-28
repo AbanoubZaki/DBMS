@@ -20,31 +20,45 @@ public class Table {
 	private Table() {
 		this.databaseName = new String();
 		this.tableName = new String();
-		columnNames = new ArrayList<>();
-		columnTypes = new HashMap<String, String>();
-		tableRows = new ArrayList<>();
+		this.currentTable = new Table();
+		this.columnNamesMain = new ArrayList<>();
+		this.columnNames = new ArrayList<>();
+		this.columnTypes = new HashMap<String, String>();
+		this.tableRows = new ArrayList<>();
 	}
 	
-	public Table getInstance(String tableName) {
+	public static Table getInstance(String tableName) {
 		if (tables == null) {
 			tables = new ArrayList<>();
 		}
 		for (Table t : tables) {
 			if (t.getTableName().equals(tableName)) {
+				setCurrentTable(t);
 				return t;
 			}
 		}
 		table = new Table();
 		table.setTableName(tableName);
 		tables.add(table);
+		setCurrentTable(table);
 		return table;
 	}
 
+	public Table getInstance() {
+		if (tables == null) {
+			tables = null;
+		}
+		if (getCurrentTable() == null) {
+			return null;
+		}
+		return getCurrentTable();
+	}
+	
 	private String databaseName;
 
 	private String tableName;
 
-	private String currentTable;
+	private static Table currentTable;
 
 	private ArrayList<String> columnNames;
 
@@ -93,11 +107,11 @@ public class Table {
 		return tableName;
 	}
 
-	public String getCurrentTable() {
+	public Table getCurrentTable() {
 		return currentTable;
 	}
 
-	public void setCurrentTable(String currentTable) {
+	public void setCurrentTable(Table currentTable) {
 		this.currentTable = currentTable;
 	}
 
