@@ -11,7 +11,7 @@ public class Row {
 	}
 	public Row(Table table) {
 		this.cells = new HashMap<String, Cell>();
-		for(String s:table.getColumnNames()) {
+		for(String s:table.getColumnNamesToLowerCase()) {
 			cells.put(s, null);
 		}
 	}
