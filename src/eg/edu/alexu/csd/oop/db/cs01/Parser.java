@@ -41,8 +41,8 @@ public class Parser {
 		final String drobDataBasePattern = "(?i)\\bdrob\\b (?i)\\bdatabase\\b (\\w+) ?; ?";
 		final String createTablePattern = "(?i)\\bcreate\\b (?i)\\btable\\b (\\w+) \\( ?(( ?\\w+ (int|varchar) ?,?)+)\\) ?; ?";
 		final String drobTablePattern = "(?i)\\bdrob\\b (?i)\\btable\\b (\\w+) ?; ?";
-		final String insertIntoTableColumnsAndValuesPattern = "(?i)\\binsert\\b (?i)\\binto\\b (\\w+) (\\( ?(( ?\\w+ ?,?)+)\\)) (?i)\\bvalues\\b \\((( ?\\w+ ?,?)+)\\) ?; ?";
-		final String insertIntoTableValuesOnlyPattern = "(?i)\\binsert\\b (?i)\\binto\\b (\\w+) (?i)\\bvalues\\b \\( ?(( ?\\w+ ?,?)+)\\) ?; ?";
+		final String insertIntoTableColumnsAndValuesPattern = "(?i)\\binsert\\b (?i)\\binto\\b (\\w+) (\\( ?(( ?\\w+ ?,?)+)\\)) (?i)\\bvalues\\b \\((( ?['\"]? ?\\w+ ?['\"]? ?,?)+)\\) ?; ?";
+		final String insertIntoTableValuesOnlyPattern = "(?i)\\binsert\\b (?i)\\binto\\b (\\w+) (?i)\\bvalues\\b \\( ?(( ?['\"]? ?\\w+ ?['\"]? ?,?)+)\\) ?; ?";
 		final String selectAllFromTablePattern = "(?i)\\bselect\\b \\* (?i)\\bfrom\\b (\\w+) ?(((?i)\\bwhere\\b) ?(((?i)\\bnot\\b)? ?([^;\\s]) ?(([!=><]{1,2}) ?([^;\\s]+))? ?(((?i)\\bor\\b|(?i)\\band\\b) ?((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?)?))? ?; ?";
 		final String selectColumnFromTablePattern = "(?i)\\bselect\\b (\\w+) (?i)\\bfrom\\b (\\w+) ?(((?i)\\bwhere\\b) ?(((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?(((?i)\\bor\\b|(?i)\\band\\b) ?((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?)?))? ?; ?";
 		final String updateTableSetColumnPattern = "(?i)\\bupdate\\b (\\w+) (?i)\\bset\\b (( ?(\\w+) = ['\"]? ?(\\w)+ ?['\"]? ?,?)+)(((?i)\\bwhere\\b) ?(((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?(((?i)\\bor\\b|(?i)\\band\\b) ?((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?)?))? ?; ?";
@@ -98,25 +98,27 @@ public class Parser {
 				System.out.println("There is NO DataBase selected");
 				return null;
 			}
-			String[] coulmns;
+			String[] columns;
 			// group(2) is a string contains all columns beside their types example
 			// (column_1 type, ...).
-			coulmns = theMatchers.get(2).group(2).split(" ?, ?");
-			ArrayList<String> coulmnsName = new ArrayList<>();
-			ArrayList<String> coulmnsType = new ArrayList<>();
+			columns = theMatchers.get(2).group(2).split(" ?, ?");
+			ArrayList<String> columnsName = new ArrayList<>();
+			ArrayList<String> columnsType = new ArrayList<>();
 			Pattern p = Pattern.compile("(\\w+) (\\w+)");
-			for (int i = 0; i < coulmns.length; i++) {
-				Matcher coulmnsNameAndTypeMatcher = p.matcher(coulmns[i]);
-				if (coulmnsNameAndTypeMatcher.find()) {
+			for (int i = 0; i < columns.length; i++) {
+				Matcher columnsNameAndTypeMatcher = p.matcher(columns[i]);
+				if (columnsNameAndTypeMatcher.find()) {
 					// group(1) is column names.
-					coulmnsName.add((String) coulmnsNameAndTypeMatcher.group(1));
+					columnsName.add((String) columnsNameAndTypeMatcher.group(1));
 					// group(2) is column types.
-					coulmnsType.add((String) coulmnsNameAndTypeMatcher.group(2));
+					columnsType.add((String) columnsNameAndTypeMatcher.group(2));
 				}
 			}
 			// group(1) is the name of the table.
-			Table createTable = new Table(theMainDataBase, theMatchers.get(2).group(1), coulmnsName, coulmnsType);
-			IQuery createTableQuery = new CreateTable(createTable);
+			Table.getInstance(theMatchers.get(2).group(1));
+			Table.getInstance().setDatabaseName(theMainDataBase);
+			Table.getInstance().setAllColumnNamesAndTypes(columnsName, columnsType);
+			IQuery createTableQuery = new CreateTable(Table.getInstance());
 			return createTableQuery;
 		} else if (theQuery.contains(";") && theMatchers.get(3).find()) {// if the query match drop table.
 			if (theMainDataBase == null) {
@@ -124,8 +126,9 @@ public class Parser {
 				return null;
 			}
 			// group(1) is the name of the table.
-			Table dropTable = new Table(theMainDataBase, theMatchers.get(3).group(1));
-			IQuery dropTableQuery = new DropTable(dropTable);
+			Table.getInstance(theMatchers.get(3).group(1));
+			Table.getInstance().setDatabaseName(theMainDataBase);
+			IQuery dropTableQuery = new DropTable(Table.getInstance());
 			return dropTableQuery;
 		} else if (theQuery.contains(";") && theMatchers.get(4).find()) {// if the query match insert Into Table Columns
 																			// And Values.
@@ -133,24 +136,24 @@ public class Parser {
 				System.out.println("There is NO DataBase selected");
 				return null;
 			}
-			String[] coulmnsArray;
+			String[] columnsArray;
 			String[] valuesArray;
 			// group(3) is column names string.
-			coulmnsArray = theMatchers.get(4).group(3).split(" ?, ?");
+			columnsArray = theMatchers.get(4).group(3).split(" ?, ?");
 			// group(5) is values of each column string.
 			valuesArray = theMatchers.get(4).group(5).split(" ?, ?");
-			if (coulmnsArray.length != valuesArray.length) {
+			if (columnsArray.length != valuesArray.length) {
 				System.out.println("could not prepare statement.");
 				return null;
 			}
 			// converting array to ArrayList.
-			ArrayList<String> columnNames = new ArrayList<String>(Arrays.asList(coulmnsArray));
+			ArrayList<String> columnNames = new ArrayList<String>(Arrays.asList(columnsArray));
 			// converting array to ArrayList.
 			ArrayList<String> values = new ArrayList<String>(Arrays.asList(valuesArray));
 			// group(1) is the name of the table.
-			Table insertIntoTableColumnsAndValuesTable = new Table(theMainDataBase, theMatchers.get(4).group(1));
-			IQuery insertIntoTableColumnsAndValuesQuery = new InsertInto(insertIntoTableColumnsAndValuesTable,
-					columnNames, values);
+			Table.getInstance(theMatchers.get(4).group(1));
+			Table.getInstance().setDatabaseName(theMainDataBase);
+			IQuery insertIntoTableColumnsAndValuesQuery = new InsertInto(Table.getInstance(), columnNames, values);
 			return insertIntoTableColumnsAndValuesQuery;
 		} else if (theQuery.contains(";") && theMatchers.get(5).find()) {// if the query match insert Into Table Values
 																			// Only.
@@ -164,8 +167,9 @@ public class Parser {
 			// converting array to ArrayList.
 			ArrayList<String> values = new ArrayList<String>(Arrays.asList(valuesArray));
 			// group(1) is the name of the table.
-			Table insertIntoTableValuesOnlyTable = new Table(theMainDataBase, theMatchers.get(5).group(1));
-			IQuery insertIntoTableValuesOnlyQuery = new InsertInto(insertIntoTableValuesOnlyTable, values);
+			Table.getInstance(theMatchers.get(5).group(1));
+			Table.getInstance().setDatabaseName(theMainDataBase);
+			IQuery insertIntoTableValuesOnlyQuery = new InsertInto(Table.getInstance(), values);
 			return insertIntoTableValuesOnlyQuery;
 		} else if (theQuery.contains(";") && theMatchers.get(6).find()) {// select * from tabel_name where condition.
 			if (theMainDataBase == null) {
@@ -173,10 +177,11 @@ public class Parser {
 				return null;
 			}
 			// group(1) is the name of the table.
-			Table tableSelectAllFromTable = new Table(theMainDataBase, theMatchers.get(6).group(1));
+			Table.getInstance(theMatchers.get(6).group(1));
+			Table.getInstance().setDatabaseName(theMainDataBase);
 			// group(4) is the condition it may equals null.
 			RelationalCondition selectAllFromTableCondition = new RelationalCondition(theMatchers.get(6).group(4));
-			IQuery selectAllFromTableQuery = new SelectFrom(tableSelectAllFromTable, selectAllFromTableCondition);
+			IQuery selectAllFromTableQuery = new SelectFrom(Table.getInstance(), selectAllFromTableCondition);
 			return selectAllFromTableQuery;
 		} else if (theQuery.contains(";") && theMatchers.get(7).find()) {// select column from tabel_name where
 																			// condition.
@@ -185,11 +190,12 @@ public class Parser {
 				return null;
 			}
 			// group(2) is the table name.
-			Table tableSelectColumnFromTable = new Table(theMainDataBase, theMatchers.get(7).group(2));
+			Table.getInstance(theMatchers.get(7).group(2));
+			Table.getInstance().setDatabaseName(theMainDataBase);
 			// group(5) is the condition it may equals null.
 			RelationalCondition selectColumnFromTableCondition = new RelationalCondition(theMatchers.get(7).group(5));
 			// group(1) is the column name.
-			IQuery selectColumnFromTableQuery = new SelectFrom(tableSelectColumnFromTable, theMatchers.get(7).group(1),
+			IQuery selectColumnFromTableQuery = new SelectFrom(Table.getInstance(), theMatchers.get(7).group(1),
 					selectColumnFromTableCondition);
 			return selectColumnFromTableQuery;
 		} else if (theQuery.contains(";") && theMatchers.get(8).find()) {// update tabel name set c1 = v1, ... where
@@ -202,7 +208,7 @@ public class Parser {
 			ArrayList<String> columnNames = new ArrayList<>();
 			ArrayList<String> values = new ArrayList<>();
 			// pattern to split column name from the new value.
-			String setsPattern = " ?(\\w+) ?= ?['\"]? ?(\\w+) ?['\"] ?";
+			String setsPattern = " ?(\\w+) ?= ?(['\"]? ?(\\w+) ?['\"]) ?";
 			// group(2) is the all of the sets.
 			sets = theMatchers.get(8).group(2).split(" ?, ?");
 			// compiling sets pattern
@@ -216,10 +222,11 @@ public class Parser {
 				}
 			}
 			// group(1) is the table name.
-			Table tableUpdateTableSetColumn = new Table(theMainDataBase, theMatchers.get(8).group(1));
+			Table.getInstance(theMatchers.get(8).group(1));
+			Table.getInstance().setDatabaseName(theMainDataBase);
 			// group(8) is the condition it may equals null.
 			RelationalCondition updateTableSetColumnCondition = new RelationalCondition(theMatchers.get(8).group(8));
-			IQuery updateTableSetColumnQuery = new UpdateSet(tableUpdateTableSetColumn, columnNames, values,
+			IQuery updateTableSetColumnQuery = new UpdateSet(Table.getInstance(), columnNames, values,
 					updateTableSetColumnCondition);
 			return updateTableSetColumnQuery;
 		} else if (theQuery.contains(";") && theMatchers.get(9).find()) {// DELETE FROM table_name WHERE condition.
@@ -228,9 +235,11 @@ public class Parser {
 				return null;
 			}
 			// group(1) is the table name.
-			Table tableDeleteFromTable = new Table(theMainDataBase, theMatchers.get(9).group(1));
+			Table.getInstance(theMatchers.get(9).group(1));
+			Table.getInstance().setDatabaseName(theMainDataBase);
+			// group(4) is the condition it may equals null.
 			RelationalCondition deleteFromTableCondition = new RelationalCondition(theMatchers.get(9).group(4));
-			IQuery deleteFromTableQuery = new DeleteFrom(tableDeleteFromTable, deleteFromTableCondition);
+			IQuery deleteFromTableQuery = new DeleteFrom(Table.getInstance(), deleteFromTableCondition);
 			return deleteFromTableQuery;
 		}
 		return null;
