@@ -3,7 +3,6 @@ package eg.edu.alexu.csd.oop.db.cs01;
 import java.sql.SQLException;
 
 import eg.edu.alexu.csd.oop.db.Database;
-import eg.edu.alexu.csd.oop.dp.cs01.queries.CreateDatabase;
 import eg.edu.alexu.csd.oop.dp.cs01.queries.IQuery;
 
 public class OurSql implements Database {
@@ -28,6 +27,8 @@ public class OurSql implements Database {
 		try {
 			if(!executeStructureQuery(query)&&dropIfExists) {
 				query = query.replace("CREATE", "drop");
+				executeStructureQuery(query);
+				query=query.replace("drop", "CREATE");
 				executeStructureQuery(query);
 			}
 		} catch (SQLException e) {

@@ -54,10 +54,7 @@ public class FileManager {
 		if(!databaseName.contains(System.getProperty("file.separator")))
 			databaseName="databases"+System.getProperty("file.separator")+databaseName;
 		File db = new File(databaseName);
-		boolean isExists = !db.mkdirs();
-		if(isExists) {
-			return false;
-		}
+		db.mkdirs();
 		return true;
 	}
 	/**
