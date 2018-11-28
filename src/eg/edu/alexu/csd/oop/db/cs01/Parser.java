@@ -24,18 +24,6 @@ public class Parser {
 
 	private Parser() {
 		theMainDataBase = null;
-	}
-
-	public static Parser getInstance() {
-		if (instance == null) {
-			instance = new Parser();
-		}
-		return instance;
-	}
-
-	private String theMainDataBase;
-
-	public IQuery parseQuery(String theQuery) {
 		// Creating regex-es for queries.
 		final String createDataBasePattern = "(?i)\\bcreate\\b (?i)\\bdatabase\\b (\\w+) ?;? ?";
 		final String drobDataBasePattern = "(?i)\\bdrop\\b (?i)\\bdatabase\\b (\\w+) ?;? ?";
@@ -49,7 +37,7 @@ public class Parser {
 		final String deleteFromTablePattern = "(?i)\\bdelete\\b (?i)\\bfrom\\b (\\w+) ?(((?i)\\bwhere\\b) ?(((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?(((?i)\\bor\\b|(?i)\\band\\b) ?((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?)?))? ?;? ?";
 
 		// Adding regex-es to the ArrayList.
-		ArrayList<String> allPatternStrings = new ArrayList<>();
+		
 		allPatternStrings.add(createDataBasePattern);// 0.
 		allPatternStrings.add(drobDataBasePattern);// 1.
 		allPatternStrings.add(createTablePattern);// 2.
@@ -60,10 +48,34 @@ public class Parser {
 		allPatternStrings.add(selectColumnFromTablePattern);// 7.
 		allPatternStrings.add(updateTableSetColumnPattern);// 8.
 		allPatternStrings.add(deleteFromTablePattern);// 9.
-		// ArrayLists for patterns and matchers.
-		ArrayList<Pattern> thePatterns = new ArrayList<>();
-		ArrayList<Matcher> theMatchers = new ArrayList<>();
+	}
 
+	public static Parser getInstance() {
+		if (instance == null) {
+			instance = new Parser();
+		}
+		return instance;
+	}
+
+	private String theMainDataBase;
+	/**
+	 * carry all patterns.
+	 */
+	ArrayList<String> allPatternStrings = new ArrayList<>();
+	// ArrayLists for patterns and matchers.
+	ArrayList<Pattern> thePatterns = new ArrayList<>();
+	ArrayList<Matcher> theMatchers = new ArrayList<>();
+
+	public IQuery parseQuery(String theQuery) {
+		/**
+		 * Editing the given string (the Query) to match the regex by replacing multiple
+		 * spaces with one space. To CREATE you need names as they were entered. on
+		 * DROP, INSERT INTO, SELECT, UPDATE, DELETE queries you need to lower case them
+		 * to compare with the lower cased original names. so I will return them as they
+		 * were entered.
+		 */
+		theQuery = theQuery.replaceAll("( +)", " ");
+		
 		// Filling patterns and matchers ArrayLists.
 		for (int i = 0; i < allPatternStrings.size(); i++) {
 			Pattern pattern;
@@ -74,14 +86,7 @@ public class Parser {
 			theMatchers.add(matcher);
 		}
 
-		/**
-		 * Editing the given string (the Query) to match the regex by replacing multiple
-		 * spaces with one space. To CREATE you need names as they were entered. on
-		 * DROP, INSERT INTO, SELECT, UPDATE, DELETE queries you need to lower case them
-		 * to compare with the lower cased original names. so I will return them as they
-		 * were entered.
-		 */
-		theQuery = theQuery.replaceAll("( +)", " ");
+		
 
 		// Creating the right query.
 		if (theMatchers.get(0).find()) {// if the query match create data base.
@@ -132,7 +137,7 @@ public class Parser {
 			IQuery dropTableQuery = new DropTable(Table.getInstance());
 			return dropTableQuery;
 		} else if (theMatchers.get(4).find()) {// if the query match insert Into Table Columns
-																			// And Values.
+												// And Values.
 			if (theMainDataBase == null) {
 				System.out.println("There is NO DataBase selected");
 				return null;
@@ -157,7 +162,7 @@ public class Parser {
 			IQuery insertIntoTableColumnsAndValuesQuery = new InsertInto(Table.getInstance(), columnNames, values);
 			return insertIntoTableColumnsAndValuesQuery;
 		} else if (theMatchers.get(5).find()) {// if the query match insert Into Table Values
-																			// Only.
+												// Only.
 			if (theMainDataBase == null) {
 				System.out.println("There is NO DataBase selected");
 				return null;
@@ -185,7 +190,7 @@ public class Parser {
 			IQuery selectAllFromTableQuery = new SelectFrom(Table.getInstance(), selectAllFromTableCondition);
 			return selectAllFromTableQuery;
 		} else if (theMatchers.get(7).find()) {// select column from tabel_name where
-																			// condition.
+												// condition.
 			if (theMainDataBase == null) {
 				System.out.println("There is NO DataBase selected");
 				return null;
@@ -200,7 +205,7 @@ public class Parser {
 					selectColumnFromTableCondition);
 			return selectColumnFromTableQuery;
 		} else if (theMatchers.get(8).find()) {// update tabel name set c1 = v1, ... where
-																			// condition.
+												// condition.
 			if (theMainDataBase == null) {
 				System.out.println("There is NO DataBase selected");
 				return null;
