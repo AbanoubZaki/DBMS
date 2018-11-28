@@ -24,8 +24,8 @@ public class UpdateSet extends OurQuery {
 	@Override
 	public boolean execute() {
 		FileManager.getInstance().readTable(getTable());
-		for(int i = 0; i < getTable().getColumnNames().size(); i++) {
-			if(!getTable().getColumnNames().contains(columnNames.get(i).toLowerCase())) {
+		for(int i = 0; i < getTable().getColumnNamesToLowerCase().size(); i++) {
+			if(!getTable().getColumnNamesToLowerCase().contains(columnNames.get(i).toLowerCase())) {
 				return false;
 			}	
 		}
@@ -33,14 +33,14 @@ public class UpdateSet extends OurQuery {
 		for (int k = 0; k < columnNames.size(); k++) {
 			int index = -1;
 			if(getCondition() == null) {
-				for (int j = 0; j < getTable().getColumnNames().size(); j++) {
-					if(columnNames.get(k).equals(getTable().getColumnNames().get(j).toLowerCase())) {
+				for (int j = 0; j < getTable().getColumnNamesToLowerCase().size(); j++) {
+					if(columnNames.get(k).equals(getTable().getColumnNamesToLowerCase().get(j).toLowerCase())) {
 						index = j;
 						break;
 					}
 				}
 				for (int i = 0; i < getTable().getRows().size(); i++) {
-						getTable().getRows().get(i).updateCell(getTable().getColumnNames().get(index), new Cell(values.get(k)));
+						getTable().getRows().get(i).updateCell(getTable().getColumnNamesToLowerCase().get(index), new Cell(values.get(k)));
 				}
 			}else {
 				

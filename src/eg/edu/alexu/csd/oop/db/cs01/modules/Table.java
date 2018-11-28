@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import eg.edu.alexu.csd.oop.db.cs01.fileManager.FileManager;
+
 public class Table {
 
 	//object pool pattern.
@@ -34,6 +36,10 @@ public class Table {
 				currentTableName = tableName;
 				return t;
 			}
+		}
+		// to save the table before select anther one.
+		if(table!=null) {
+			FileManager.getInstance().createTable(table);
 		}
 		table = new Table();
 		table.setTableName(tableName);

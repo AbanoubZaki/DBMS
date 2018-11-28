@@ -1,8 +1,6 @@
 package eg.edu.alexu.csd.oop.dp.cs01.queries;
 
 import java.util.ArrayList;
-import java.util.concurrent.locks.Condition;
-
 import eg.edu.alexu.csd.oop.db.cs01.condition.RelationalCondition;
 import eg.edu.alexu.csd.oop.db.cs01.fileManager.FileManager;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Row;
@@ -52,13 +50,13 @@ public class SelectFrom extends OurQuery {
 	}
 
 	public void setColumnIndexAndType() {
-		for (int i = 0; i < getTable().getColumnNames().size(); i++) {
-			if (getTable().getColumnNames().contains(getColumn().toLowerCase())) {
+		for (int i = 0; i < getTable().getColumnNamesToLowerCase().size(); i++) {
+			if (getTable().getColumnNamesToLowerCase().contains(getColumn().toLowerCase())) {
 				this.columnIndex = i;
 				break;
 			}
 		}
-		this.columnType  = getTable().getColumnTypes().get(getTable().getColumnNames().get(getColumnIndex()));
+		this.columnType  = getTable().getColumnTypes().get(getTable().getColumnNamesToLowerCase().get(getColumnIndex()));
 	}
 
 	public String getColumnType() {
@@ -81,7 +79,7 @@ public class SelectFrom extends OurQuery {
 			/**
 			 * if its a imaginary column the return false.
 			 */
-			if (!getTable().getColumnNames().contains(getColumn().toLowerCase())) {
+			if (!getTable().getColumnNamesToLowerCase().contains(getColumn().toLowerCase())) {
 				return false;
 			}
 			FileManager.getInstance().readTable(getTable());
@@ -91,12 +89,12 @@ public class SelectFrom extends OurQuery {
 				// row of data to be filled with objects.
 				ArrayList<Object> dataRow = new ArrayList<>();
 				Row r = getTable().getRows().get(i);
-				for (int j = 0; j <getTable().getColumnNames().size() ; j++) {
+				for (int j = 0; j <getTable().getColumnNamesToLowerCase().size() ; j++) {
 					if (j == getColumnIndex()) {
 						if (getColumnType().equals("int")) {
-							dataRow.add((Integer.parseInt(r.getCells().get(getTable().getColumnNames().get(j)).getValue())));
+							dataRow.add((Integer.parseInt(r.getCells().get(getTable().getColumnNamesToLowerCase().get(j)).getValue())));
 						} else if (getColumnType().equals("varchar")) {
-							dataRow.add(r.getCells().get(getTable().getColumnNames().get(j)).getValue());
+							dataRow.add(r.getCells().get(getTable().getColumnNamesToLowerCase().get(j)).getValue());
 						}
 					}
 				}
@@ -113,7 +111,7 @@ public class SelectFrom extends OurQuery {
 			/**
 			 * if its a imaginary column the return false.
 			 */
-			if (!getTable().getColumnNames().contains(getColumn().toLowerCase())) {
+			if (!getTable().getColumnNamesToLowerCase().contains(getColumn().toLowerCase())) {
 				return false;
 			}
 			

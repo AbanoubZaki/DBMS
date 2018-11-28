@@ -113,7 +113,8 @@ public class FileManager {
 			JAXBContext jaxbContext = JAXBContext.newInstance(table.getClass());
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 			Table loadTable = (Table) unmarshaller.unmarshal(tableFile);
-			table.setColumnNames(loadTable.getColumnNames());
+			table.setColumnNamesAsGiven(loadTable.getColumnNamesAsGiven());
+			table.setColumnNamesToLowerCase(loadTable.getColumnNamesToLowerCase());
 			table.setColumnTypes(loadTable.getColumnTypes());
 			table.setRows(loadTable.getRows());
 		} catch (JAXBException e) {

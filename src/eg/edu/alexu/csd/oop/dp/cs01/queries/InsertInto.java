@@ -32,7 +32,7 @@ public class InsertInto extends OurQuery {
 	@Override
 	public boolean execute() {
 		if (columnNames == null) {
-			columnNames = getTable().getColumnNames();
+			columnNames = getTable().getColumnNamesToLowerCase();
 		}
 		Row insertedRow = new Row(getTable());
 		for (int i = 0; i < columnNames.size(); i++) {

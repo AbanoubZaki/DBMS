@@ -13,11 +13,11 @@ public class CreateTable extends OurQuery {
 	}
 	@Override
 	public boolean execute() {
-		Set<String> columnsSet = new HashSet<>(super.getTable().getColumnNames()); 
+		Set<String> columnsSet = new HashSet<>(super.getTable().getColumnNamesToLowerCase()); 
 		if(getTable()==null) {
 			return false;
 		}
-		if(columnsSet.size() != super.getTable().getColumnNames().size()) {
+		if(columnsSet.size() != super.getTable().getColumnNamesToLowerCase().size()) {
 			System.out.println("Duplicates found in column names.");
 			return false;
 		}
