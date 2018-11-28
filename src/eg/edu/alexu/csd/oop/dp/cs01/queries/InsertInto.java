@@ -33,16 +33,23 @@ public class InsertInto extends OurQuery {
 	public int execute2() {
 		if (columnNames == null) {
 			columnNames = getTable().getColumnNamesToLowerCase();
+			// no of values must be equal to no of columns.
+			if (values.size() != columnNames.size()) {
+				System.out.println(
+						"you have entered " + values.size() + " but table needs " + columnNames.size() + " values.");
+				return 0;
+			}
 		}
 		Row insertedRow = new Row(getTable());
 		for (int i = 0; i < values.size(); i++) {
-			if(getTable().getColumnTypes().get(columnNames.get(i)).equals("int")) {
-				if (getTable().getColumnTypes().get(columnNames.get(i)).equals(dataChecker.getInstance().checkType(values.get(i)))) {
-				insertedRow.updateCell(columnNames.get(i), new Cell(values.get(i)));
-				}else
+			if (getTable().getColumnTypes().get(columnNames.get(i)).equals("int")) {
+				if (getTable().getColumnTypes().get(columnNames.get(i))
+						.equals(dataChecker.getInstance().checkType(values.get(i)))) {
+					insertedRow.updateCell(columnNames.get(i), new Cell(values.get(i)));
+				} else
 					return 0;
-			}else
-				insertedRow.updateCell(columnNames.get(i), new Cell(values.get(i)));	
+			} else
+				insertedRow.updateCell(columnNames.get(i), new Cell(values.get(i)));
 		}
 		getTable().addRow(insertedRow);
 		return 1;
