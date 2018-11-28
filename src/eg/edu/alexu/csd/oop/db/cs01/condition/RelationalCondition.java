@@ -24,7 +24,6 @@ public class RelationalCondition {
 	 * @param operation
 	 */
 	public RelationalCondition(String stringCondition) {
-		// TODO Auto-generated constructor stub
 		this.stringCondition=stringCondition;
 	}
 	public RelationalCondition(RelationalOperand leftAgrument, RelationalOperand rightAgrument, String operation){

@@ -10,7 +10,6 @@ public class ConditionParser {
 
 	private static ConditionParser parser;
 	private ConditionParser() {
-		// TODO Auto-generated constructor stub
 	}
 	public static ConditionParser getInstance() {
 		if(parser==null)

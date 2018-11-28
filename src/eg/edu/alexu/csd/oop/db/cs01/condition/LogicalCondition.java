@@ -9,6 +9,20 @@ public class LogicalCondition {
 	private String logicalSign;
 	
 	private String logicalOperation;
+	
+	private String stringCondition;
+	/**
+	 * @return the stringCondition
+	 */
+	public String getStringCondition() {
+		return stringCondition;
+	}
+	/**
+	 * @param stringCondition the stringCondition to set
+	 */
+	public void setStringCondition(String stringCondition) {
+		this.stringCondition = stringCondition;
+	}
 
 	public LogicalCondition(String logicalOperation) {
 		setLogicalOperation(logicalOperation);
