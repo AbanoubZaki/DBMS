@@ -1,5 +1,0 @@
-<?xml encoding="UTF-8"?>
-<!ELEMENT table (columnNames*,dataBaseName,rows*)>
-<!ELEMENT columnNames (#PCDATA)>
-<!ELEMENT dataBaseName (#PCDATA)>
-<!ELEMENT tableName (#PCDATA)>

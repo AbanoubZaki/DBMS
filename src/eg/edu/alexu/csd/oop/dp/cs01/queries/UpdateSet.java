@@ -47,7 +47,7 @@ public class UpdateSet extends OurQuery {
 						effectedRows++;
 				}
 			}else {
-				
+				///////////////////////////////
 			}
 		}
 		
