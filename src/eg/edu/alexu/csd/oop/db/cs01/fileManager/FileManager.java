@@ -87,7 +87,7 @@ public class FileManager {
 		pathTable+=System.getProperty("file.separator")+table.getTableName();
 		File tableFile = new File(pathTable+".Xml");
 		if(tableFile.exists()) {
-			tableFile.delete();
+			return false;
 		}
 	    DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         try {
@@ -116,9 +116,8 @@ public class FileManager {
 		            tr.setOutputProperty(OutputKeys.METHOD, "xml");
 		            tr.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
 		            tr.transform(new DOMSource(dom), 
-                            new StreamResult(new FileOutputStream(tableFile)));
+                            new StreamResult(tableFile));
 		            createDTD(table);
-		            table = null;
 			 
 		} catch (Exception e) {
 			System.out.println("error");
@@ -226,7 +225,7 @@ public class FileManager {
 		pathTable+=System.getProperty("file.separator")+table.getTableName();
 		File tableFile = new File(pathTable+".Xml");
 		if(!tableFile.exists()) {
-			return false;
+			tableFile.delete();
 		}
 	    DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         try {
@@ -255,10 +254,7 @@ public class FileManager {
 		            tr.setOutputProperty(OutputKeys.METHOD, "xml");
 		            tr.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
 		            tr.transform(new DOMSource(dom), 
-                            new StreamResult(new FileOutputStream(tableFile)));
-		            createDTD(table);
-		            table = null;
-			 
+                            new StreamResult(tableFile));			 
 		} catch (Exception e) {
 			System.out.println("error");
 			e.printStackTrace();
