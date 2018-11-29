@@ -39,12 +39,12 @@ public class Table {
 		this.tableRows = new ArrayList<>();
 	}
 	
-	public static Table getInstance(String tableName, String databaseName) {
+	public static Table getInstance(String tableName) {
 		if (tables == null) {
 			tables = new ArrayList<>();
 		}
 		for (Table t : tables) {
-			if (t.getTableName().equals(tableName.toLowerCase()) && t.getDatabaseName().equals(databaseName)) {
+			if (t.getTableName().equals(tableName.toLowerCase())) {
 				table = t;
 				currentTableName = tableName;
 				return t;
