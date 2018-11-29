@@ -42,6 +42,7 @@ public class SelectFrom extends OurQuery {
 		setTable(table);
 		setCondition(condition);
 		setColumn(column);
+		setColumnType();
 		setColumnIndexAndType();
 	}
 	
@@ -91,9 +92,9 @@ public class SelectFrom extends OurQuery {
 			for (int i = 0; i < getTable().getRows().size(); i++) {
 				// row of data to be filled with objects.
 				if (getColumnType().equals("varchar")) {
-					selected[i][1] = getTable().getRow(i).getCells().get(getColumn().toLowerCase()).getValue();
+					selected[i][0] = getTable().getRow(i).getCells().get(getColumn().toLowerCase()).getValue();
 				} else {
-					selected[i][1] = Integer.parseInt(getTable().getRow(i).getCells().get(getColumn().toLowerCase()).getValue());
+					selected[i][0] = Integer.parseInt(getTable().getRow(i).getCells().get(getColumn().toLowerCase()).getValue());
 				}
 			}
 			setSelected(selected);
@@ -140,11 +141,13 @@ public class SelectFrom extends OurQuery {
 			if (!getTable().getColumnNamesToLowerCase().contains(getColumn().toLowerCase())) {
 				return false;
 			}
+			setCondition(ConditionParser.getInstance().stringToRelationalCondition(getCondition().getStringCondition()));
 			ArrayList<Object> selectedPartOfColumn = new ArrayList<>();
+			
 			for (int i = 0; i < getTable().getRows().size(); i++) {
 				Row r = getTable().getRows().get(i);
-				setCondition(ConditionParser.getInstance().stringToRelationalCondition(getCondition().getStringCondition()));
 				if (RelationalSolver.getInstance().isRowSolvingCondition(r, getCondition())) {
+					System.out.println(getColumnType());
 					if (getColumnType().equals("varchar")) {
 						selectedPartOfColumn.add(getTable().getRow(i).getCells().get(getColumn().toLowerCase()).getValue());
 					} else {
@@ -155,7 +158,7 @@ public class SelectFrom extends OurQuery {
 			}
 			selected = new Object[selectedPartOfColumn.size()][1];
 			for (int i = 0; i < selected.length; i++) {
-				selected[i][1] = selectedPartOfColumn.get(i);
+				selected[i][0] = selectedPartOfColumn.get(i);
 			}
 			setSelected(selected);
 			return true;
