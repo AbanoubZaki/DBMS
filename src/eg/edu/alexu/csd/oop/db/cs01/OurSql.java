@@ -53,7 +53,7 @@ public class OurSql implements Database {
 	public Object[][] executeQuery(String query) throws SQLException {
 		IQuery selectQuery = Parser.getInstance().parseQuery(query);
 		if (selectQuery == null) {
-			throw new SQLException("Query syntax error.");
+			throw new SQLException("Selection Failed Query, syntax error.");
 		}
 		selectQuery.execute1();
 		return selectQuery.getSelected();
