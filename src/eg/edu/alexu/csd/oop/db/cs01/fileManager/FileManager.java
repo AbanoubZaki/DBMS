@@ -106,7 +106,11 @@ public class FileManager {
 			 		Element e = dom.createElement("row");
 			 		for(String col:table.getColumnNamesAsGiven()) {
 			 			Element elementCell = dom.createElement(col);
-			 			elementCell.appendChild(dom.createTextNode(r.getCellByColumn(col.toLowerCase())));
+			 			if(r.getCellByColumn(col)!=null)
+			 				elementCell.appendChild(dom.createTextNode(r.getCellByColumn(col)));
+			 			else
+			 				elementCell.appendChild(dom.createTextNode("null"));
+
 			 			e.appendChild(elementCell);
 			 		}
 			 		rootEle.appendChild(e);
@@ -203,7 +207,10 @@ public class FileManager {
 			for(int i=1;i<numberOfRow;i++) {
 				Row r = new Row(table);
 				for(Entry<String, ArrayList<String>>e:map.entrySet()) {
-					r.updateCell(e.getKey(), new Cell(e.getValue().get(i)));
+					if(!e.getValue().get(i).equals("null"))
+						r.updateCell(e.getKey(), new Cell(e.getValue().get(i)));
+					else
+						r.updateCell(e.getKey(), null);
 				}
 				table.addRow(r);
 			}
@@ -243,7 +250,10 @@ public class FileManager {
 			 		Element e = dom.createElement("row");
 			 		for(String col:table.getColumnNamesAsGiven()) {
 			 			Element elementCell = dom.createElement(col);
-			 			elementCell.appendChild(dom.createTextNode(r.getCellByColumn(col.toLowerCase())));
+			 			if(r.getCellByColumn(col)!=null)
+			 				elementCell.appendChild(dom.createTextNode(r.getCellByColumn(col)));
+			 			else
+			 				elementCell.appendChild(dom.createTextNode("null"));
 			 			e.appendChild(elementCell);
 			 		}
 			 		rootEle.appendChild(e);
