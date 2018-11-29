@@ -1,5 +1,6 @@
 package eg.edu.alexu.csd.oop.dp.cs01.queries;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import eg.edu.alexu.csd.oop.db.cs01.condition.RelationalCondition;
@@ -23,8 +24,12 @@ public class UpdateSet extends OurQuery {
 	}
 
 	@Override
-	public int execute2() {
+	public int execute2()throws SQLException {
 		
+		if(getTable().getData()==null) {
+			new SQLException("table not found");
+			return 0;
+		}
 		for (int i = 0; i < columnNames.size(); i++) {
 			if (!getTable().getColumnNamesToLowerCase().contains(columnNames.get(i).toLowerCase())) {
 				System.out.println("Column names not found.");
@@ -35,7 +40,7 @@ public class UpdateSet extends OurQuery {
 			return 0;
 
 		int effectedRows = 0;
-			if (getCondition() == null) {
+			if (getCondition().getStringCondition() == null) {
 				for(Row r : getTable().getRows()){
 					for (int i = 0; i < columnNames.size(); i++) {
 						r.updateCell(columnNames.get(i).toLowerCase(), new Cell(values.get(i)));

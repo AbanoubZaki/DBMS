@@ -158,6 +158,8 @@ public class Table {
 	 * @return
 	 */
 	public Object[][] getData() {
+		if(this.tableRows.size()==0)
+			return null;
 		Object[][]data = new Object[getRows().size()][getColumnNamesToLowerCase().size()];
 		for (int i = 0; i < getRows().size(); i++) {
 			// row of data to be filled with objects.

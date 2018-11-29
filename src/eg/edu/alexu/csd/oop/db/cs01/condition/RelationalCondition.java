@@ -24,6 +24,8 @@ public class RelationalCondition {
 	 * @param operation
 	 */
 	public RelationalCondition(String stringCondition) {
+		if(stringCondition==null)
+			return;
 		this.stringCondition=stringCondition;
 		RelationalCondition r = ConditionParser.getInstance().stringToRelationalCondition(stringCondition);
 		setLeftAgrument(r.getLeftAgrument());

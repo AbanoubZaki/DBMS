@@ -186,8 +186,10 @@ public class FileManager {
 		if(!pathTable.contains(System.getProperty("file.separator")))
 			pathTable="databases"+System.getProperty("file.separator")+pathTable;		pathTable+=System.getProperty("file.separator")+table.getTableName();
 		File tableFile = new File(pathTable+".Xml");
-		if(!tableFile.exists())
+		if(!tableFile.exists()) {
+			table = null;
 			return false;
+		}
 		try {
 			Map<String, ArrayList<String> > map = parseXml(tableFile);
 			int numberOfRow = map.get(map.keySet().toArray()[0]).size();

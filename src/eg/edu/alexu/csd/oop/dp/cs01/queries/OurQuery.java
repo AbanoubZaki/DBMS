@@ -1,5 +1,7 @@
 package eg.edu.alexu.csd.oop.dp.cs01.queries;
 
+import java.sql.SQLException;
+
 import eg.edu.alexu.csd.oop.db.cs01.condition.RelationalCondition;
 import eg.edu.alexu.csd.oop.db.cs01.fileManager.FileManager;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
@@ -32,7 +34,7 @@ public class OurQuery implements IQuery {
 	}
 
 	@Override
-	public int execute2() {
+	public int execute2() throws SQLException {
 		return 0;
 	}
 	
