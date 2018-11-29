@@ -38,7 +38,7 @@ public class RelationalSolver {
 		ScriptEngineManager sem = new ScriptEngineManager();
 		ScriptEngine sm = sem.getEngineByName("JavaScript");
 		try {
-			return (boolean) sm.eval(var1.getOperand()+operation+var2.getOperand());
+			return (boolean) sm.eval(var1.getOperand().toLowerCase()+operation+var2.getOperand().toLowerCase());
 		} catch (ScriptException e) {
 			System.out.println("error");
 			
@@ -47,18 +47,18 @@ public class RelationalSolver {
 	}
 	private boolean compareValueCol(Row row , RelationalCondition condition){
 		if(!condition.getLeftAgrument().isVariable()) {
-			condition.getLeftAgrument().setOperand(row.getCellByColumn(condition.getLeftAgrument().getOperand()));
-			return getRelationResult(condition.getLeftAgrument(),condition.getRightAgrument(), condition.getOperation());
+			RelationalOperand rp = new RelationalOperand(row.getCellByColumn(condition.getLeftAgrument().getOperand()), false,condition.getLeftAgrument().getType());
+			return getRelationResult(rp,condition.getRightAgrument(), condition.getOperation());
 
 		}else {
-			condition.getRightAgrument().setOperand(row.getCellByColumn(condition.getRightAgrument().getOperand()));
-			return getRelationResult(condition.getLeftAgrument(),condition.getRightAgrument(), condition.getOperation());
+			RelationalOperand rp = new RelationalOperand(row.getCellByColumn(condition.getRightAgrument().getOperand()), false,condition.getRightAgrument().getType());
+			return getRelationResult(rp,condition.getRightAgrument(), condition.getOperation());		
 		}			
 	}
 	private boolean compareTwoCol(Row row , RelationalCondition condition) {
-		condition.getLeftAgrument().setOperand(row.getCellByColumn(condition.getLeftAgrument().getOperand()));
-		condition.getRightAgrument().setOperand(row.getCellByColumn(condition.getRightAgrument().getOperand()));
-		return getRelationResult(condition.getLeftAgrument(),condition.getRightAgrument(), condition.getOperation());
+		RelationalOperand lrp = new RelationalOperand(row.getCellByColumn(condition.getLeftAgrument().getOperand()), false,condition.getLeftAgrument().getType());
+		RelationalOperand rrp = new RelationalOperand(row.getCellByColumn(condition.getRightAgrument().getOperand()), false,condition.getRightAgrument().getType());
+		return getRelationResult(lrp,rrp, condition.getOperation());
 		
 	}
 }

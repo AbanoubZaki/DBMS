@@ -17,9 +17,10 @@ public class DeleteFrom extends OurQuery {
 	
 	@Override
 	public int execute2() {
-		FileManager.getInstance().readTable(getTable());
+		int effectedRows = 0;
+		 effectedRows = getTable().getRows().size();
 		if (getCondition() == null) {
-			int effectedRows = getTable().getRows().size(); 
+			 effectedRows = getTable().getRows().size();
 			getTable().setRows(null);
 			return effectedRows;
 		}else if (getCondition() != null) {
@@ -30,9 +31,10 @@ public class DeleteFrom extends OurQuery {
 				}
 			}
 			getTable().setRows(remainingRows);
+			 effectedRows -= getTable().getRows().size();
 		}
 		
-		return 0;
+		return effectedRows;
 	}
 
 }

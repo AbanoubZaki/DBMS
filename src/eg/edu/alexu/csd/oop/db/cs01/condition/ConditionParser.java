@@ -24,9 +24,21 @@ public class ConditionParser {
 		if(table==null)
 			return null;
 		if (theMatcher.find()) {
-			RelationalOperand leftAgrument = new RelationalOperand(theMatcher.group(1), !table.getColumnNamesToLowerCase().contains(theMatcher.group(1).toLowerCase()),dataChecker.getInstance().checkType(theMatcher.group(1)));
-			RelationalOperand rightAgrument = new RelationalOperand(theMatcher.group(3), !table.getColumnNamesToLowerCase().contains(theMatcher.group(3).toLowerCase()),dataChecker.getInstance().checkType(theMatcher.group(3)));
-			return new RelationalCondition(leftAgrument, rightAgrument, theMatcher.group(2));
+			String op = theMatcher.group(2).replace("=", "==");
+			op = op.replace("<>","!=");
+			RelationalOperand leftAgrument = null;
+			RelationalOperand rightAgrument = null;
+			if(!table.getColumnNamesToLowerCase().contains(theMatcher.group(1).toLowerCase())) {
+				leftAgrument = new RelationalOperand(theMatcher.group(1), !table.getColumnNamesToLowerCase().contains(theMatcher.group(1).toLowerCase()),dataChecker.getInstance().checkType(theMatcher.group(1)));
+			}else {
+				leftAgrument = new RelationalOperand(theMatcher.group(1), !table.getColumnNamesToLowerCase().contains(theMatcher.group(1).toLowerCase()),table.getColumnTypes().get(theMatcher.group(1).toLowerCase()));
+			}
+			if(!table.getColumnNamesToLowerCase().contains(theMatcher.group(3).toLowerCase())) {
+				 rightAgrument = new RelationalOperand(theMatcher.group(3), !table.getColumnNamesToLowerCase().contains(theMatcher.group(3).toLowerCase()),dataChecker.getInstance().checkType(theMatcher.group(3)));
+			}else {
+				rightAgrument = new RelationalOperand(theMatcher.group(3), !table.getColumnNamesToLowerCase().contains(theMatcher.group(3).toLowerCase()),table.getColumnTypes().get(theMatcher.group(3).toLowerCase()));
+			}
+			return new RelationalCondition(leftAgrument, rightAgrument,op );
 		}
 		return null;
 	}

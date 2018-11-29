@@ -25,6 +25,10 @@ public class RelationalCondition {
 	 */
 	public RelationalCondition(String stringCondition) {
 		this.stringCondition=stringCondition;
+		RelationalCondition r = ConditionParser.getInstance().stringToRelationalCondition(stringCondition);
+		setLeftAgrument(r.getLeftAgrument());
+		setRightAgrument(r.getRightAgrument());
+		setOperation(r.getOperation());
 	}
 	public RelationalCondition(RelationalOperand leftAgrument, RelationalOperand rightAgrument, String operation){
 		if(!leftAgrument.getType().equals(rightAgrument.getType()))

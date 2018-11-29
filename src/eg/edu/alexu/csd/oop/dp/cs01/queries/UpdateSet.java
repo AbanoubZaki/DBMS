@@ -39,16 +39,16 @@ public class UpdateSet extends OurQuery {
 				for(Row r : getTable().getRows()){
 					for (int i = 0; i < columnNames.size(); i++) {
 						r.updateCell(columnNames.get(i).toLowerCase(), new Cell(values.get(i)));
-						effectedRows++;
 					}
+					effectedRows++;
 				}		
 			} else {
 				for (Row r : getTable().getRows()) {
 					if (RelationalSolver.getInstance().isRowSolvingCondition(r, getCondition())) {
 						for (int i = 0; i < columnNames.size(); i++) {
 							r.updateCell(columnNames.get(i).toLowerCase(), new Cell(values.get(i)));
-							effectedRows++;
 						}
+						effectedRows++;
 					}
 				}
 			}

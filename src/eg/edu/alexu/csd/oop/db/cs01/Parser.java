@@ -215,7 +215,7 @@ public class Parser {
 			ArrayList<String> columnNames = new ArrayList<>();
 			ArrayList<String> values = new ArrayList<>();
 			// pattern to split column name from the new value.
-			String setsPattern = " ?(\\w+) ?= ?(['\"]? ?(\\w+) ?['\"]) ?";
+			String setsPattern = " ?(\\w+) ?= ?(['\"]? ?(\\w+) ?['\"]?) ?";
 			// group(2) is the all of the sets.
 			sets = theMatchers.get(8).group(2).split(" ?, ?");
 			// compiling sets pattern
@@ -232,7 +232,7 @@ public class Parser {
 			Table.getInstance(theMatchers.get(8).group(1));
 			Table.getInstance().setDatabaseName(theMainDataBase);
 			// group(8) is the condition it may equals null.
-			RelationalCondition updateTableSetColumnCondition = new RelationalCondition(theMatchers.get(8).group(8));
+			RelationalCondition updateTableSetColumnCondition = new RelationalCondition(theMatchers.get(8).group(9));
 			IQuery updateTableSetColumnQuery = new UpdateSet(Table.getInstance(), columnNames, values,
 					updateTableSetColumnCondition);
 			return updateTableSetColumnQuery;
