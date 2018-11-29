@@ -15,6 +15,20 @@ public class Table {
 
 	private static ArrayList<Table> tables;
 	
+	/**
+	 * @return the tables
+	 */
+	public static ArrayList<Table> getTables() {
+		return tables;
+	}
+
+	/**
+	 * @param tables the tables to set
+	 */
+	public static void setTables(ArrayList<Table> tables) {
+		Table.tables = tables;
+	}
+
 	private static String currentTableName;
 
 	private String databaseName;
@@ -42,6 +56,7 @@ public class Table {
 	public static Table getInstance(String tableName) {
 		if (tables == null) {
 			tables = new ArrayList<>();
+			table = null;
 		}
 		for (Table t : tables) {
 			if (t.getTableName().equals(tableName.toLowerCase())) {

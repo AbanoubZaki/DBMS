@@ -73,6 +73,7 @@ public class FileManager {
 		f.delete();
 		}
 		db.delete();
+		Table.setTables(null);
 		return true;
 	}
 	public boolean createTable(Table table) {
