@@ -2,6 +2,9 @@ package eg.edu.alexu.csd.oop.dp.cs01.queries;
 
 import java.util.ArrayList;
 
+import com.sun.org.apache.bcel.internal.generic.CompoundInstruction;
+
+import eg.edu.alexu.csd.oop.db.cs01.condition.ConditionParser;
 import eg.edu.alexu.csd.oop.db.cs01.condition.RelationalCondition;
 import eg.edu.alexu.csd.oop.db.cs01.condition.RelationalSolver;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Row;
@@ -120,6 +123,7 @@ public class SelectFrom extends OurQuery {
 			ArrayList<Object> selectedPartOfColumn = new ArrayList<>();
 			for (int i = 0; i < getTable().getRows().size(); i++) {
 				Row r = getTable().getRows().get(i);
+				setCondition(ConditionParser.getInstance().stringToRelationalCondition(getCondition().getStringCondition()));
 				if (RelationalSolver.getInstance().isRowSolvingCondition(r, getCondition())) {
 					if (getColumnType().equals("varchar")) {
 						selectedPartOfColumn.add(getTable().getRow(i).getCells().get(getColumn().toLowerCase()).getValue());
