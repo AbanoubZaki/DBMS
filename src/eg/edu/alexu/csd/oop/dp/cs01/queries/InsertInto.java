@@ -3,7 +3,6 @@ package eg.edu.alexu.csd.oop.dp.cs01.queries;
 import java.util.ArrayList;
 
 import eg.edu.alexu.csd.oop.db.cs01.dataChecker;
-import eg.edu.alexu.csd.oop.db.cs01.fileManager.FileManager;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Cell;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Row;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Table;

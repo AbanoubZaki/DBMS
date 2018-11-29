@@ -61,7 +61,7 @@ public class Table {
 		this.tableRows = new ArrayList<>();
 	}
 	
-	public static Table getInstance(String tableName) {
+	public static Table getInstance(String tableName , String currenDataBaseName) {
 		if (tables == null) {
 			tables = new ArrayList<>();
 			table = null;
@@ -79,6 +79,8 @@ public class Table {
 		}
 		table = new Table();
 		table.setTableName(tableName);
+		table.setDatabaseName(currenDataBaseName);
+		FileManager.getInstance().readTable(table);
 		tables.add(table);
 		currentTableName = tableName;
 		return table;

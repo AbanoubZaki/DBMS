@@ -122,8 +122,8 @@ public class Parser {
 				}
 			}
 			// group(1) is the name of the table.
-			Table.getInstance(theMatchers.get(2).group(1));
-			Table.getInstance().setDatabaseName(theMainDataBase);
+//			Table.getInstance(theMatchers.get(2).group(1));
+			Table.getInstance(theMatchers.get(2).group(1),theMainDataBase);
 			Table.getInstance().setAllColumnNamesAndTypes(columnsName, columnsType);
 			IQuery createTableQuery = new CreateTable(Table.getInstance());
 			return createTableQuery;
@@ -133,8 +133,8 @@ public class Parser {
 				return null;
 			}
 			// group(1) is the name of the table.
-			Table.getInstance(theMatchers.get(3).group(1));
-			Table.getInstance().setDatabaseName(theMainDataBase);
+//			Table.getInstance(theMatchers.get(3).group(1));
+			Table.getInstance(theMatchers.get(3).group(1),theMainDataBase);
 			IQuery dropTableQuery = new DropTable(Table.getInstance());
 			return dropTableQuery;
 		} else if (theMatchers.get(4).find()) {// if the query match insert Into Table Columns
@@ -158,8 +158,8 @@ public class Parser {
 			// converting array to ArrayList.
 			ArrayList<String> values = new ArrayList<String>(Arrays.asList(valuesArray));
 			// group(1) is the name of the table.
-			Table.getInstance(theMatchers.get(4).group(1));
-			Table.getInstance().setDatabaseName(theMainDataBase);
+//			Table.getInstance(theMatchers.get(4).group(1));
+			Table.getInstance(theMatchers.get(4).group(1),theMainDataBase);
 			IQuery insertIntoTableColumnsAndValuesQuery = new InsertInto(Table.getInstance(), columnNames, values);
 			return insertIntoTableColumnsAndValuesQuery;
 		} else if (theMatchers.get(5).find()) {// if the query match insert Into Table Values
@@ -174,8 +174,8 @@ public class Parser {
 			// converting array to ArrayList.
 			ArrayList<String> values = new ArrayList<String>(Arrays.asList(valuesArray));
 			// group(1) is the name of the table.
-			Table.getInstance(theMatchers.get(5).group(1));
-			Table.getInstance().setDatabaseName(theMainDataBase);
+//			Table.getInstance(theMatchers.get(5).group(1));
+			Table.getInstance(theMatchers.get(5).group(1),theMainDataBase);
 			IQuery insertIntoTableValuesOnlyQuery = new InsertInto(Table.getInstance(), values);
 			return insertIntoTableValuesOnlyQuery;
 		} else if (theMatchers.get(6).find()) {// select * from tabel_name where condition.
@@ -184,8 +184,8 @@ public class Parser {
 				return null;
 			}
 			// group(1) is the name of the table.
-			Table.getInstance(theMatchers.get(6).group(1));
-			Table.getInstance().setDatabaseName(theMainDataBase);
+//			Table.getInstance(theMatchers.get(6).group(1));
+			Table.getInstance(theMatchers.get(6).group(1),theMainDataBase);
 			// group(4) is the condition it may equals null.
 			RelationalCondition selectAllFromTableCondition = new RelationalCondition(theMatchers.get(6).group(4));
 			IQuery selectAllFromTableQuery = new SelectFrom(Table.getInstance(), selectAllFromTableCondition);
@@ -197,8 +197,8 @@ public class Parser {
 				return null;
 			}
 			// group(2) is the table name.
-			Table.getInstance(theMatchers.get(7).group(2));
-			Table.getInstance().setDatabaseName(theMainDataBase);
+//			Table.getInstance(theMatchers.get(7).group(2));
+			Table.getInstance(theMatchers.get(7).group(2),theMainDataBase);
 			// group(5) is the condition it may equals null.
 			RelationalCondition selectColumnFromTableCondition = new RelationalCondition(theMatchers.get(7).group(5));
 			// group(1) is the column name.
@@ -229,8 +229,8 @@ public class Parser {
 				}
 			}
 			// group(1) is the table name.
-			Table.getInstance(theMatchers.get(8).group(1));
-			Table.getInstance().setDatabaseName(theMainDataBase);
+//			Table.getInstance(theMatchers.get(8).group(1));
+			Table.getInstance(theMatchers.get(8).group(1),theMainDataBase);
 			// group(8) is the condition it may equals null.
 			RelationalCondition updateTableSetColumnCondition = new RelationalCondition(theMatchers.get(8).group(9));
 			IQuery updateTableSetColumnQuery = new UpdateSet(Table.getInstance(), columnNames, values,
@@ -242,8 +242,8 @@ public class Parser {
 				return null;
 			}
 			// group(1) is the table name.
-			Table.getInstance(theMatchers.get(9).group(1));
-			Table.getInstance().setDatabaseName(theMainDataBase);
+//			Table.getInstance(theMatchers.get(9).group(1));
+			Table.getInstance(theMatchers.get(9).group(1),theMainDataBase);
 			// group(4) is the condition it may equals null.
 			RelationalCondition deleteFromTableCondition = new RelationalCondition(theMatchers.get(9).group(4));
 			IQuery deleteFromTableQuery = new DeleteFrom(Table.getInstance(), deleteFromTableCondition);

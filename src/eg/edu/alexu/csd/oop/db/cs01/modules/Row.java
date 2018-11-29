@@ -12,7 +12,7 @@ public class Row {
 	public Row(Table table) {
 		this.cells = new HashMap<String, Cell>();
 		for(String s:table.getColumnNamesToLowerCase()) {
-			cells.put(s, null);
+			cells.put(s, new Cell(null));
 		}
 	}
 	/**
@@ -36,6 +36,8 @@ public class Row {
 		updateCell(columnName.toLowerCase(), null);
 	}
 	public String getCellByColumn(String columnName) {
-		return cells.get(columnName.toLowerCase()).getValue();
+		if(cells.get(columnName.toLowerCase())!=null)
+			return cells.get(columnName.toLowerCase()).getValue();
+		return null;
 	}
 }

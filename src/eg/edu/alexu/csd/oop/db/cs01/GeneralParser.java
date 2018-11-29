@@ -10,7 +10,6 @@ public class GeneralParser {
 	private int updatedRows;
 	private GeneralParser() {
 		checkerExecute = false;
-		currentData = null;
 		updatedRows=0;
 	}
 

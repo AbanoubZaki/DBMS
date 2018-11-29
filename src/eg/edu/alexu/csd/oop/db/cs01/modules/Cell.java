@@ -7,7 +7,7 @@ public class Cell {
 	public Cell() {
 	}
 	public Cell(String value) {
-		this.value = new String(value);
+		this.value = value;
 	}
 	
 	public void setValue(String value) {

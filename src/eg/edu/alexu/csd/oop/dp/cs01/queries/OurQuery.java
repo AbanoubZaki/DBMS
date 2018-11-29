@@ -29,7 +29,7 @@ public class OurQuery implements IQuery {
 	}	
 	
 	@Override
-	public boolean execute1() {
+	public boolean execute1() throws SQLException {
 		return false;
 	}
 
