@@ -184,7 +184,8 @@ public class FileManager {
 		}
 		String pathTable = table.getDatabaseName();
 		if(!pathTable.contains(System.getProperty("file.separator")))
-			pathTable="databases"+System.getProperty("file.separator")+pathTable;		pathTable+=System.getProperty("file.separator")+table.getTableName();
+			pathTable="databases"+System.getProperty("file.separator")+pathTable;		
+			pathTable+=System.getProperty("file.separator")+table.getTableName();
 		File tableFile = new File(pathTable+".Xml");
 		if(!tableFile.exists()) {
 			table = null;

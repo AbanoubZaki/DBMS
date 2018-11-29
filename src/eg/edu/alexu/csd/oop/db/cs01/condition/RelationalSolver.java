@@ -19,6 +19,10 @@ public class RelationalSolver {
 	}
 	public boolean isRowSolvingCondition(Row row , RelationalCondition condition){
 		// value , value
+		if (condition.getLeftAgrument() == null || condition.getRightAgrument() == null) {
+			System.out.println("Condition error.");
+			return false;
+		}
 		if(condition.getLeftAgrument().isVariable()&&condition.getRightAgrument().isVariable())
 			return compareTwoValue(condition);
 		else if(!condition.getLeftAgrument().isVariable()&&!condition.getRightAgrument().isVariable())

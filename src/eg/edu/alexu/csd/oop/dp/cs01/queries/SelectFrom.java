@@ -101,14 +101,34 @@ public class SelectFrom extends OurQuery {
 			
 		} else if (getColumn() == null) {
 			// 3rd constructor
-			ArrayList<Row> remainingRows = new ArrayList<>();
+			//fetches all the table using the condition.
+			System.out.println(getTable().getRows().size());
+			ArrayList<Row> rowsValidateCondition = new ArrayList<>();
 			for (Row r:getTable().getRows()) {
 				if (RelationalSolver.getInstance().isRowSolvingCondition(r, getCondition())) {
-					remainingRows.add(r);
+					rowsValidateCondition.add(r);
 				}
 			}
-			getTable().setRows(remainingRows);
-			setSelected(getTable().getData());
+			System.out.println(getTable().getRows().size());
+			selected = new Object[rowsValidateCondition.size()][getTable().getColumnNamesAsGiven().size()];
+			for (int i = 0; i < rowsValidateCondition.size(); i++) {
+				// row of data to be filled with objects.
+				Row r = rowsValidateCondition.get(i);
+				for (int j = 0; j < getTable().getColumnNamesToLowerCase().size(); j++) {
+					if (getTable().getColumnTypes().get(getTable().getColumnNamesToLowerCase().get(j)).equals("int")) {
+						if(r.getCells().get(getTable().getColumnNamesToLowerCase().get(j))!=null) {
+							selected[i][j]=(Integer.parseInt(r.getCells().get(getTable().getColumnNamesToLowerCase().get(j)).getValue()));
+							System.out.println(selected[i][j]);
+						} else {
+							selected[i][j]=null;
+						}
+					} else if (getTable().getColumnTypes().get(getTable().getColumnNamesToLowerCase().get(j)).equals("varchar")) {
+						selected[i][j] = r.getCells().get(getTable().getColumnNamesToLowerCase().get(j)).getValue();
+						System.out.println(selected[i][j]);
+					}
+				}
+			}
+			setSelected(selected);
 			
 			return true;
 		} else if (getColumn() != null && getCondition().getStringCondition() != null) {
@@ -128,7 +148,8 @@ public class SelectFrom extends OurQuery {
 					if (getColumnType().equals("varchar")) {
 						selectedPartOfColumn.add(getTable().getRow(i).getCells().get(getColumn().toLowerCase()).getValue());
 					} else {
-						selectedPartOfColumn.add(Integer.parseInt(getTable().getRow(i).getCells().get(getColumn().toLowerCase()).getValue()));
+						if(r.getCells().get(getColumn().toLowerCase())!=null)
+							selectedPartOfColumn.add(Integer.parseInt(getTable().getRow(i).getCells().get(getColumn().toLowerCase()).getValue()));
 					}
 				}
 			}

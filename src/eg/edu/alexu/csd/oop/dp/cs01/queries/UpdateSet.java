@@ -57,7 +57,6 @@ public class UpdateSet extends OurQuery {
 					}
 				}
 			}
-
 		return effectedRows;
 	}
 

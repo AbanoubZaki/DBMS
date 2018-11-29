@@ -17,7 +17,10 @@ public class ConditionParser {
 		return parser;
 	}
 	public RelationalCondition stringToRelationalCondition(String relationalCondition) {
-		String stringConditionPattern = " ?(['\"]? ?\\w+ ?['\"]?) ?([><=!]{1,2})? ?(['\"]? ?\\w+['\"]?)? ?";
+		//remove all spaces to increase the speed of regex matching decreasing steps of matching
+		relationalCondition = relationalCondition.replace(" ", "");
+		relationalCondition = " " + relationalCondition;
+		String stringConditionPattern = " \\s* ?(['\\\"]? ?\\w+['\\\"]?)\\s* ?([><=!]{1,2})?\\s* ?(['\\\"]? ?\\w+['\\\"]?)? ?";
 		Pattern thePattern = Pattern.compile(stringConditionPattern);
 		Matcher theMatcher = thePattern.matcher(relationalCondition);
 		Table table = Table.getInstance();

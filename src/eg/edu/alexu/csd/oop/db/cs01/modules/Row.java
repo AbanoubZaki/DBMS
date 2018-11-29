@@ -1,5 +1,6 @@
 package eg.edu.alexu.csd.oop.db.cs01.modules;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,6 +32,7 @@ public class Row {
 	
 	public void updateCell(String columnName , Cell cell) {
 		cells.put(columnName.toLowerCase(), cell);
+		System.out.println(cells.get(columnName).getValue());
 	}
 	public void deleteCell(String columnName) {
 		updateCell(columnName.toLowerCase(), null);
