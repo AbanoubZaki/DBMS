@@ -1,51 +1,30 @@
 package eg.edu.alexu.csd.oop.db.cs01;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.sql.SQLException;
 
-import eg.edu.alexu.csd.oop.db.Database;
-import eg.edu.alexu.csd.oop.db.cs01.fileManager.FileManager;
-import eg.edu.alexu.csd.oop.db.cs01.modules.Cell;
-import eg.edu.alexu.csd.oop.db.cs01.modules.Row;
-import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
-import eg.edu.alexu.csd.oop.dp.cs01.queries.InsertInto;
+import eg.edu.alexu.csd.oop.dp.cs01.queries.IQuery;
 
 public class OurMain {
-	public static void main(String[] args) {
-		Database db = OurSql.getInstance();
-		System.out.println(db.createDatabase("testDB", false));
-		Table table = new Table("testDB","t1");
-		ArrayList<String>columnNames = new ArrayList<String>();
-		columnNames.add("c1");
-		columnNames.add("c2");
-		columnNames.add("c3");
-		table.setColumnNames(columnNames);
-		Map<String, String>columnTypes = new HashMap<String, String>();
-		columnTypes.put("c1", "int");
-		columnTypes.put("c2", "varchar");
-		columnTypes.put("c3", "varchar");
-		table.setColumnTypes(columnTypes);
-		Row row = new Row(table);
-		row.updateCell("c1", new Cell("1"));
-		row.updateCell("c2", new Cell("a"));
-		row.updateCell("c3", new Cell("b"));
-		table.addRow(row);
+	public static void main(String[] args) throws SQLException {
 		
-		ArrayList<String> values = new ArrayList<>();
-		values.add("2");
-		values.add("c");
-		values.add("d");
-		InsertInto query = new InsertInto(table, values);
-		query.execute();
+		IQuery testQueries = Parser.getInstance().parseQuery("CREATE DATABASE bebo;");
+		System.out.println(testQueries.execute1());
+//		testQueries = Parser.getInstance().parseQuery(
+//				"CREATE TABLE Persons (PersonID int,LastName varchar,FirstName varchar,City varchar);");
+//		testQueries.execute1();
+//		//write table.
+//		FileManager.getInstance().createTable(Table.getInstance());
+//		testQueries = Parser.getInstance().parseQuery("INSERT INTO Persons (PersonID ,LastName ,FirstName ,City) VALUES (5, 'Asharf', 'Abanoub', 'Alex');");
+//		System.out.println(testQueries.execute2());
+//		FileManager.getInstance().writeTable(Table.getInstance());
 		
-		FileManager.getInstance().createTable(table);
-		
-//		table = FileManager.getInstance().readTable(table);
-//		System.out.println(table.getColumnNames());
-//		System.out.println(table.getColumnTypes());
-		
-		
-
+		testQueries = Parser.getInstance().parseQuery("CREATE DATABASE bony;");
+		System.out.println(testQueries.execute1());
+		testQueries = Parser.getInstance().parseQuery("DROP TABLE Persons;");
+		System.out.println(testQueries.execute1());
+//		
+//		Row row = new Row(Table.getInstance());
+//		RelationalCondition rc = new RelationalCondition("c=5");
+//		RelationalSolver.getInstance().isRowSolvingCondition(row, rc);
 	}
 }

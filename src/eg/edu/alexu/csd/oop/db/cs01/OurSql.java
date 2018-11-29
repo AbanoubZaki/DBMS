@@ -42,22 +42,31 @@ public class OurSql implements Database {
 
 	@Override
 	public boolean executeStructureQuery(String query) throws SQLException {
-		IQuery objectQquery = Parser.getInstance().parseQuery(query);
-		return objectQquery.execute1();
+		IQuery objectQuery = Parser.getInstance().parseQuery(query);
+		if (objectQuery == null) {
+			throw new SQLException("Query syntax error.");
+		}
+		return objectQuery.execute1();
 		
 	}
 
 	@Override
 	public Object[][] executeQuery(String query) throws SQLException {
 		IQuery selectQuery = Parser.getInstance().parseQuery(query);
+		if (selectQuery == null) {
+			throw new SQLException("Query syntax error.");
+		}
 		selectQuery.execute1();
 		return selectQuery.getSelected();
 	}
 
 	@Override
 	public int executeUpdateQuery(String query) throws SQLException {
-		IQuery objectQquery = Parser.getInstance().parseQuery(query);
-		return objectQquery.execute2();
+		IQuery objectQuery = Parser.getInstance().parseQuery(query);
+		if (objectQuery == null) {
+			throw new SQLException("Query syntax error.");
+		}
+		return objectQuery.execute2();
 	}
 
 }
