@@ -29,7 +29,7 @@ public class Parser {
 		final String drobDataBasePattern = "(?i)\\bdrop\\b (?i)\\bdatabase\\b ([\\w\\\\]+) ?;? ?";
 		final String createTablePattern = "(?i)\\bcreate\\b (?i)\\btable\\b (\\w+) ?\\( ?(( ?\\w+ (int|varchar) ?,?)+) ?\\) ?;? ?";
 		final String drobTablePattern = "(?i)\\bdrop\\b (?i)\\btable\\b (\\w+) ?;? ?";
-		final String insertIntoTableColumnsAndValuesPattern = "(?i)\\binsert\\b (?i)\\binto\\b (\\w+) ?(\\( ?(( ?\\w+ ?,? ?)+)\\)) (?i)\\bvalues\\b ?\\((( ?['\"]? ?\\w+ ?['\"]? ?,?)+)\\) ?;? ?";
+		final String insertIntoTableColumnsAndValuesPattern = "(?i)\\bINSERT\\b\\s(?i)\\bINTO\\b\\s([\\d\\w]+)\\s?\\(([\\s\\w\\d,]*)\\)\\s?(?i)\\bVALUES\\b\\s?\\(([\\s\\w\\d,']*)\\s?\\) ?;? ?";
 		final String insertIntoTableValuesOnlyPattern = "(?i)\\binsert\\b (?i)\\binto\\b (\\w+) (?i)\\bvalues\\b ?\\( ?(( ?['\"]? ?\\w+ ?['\"]? ?,?)+)\\) ?;? ?";
 		final String selectAllFromTablePattern = "(?i)\\bselect\\b \\* (?i)\\bfrom\\b (\\w+) ?(((?i)\\bwhere\\b) ?(((?i)\\bnot\\b)? ?([^;\\s]) ?(([!=><]{1,2}) ?([^;\\s]+))? ?(((?i)\\bor\\b|(?i)\\band\\b) ?((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?)?))? ?;? ?";
 		final String selectColumnFromTablePattern = "(?i)\\bselect\\b (\\w+) (?i)\\bfrom\\b (\\w+) ?(((?i)\\bwhere\\b) ?(((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?(((?i)\\bor\\b|(?i)\\band\\b) ?((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?)?))? ?;? ?";
@@ -146,9 +146,9 @@ public class Parser {
 			String[] columnsArray;
 			String[] valuesArray;
 			// group(3) is column names string.
-			columnsArray = theMatchers.get(4).group(3).split(" ?, ?");
+			columnsArray = theMatchers.get(4).group(2).split(" ?, ?");
 			// group(5) is values of each column string.
-			valuesArray = theMatchers.get(4).group(5).split(" ?, ?");
+			valuesArray = theMatchers.get(4).group(3).split(" ?, ?");
 			if (columnsArray.length != valuesArray.length) {
 				System.out.println("could not prepare statement.");
 				return null;
