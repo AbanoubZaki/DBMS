@@ -21,17 +21,17 @@ public class GeneralParser {
 
 	public void parser (String query) throws SQLException {
 		
-		if ((query.toLowerCase().contains(" create ") || query.toLowerCase().contains(" drop "))
-				&& (query.toLowerCase().contains(" database ") || query.toLowerCase().contains(" table "))) {
+		if ((query.toLowerCase().contains("create") || query.toLowerCase().contains("drop"))
+				&& (query.toLowerCase().contains("database") || query.toLowerCase().contains("table"))) {
 			
 			OurSql.getInstance().executeStructureQuery(query);
 			
-		}else if (query.toLowerCase().contains(" select ")) {
+		}else if (query.toLowerCase().contains("select")) {
 			OurSql.getInstance().executeQuery(query);
 			
-		}else if (query.toLowerCase().contains(" update ")
-				|| query.toLowerCase().contains(" insert ") 
-				|| query.toLowerCase().contains(" delete ") ) {
+		}else if (query.toLowerCase().contains("update")
+				|| query.toLowerCase().contains("insert") 
+				|| query.toLowerCase().contains("delete") ) {
 			
 			OurSql.getInstance().executeUpdateQuery(query);
 		}	

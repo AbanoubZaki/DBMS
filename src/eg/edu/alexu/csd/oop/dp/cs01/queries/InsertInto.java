@@ -32,12 +32,15 @@ public class InsertInto extends OurQuery {
 	 */
 	@Override
 	public int execute2() {
-		/**
-		 * 
-		 */
 		if (!FileManager.getInstance().readTable(getTable())) {
 			System.out.println("Table not found.");
 			return 0;
+		}
+		for (int i = 0; i < columnNames.size(); i++) {
+			if (!getTable().getColumnNamesToLowerCase().contains(columnNames.get(i).toLowerCase())) {
+				System.out.println("Column names not found.");
+				return 0;
+			}
 		}
 		if (getTable().getColumnTypes() == null) {
 			System.out.println("column types dismatch happened");
@@ -54,6 +57,7 @@ public class InsertInto extends OurQuery {
 		}
 		Row insertedRow = new Row(getTable());
 		for (int i = 0; i < values.size(); i++) {
+			System.out.println(getTable().getColumnTypes().get(columnNames.get(i).toLowerCase()));
 			if (getTable().getColumnTypes().get(columnNames.get(i).toLowerCase()).equals("int")) {
 				if (getTable().getColumnTypes().get(columnNames.get(i).toLowerCase())
 						.equals(dataChecker.getInstance().checkType(values.get(i)))) {
