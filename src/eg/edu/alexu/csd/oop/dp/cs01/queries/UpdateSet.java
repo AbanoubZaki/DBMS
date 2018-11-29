@@ -25,7 +25,13 @@ public class UpdateSet extends OurQuery {
 
 	@Override
 	public int execute2()throws SQLException {
-		
+		if (getTable().getColumnNamesAsGiven().size() == 0) {
+			throw new SQLException("Table not found.");
+		}
+		if (getTable().getRows().size() == 0) {
+			System.out.println("Update Failed, Table is empty.");
+			return 0;
+		}
 		if(getTable().getData()==null) {
 			new SQLException("table not found");
 			return 0;
