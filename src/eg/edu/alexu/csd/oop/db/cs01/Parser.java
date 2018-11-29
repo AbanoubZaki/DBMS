@@ -249,6 +249,7 @@ public class Parser {
 			IQuery deleteFromTableQuery = new DeleteFrom(Table.getInstance(), deleteFromTableCondition);
 			return deleteFromTableQuery;
 		}
+		theMainDataBase = null;
 		return null;
 	}
 }
