@@ -65,7 +65,7 @@ public class GeneralParser {
 		return instance;
 	}
 
-	public void parser (String query) throws SQLException {
+	public void parse (String query) throws SQLException {
 		
 		if ((query.toLowerCase().contains("create") || query.toLowerCase().contains("drop"))
 				&& (query.toLowerCase().contains("database") || query.toLowerCase().contains("table"))) {
