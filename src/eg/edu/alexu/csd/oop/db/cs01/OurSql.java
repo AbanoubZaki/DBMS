@@ -25,10 +25,12 @@ public class OurSql implements Database {
 
 	@Override
 	public String createDatabase(String databaseName, boolean dropIfExists) {
-		String query = "CREATE DATABASE "+databaseName;
+		String query = "CREATE DATABASE "+databaseName.toLowerCase();
 		try {
-			if(!executeStructureQuery(query)&&dropIfExists) {
+			if(executeStructureQuery(query)&&dropIfExists) {
 				query = query.replace("CREATE", "drop");
+				executeStructureQuery(query);
+				query = query.replace("drop","CREATE");
 				executeStructureQuery(query);
 			}
 		} catch (SQLException e) {
