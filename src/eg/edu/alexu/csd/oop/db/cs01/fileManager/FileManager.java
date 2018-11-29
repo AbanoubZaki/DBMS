@@ -31,8 +31,6 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 import eg.edu.alexu.csd.oop.db.cs01.modules.Cell;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Row;
@@ -89,7 +87,7 @@ public class FileManager {
 		pathTable+=System.getProperty("file.separator")+table.getTableName();
 		File tableFile = new File(pathTable+".Xml");
 		if(tableFile.exists()) {
-			return false;
+			tableFile.delete();
 		}
 	    DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         try {
@@ -113,13 +111,15 @@ public class FileManager {
 			 		rootEle.appendChild(e);
 			 }
 		 		dom.appendChild(rootEle);
-		 		
-				TransformerFactory transformerFactory = TransformerFactory.newInstance();
-				Transformer transformer = transformerFactory.newTransformer();
-				DOMSource domSource = new DOMSource(dom);
-				StreamResult streamResult = new StreamResult(tableFile);
-				transformer.transform(domSource, streamResult);
-		            createDTD(table);			 
+		 	      Transformer tr = TransformerFactory.newInstance().newTransformer();
+		            tr.setOutputProperty(OutputKeys.INDENT, "yes");
+		            tr.setOutputProperty(OutputKeys.METHOD, "xml");
+		            tr.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+		            tr.transform(new DOMSource(dom), 
+                            new StreamResult(new FileOutputStream(tableFile)));
+		            createDTD(table);
+		            table = null;
+			 
 		} catch (Exception e) {
 			System.out.println("error");
 			e.printStackTrace();
@@ -188,40 +188,25 @@ public class FileManager {
 			pathTable+=System.getProperty("file.separator")+table.getTableName();
 		File tableFile = new File(pathTable+".Xml");
 		if(!tableFile.exists()) {
+			table = null;
 			return false;
 		}
 		try {
-			ArrayList<String> columns = readDTD(new File(tableFile.getAbsolutePath().replace(".Xml", ".dtd")));
-	         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-	         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-	         Document doc = dBuilder.parse(tableFile);
-	         doc.getDocumentElement().normalize();		
-	         NodeList nList = doc.getElementsByTagName("dataTypes");
-	         ArrayList<String>dataTypes = new ArrayList<String>();
-	         for(int i=0;i<nList.getLength();i++) {
-	        	 Node node = nList.item(i);
-	        	 if (node.getNodeType() == Node.ELEMENT_NODE) {
-	        		 Element Element = (Element) node;
-	        		 for(String col:columns) {
-	        			 dataTypes.add(Element.getElementsByTagName(col).item(0).getTextContent());
-	        		 }
-	        	 }
-	         }
-	         table.setAllColumnNamesAndTypes(columns, dataTypes);
-	         NodeList rowNodes = doc.getElementsByTagName("row");
-	         ArrayList<Row> rows = new ArrayList<Row>();
-	         for(int i=0;i<rowNodes.getLength();i++) {
-	        	 Node node = nList.item(i);
-	        	 if (node.getNodeType() == Node.ELEMENT_NODE) {
-	        		 Element Element = (Element) node;
-	        		 Row r = new Row(table);
-	        		 for(String col:columns) {
-	        			 r.updateCell(col, new Cell(Element.getElementsByTagName(col).item(0).getTextContent()));
-	        		 }
-	        		 rows.add(r);
-	        	 }
-	         }
-	         table.setRows(rows);
+			Map<String, ArrayList<String> > map = parseXml(tableFile);
+			int numberOfRow = map.get(map.keySet().toArray()[0]).size();
+			ArrayList<String> columns = readDTD(new File(tableFile.getAbsolutePath().replaceAll(".Xml", ".dtd")));
+			ArrayList<String>types = new ArrayList<String>();
+			for(String s:columns) {
+				types.add(map.get(s).get(0));
+			}
+			table.setAllColumnNamesAndTypes(columns, types);
+			for(int i=1;i<numberOfRow;i++) {
+				Row r = new Row(table);
+				for(Entry<String, ArrayList<String>>e:map.entrySet()) {
+					r.updateCell(e.getKey(), new Cell(e.getValue().get(i)));
+				}
+				table.addRow(r);
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -241,7 +226,7 @@ public class FileManager {
 		pathTable+=System.getProperty("file.separator")+table.getTableName();
 		File tableFile = new File(pathTable+".Xml");
 		if(!tableFile.exists()) {
-			tableFile.delete();
+			return false;
 		}
 	    DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         try {
@@ -264,18 +249,64 @@ public class FileManager {
 			 		}
 			 		rootEle.appendChild(e);
 			 }
-		 		dom.appendChild(rootEle);		
-				TransformerFactory transformerFactory = TransformerFactory.newInstance();
-				Transformer transformer = transformerFactory.newTransformer();
-				DOMSource domSource = new DOMSource(dom);
-				StreamResult streamResult = new StreamResult(tableFile);
-				transformer.transform(domSource, streamResult);
+		 		dom.appendChild(rootEle);
+		 	      Transformer tr = TransformerFactory.newInstance().newTransformer();
+		            tr.setOutputProperty(OutputKeys.INDENT, "yes");
+		            tr.setOutputProperty(OutputKeys.METHOD, "xml");
+		            tr.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+		            tr.transform(new DOMSource(dom), 
+                            new StreamResult(new FileOutputStream(tableFile)));
+		            createDTD(table);
+		            table = null;
+			 
 		} catch (Exception e) {
 			System.out.println("error");
 			e.printStackTrace();
 		}
 		return true;
 	}
+	private static Map<String, ArrayList<String>> parseXml(File tableFile) throws XMLStreamException, IOException {
+		    StringBuilder content = null;
+		    Map<String, ArrayList<String>> dataMap = new HashMap<>();
+		    XMLInputFactory factory = XMLInputFactory.newInstance();
+		    InputStream stream = new ByteArrayInputStream(Files.readAllBytes(tableFile.toPath()));
+		    XMLStreamReader reader = factory.createXMLStreamReader(stream);
+
+		    while (reader.hasNext()) {
+		        int event = reader.next();
+
+		        switch (event) {
+		            case XMLStreamConstants.START_ELEMENT:
+		                content = new StringBuilder();
+		                break;
+
+		            case XMLStreamConstants.CHARACTERS:
+		                if (content != null) {
+		                    content.append(reader.getText().trim());
+		                }
+		                break;
+
+		            case XMLStreamConstants.END_ELEMENT:
+		                if (content != null) {
+		                    String leafText = content.toString();
+		                    if(dataMap.get(reader.getLocalName()) == null){
+		                        ArrayList<String> values = new ArrayList<>();
+		                        values.add(leafText);
+		                        dataMap.put(reader.getLocalName(), values);
+		                    } else {
+		                        dataMap.get(reader.getLocalName()).add(leafText);
+		                    }
+		                }
+		                content = null;
+		                break;
+
+		            case XMLStreamConstants.START_DOCUMENT:
+		                break;
+		        }
+
+		    }
+		    return dataMap;
+		}
 	private ArrayList<String> readDTD(File tableFile) {
 	    List<String> lines = Collections.emptyList(); 
 	    try
