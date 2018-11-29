@@ -3,6 +3,7 @@ package eg.edu.alexu.csd.oop.db.cs01;
 import java.sql.SQLException;
 
 import eg.edu.alexu.csd.oop.db.Database;
+import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
 import eg.edu.alexu.csd.oop.dp.cs01.queries.CreateDatabase;
 import eg.edu.alexu.csd.oop.dp.cs01.queries.IQuery;
 
@@ -43,6 +44,7 @@ public class OurSql implements Database {
 	public boolean executeStructureQuery(String query) throws SQLException {
 		IQuery objectQquery = Parser.getInstance().parseQuery(query);
 		return objectQquery.execute1();
+		
 	}
 
 	@Override

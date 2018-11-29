@@ -17,6 +17,18 @@ public class Table {
 	
 	private static String currentTableName;
 
+	private String databaseName;
+
+	private String tableName;
+
+	private ArrayList<String> columnNamesToLowerCase;
+
+	private ArrayList<String> columnNamesAsGiven;
+
+	private Map<String, String> columnTypes;
+
+	private ArrayList<Row> tableRows;
+	
 	private Table() {
 		this.databaseName = new String();
 		this.tableName = new String();
@@ -58,18 +70,6 @@ public class Table {
 		}
 		return table;
 	}
-	
-	private String databaseName;
-
-	private String tableName;
-
-	private ArrayList<String> columnNamesToLowerCase;
-
-	private ArrayList<String> columnNamesAsGiven;
-
-	private Map<String, String> columnTypes;
-
-	private ArrayList<Row> tableRows;
 
 	public void setAllColumnNamesAndTypes (ArrayList<String> columnNames, ArrayList<String> columnTypes) {
 		this.columnNamesAsGiven = new ArrayList<String>();
