@@ -2,8 +2,6 @@ package eg.edu.alexu.csd.oop.dp.cs01.queries;
 
 import java.util.ArrayList;
 
-import com.sun.org.apache.bcel.internal.generic.CompoundInstruction;
-
 import eg.edu.alexu.csd.oop.db.cs01.condition.ConditionParser;
 import eg.edu.alexu.csd.oop.db.cs01.condition.RelationalCondition;
 import eg.edu.alexu.csd.oop.db.cs01.condition.RelationalSolver;

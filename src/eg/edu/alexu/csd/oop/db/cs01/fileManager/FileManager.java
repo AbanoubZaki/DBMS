@@ -3,7 +3,6 @@ package eg.edu.alexu.csd.oop.db.cs01.fileManager;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
@@ -208,7 +207,6 @@ public class FileManager {
 				table.addRow(r);
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("error");
 		} 
