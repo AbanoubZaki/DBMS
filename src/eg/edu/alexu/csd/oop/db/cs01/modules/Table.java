@@ -205,5 +205,14 @@ public class Table {
 		}
 		return true;
 	}
+	public static class WriteCurrentTable extends Thread {
+
+		@Override
+		public void run(){
+			if(table!=null)
+				FileManager.getInstance().writeTable(table);
+			System.out.println("done");
+		}
+	}
 
 }

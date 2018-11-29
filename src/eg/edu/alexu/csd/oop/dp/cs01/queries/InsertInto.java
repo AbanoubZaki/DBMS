@@ -36,12 +36,6 @@ public class InsertInto extends OurQuery {
 			System.out.println("Table not found.");
 			return 0;
 		}
-		for (int i = 0; i < columnNames.size(); i++) {
-			if (!getTable().getColumnNamesToLowerCase().contains(columnNames.get(i).toLowerCase())) {
-				System.out.println("Column names not found.");
-				return 0;
-			}
-		}
 		if (getTable().getColumnTypes() == null) {
 			System.out.println("column types dismatch happened");
 			return 0;
@@ -52,6 +46,12 @@ public class InsertInto extends OurQuery {
 			if (values.size() != columnNames.size()) {
 				System.out.println(
 						"you have entered " + values.size() + " but table needs " + columnNames.size() + " values.");
+				return 0;
+			}
+		}
+		for (int i = 0; i < columnNames.size(); i++) {
+			if (!getTable().getColumnNamesToLowerCase().contains(columnNames.get(i).toLowerCase())) {
+				System.out.println("Column names not found.");
 				return 0;
 			}
 		}
