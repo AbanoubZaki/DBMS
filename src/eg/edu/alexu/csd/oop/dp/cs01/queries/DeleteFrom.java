@@ -18,11 +18,11 @@ public class DeleteFrom extends OurQuery {
 	public int execute2() {
 		int effectedRows = 0;
 		 effectedRows = getTable().getRows().size();
-		if (getCondition() == null) {
+		if (getCondition().getStringCondition() == null) {
 			 effectedRows = getTable().getRows().size();
 			getTable().setRows(null);
 			return effectedRows;
-		}else if (getCondition() != null) {
+		}else if (getCondition().getStringCondition() != null) {
 			ArrayList<Row> remainingRows = new ArrayList<>();
 			for (Row r:getTable().getRows()) {
 				if (!RelationalSolver.getInstance().isRowSolvingCondition(r, getCondition())) {

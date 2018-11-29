@@ -69,12 +69,12 @@ public class SelectFrom extends OurQuery {
 
 	@Override
 	public boolean execute1() {
-		if (getColumn() == null && getCondition() == null) {
+		if (getColumn() == null && getCondition().getStringCondition() == null) {
 			// 1st constructor
 			setSelected(getTable().getData());
 			return true;
 
-		} else if (getColumn() != null && getCondition() == null) {
+		} else if (getColumn() != null && getCondition().getStringCondition() == null) {
 			// 2nd constructor
 			//return a whole column.
 			/**
@@ -108,7 +108,7 @@ public class SelectFrom extends OurQuery {
 			setSelected(getTable().getData());
 			
 			return true;
-		} else if (getColumn() != null && getCondition() != null) {
+		} else if (getColumn() != null && getCondition().getStringCondition() != null) {
 			// 4th constructor
 			// returns a part of one column only which matches the condition.
 			/**
