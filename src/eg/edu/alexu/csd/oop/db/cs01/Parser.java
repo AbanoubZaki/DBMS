@@ -91,7 +91,7 @@ public class Parser {
 
 		// Creating the right query.
 		if (theMatchers.get(0).find()) {// if the query match create data base.
-			IQuery createDataBaseQuery = new CreateDatabase(theMatchers.get(0).group(1).toLowerCase(), false);
+			IQuery createDataBaseQuery = new CreateDatabase(theMatchers.get(0).group(1).toLowerCase());
 			// group(1) is the name of the data base.
 			theMainDataBase = theMatchers.get(0).group(1).toLowerCase();
 			return createDataBaseQuery;

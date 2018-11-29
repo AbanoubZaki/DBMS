@@ -5,13 +5,10 @@ import eg.edu.alexu.csd.oop.db.cs01.fileManager.FileManager;
 public class CreateDatabase extends OurQuery{
 	
 	private String databaseName;
-		
-	private boolean dropIfExists;
-	
-	public CreateDatabase(String databaseName, boolean dropIfExists) {
+			
+	public CreateDatabase(String databaseName) {
 		super();
 		this.databaseName = databaseName;
-		this.dropIfExists = dropIfExists;
 	}
 	
 	/**
