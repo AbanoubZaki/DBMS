@@ -86,7 +86,8 @@ public class FileManager {
 			pathTable="databases"+System.getProperty("file.separator")+pathTable;
 		pathTable+=System.getProperty("file.separator")+table.getTableName();
 		File tableFile = new File(pathTable+".Xml");
-		if(tableFile.exists()) {
+		File DTDFile = new File(pathTable+".dtd");
+		if(tableFile.exists() && DTDFile.exists()) {
 			return false;
 		}
 	    DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
