@@ -13,7 +13,11 @@ public class DropTable extends OurQuery {
 	public boolean execute1() {
 		if(getTable()==null)
 			return false;
-		return FileManager.getInstance().dropTable(getTable());
+		if(FileManager.getInstance().dropTable(getTable())) {
+			Table.dropCurrentTable();
+			return true;
+		}
+		return false ;
 	}
 
 }

@@ -31,7 +31,6 @@ public class Row {
 	
 	public void updateCell(String columnName , Cell cell) {
 		cells.put(columnName.toLowerCase(), cell);
-		System.out.println(cells.get(columnName).getValue());
 	}
 	public void deleteCell(String columnName) {
 		updateCell(columnName.toLowerCase(), null);

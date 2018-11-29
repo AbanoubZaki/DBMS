@@ -13,6 +13,14 @@ public class Table {
 	
 	private static Table table;
 
+	/**
+	 * @param table the table to set
+	 */
+	public static void dropCurrentTable() {
+		tables.remove(table);
+		Table.table = new Table();
+	}
+
 	private static ArrayList<Table> tables;
 	
 	/**
@@ -59,7 +67,7 @@ public class Table {
 			table = null;
 		}
 		for (Table t : tables) {
-			if (t.getTableName().equals(tableName.toLowerCase())) {
+			if (t.getTableName().equalsIgnoreCase(tableName)) {
 				table = t;
 				currentTableName = tableName;
 				return t;
@@ -209,9 +217,10 @@ public class Table {
 
 		@Override
 		public void run(){
-			if(table!=null)
+			if(table!=null&&!table.getColumnTypes().isEmpty()) {
 				FileManager.getInstance().writeTable(table);
-			System.out.println("done");
+				System.out.println("done");
+			}
 		}
 	}
 

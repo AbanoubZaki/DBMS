@@ -21,7 +21,11 @@ public class CreateTable extends OurQuery {
 			System.out.println("Duplicates found in column names.");
 			return false;
 		}
-		return FileManager.getInstance().createTable(getTable());
+		if(!FileManager.getInstance().createTable(getTable())) {
+			FileManager.getInstance().readTable(getTable());
+			return false;
+		}
+		return true;
 	}
 
 }

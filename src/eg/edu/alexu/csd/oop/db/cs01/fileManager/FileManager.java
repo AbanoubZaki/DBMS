@@ -301,6 +301,8 @@ public class FileManager {
 		        }
 
 		    }
+		    stream.close();
+		    reader.close();
 		    return dataMap;
 		}
 	private ArrayList<String> readDTD(File tableFile) {

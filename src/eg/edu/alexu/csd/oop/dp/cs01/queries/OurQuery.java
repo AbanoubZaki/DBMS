@@ -25,7 +25,7 @@ public class OurQuery implements IQuery {
 
 	public void setTable(Table table) {
 		this.table = table;
-		readTable();
+//		readTable();
 	}	
 	
 	@Override
