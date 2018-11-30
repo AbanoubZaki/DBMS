@@ -36,7 +36,7 @@ public class InsertInto extends OurQuery {
 			return 0;
 		}
 		if (getTable().getColumnTypes() == null) {
-			System.out.println("column types dismatch happened");
+			System.out.println("Datatype mismatch happened.");
 			return 0;
 		}
 		if (columnNames == null) {

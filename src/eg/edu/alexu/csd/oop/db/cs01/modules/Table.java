@@ -208,7 +208,7 @@ public class Table {
 			if (getColumnTypes().get(columnNames.get(i).toLowerCase()).equals("int")) {
 				if (dataChecker.getInstance().checkType(values.get(i)).equals("int")) {
 				} else {
-					System.out.println("datatype mismatch");
+					System.out.println("Datatype mismatch happened.");
 					return false;
 				}
 			}
@@ -221,7 +221,7 @@ public class Table {
 		public void run(){
 			if(table!=null&&!table.getColumnTypes().isEmpty()) {
 				FileManager.getInstance().writeTable(table);
-				System.out.println("done ;)");
+				System.out.println("Done ;)");
 			}
 		}
 	}

@@ -78,7 +78,7 @@ public class FileManager {
 	}
 	public boolean createTable(Table table) {
 		if (table.getDatabaseName() == null) {
-			System.out.println("database is unknown");
+			System.out.println("Database is unknown.");
 			return false;
 		}
 		String pathTable = table.getDatabaseName();
@@ -126,7 +126,7 @@ public class FileManager {
 		            createDTD(table);
 			 
 		} catch (Exception e) {
-			System.out.println("error");
+			System.out.println("Error happened bs msh ha2olak 3aleh.");
 			e.printStackTrace();
 		}
 		return true;
@@ -140,7 +140,7 @@ public class FileManager {
 	 */
 	public boolean dropTable(Table table) {
 		if (table.getDatabaseName() == null) {
-			System.out.println("database is unknown");
+			System.out.println("Database is unknown.");
 			return false;
 		}
 		String pathTable = table.getDatabaseName();
@@ -184,7 +184,7 @@ public class FileManager {
 	}
 	public boolean readTable(Table table) {
 		if (table.getDatabaseName() == null) {
-			System.out.println("database is unknown");
+			System.out.println("Database is unknown.");
 			return false;
 		}
 		String pathTable = table.getDatabaseName();
@@ -224,7 +224,7 @@ public class FileManager {
 	}
 	public boolean writeTable(Table table) {
 		if (table.getDatabaseName() == null) {
-			System.out.println("database is unknown");
+			System.out.println("Database is unknown.");
 			return false;
 		}
 		String pathTable = table.getDatabaseName();
@@ -267,7 +267,7 @@ public class FileManager {
 		            tr.transform(new DOMSource(dom), 
                             new StreamResult(tableFile));			 
 		} catch (Exception e) {
-			System.out.println("error");
+			System.out.println("Error happened bs msh ha2olak 3aleh.");
 			e.printStackTrace();
 		}
 		return true;

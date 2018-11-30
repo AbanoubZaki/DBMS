@@ -83,7 +83,7 @@ public class SelectFrom extends OurQuery {
 			 * if its a imaginary column the return false.
 			 */
 			if (!getTable().getColumnNamesToLowerCase().contains(getColumn().toLowerCase())) {
-				System.out.println("column \"" + getColumn() + "\" not found");
+				System.out.println("Column \"" + getColumn() + "\" not found.");
 				return false;
 			}
 			selected = new Object[getTable().getRows().size()][1];
@@ -117,13 +117,11 @@ public class SelectFrom extends OurQuery {
 					if (getTable().getColumnTypes().get(getTable().getColumnNamesToLowerCase().get(j)).equals("int")) {
 						if(r.getCells().get(getTable().getColumnNamesToLowerCase().get(j))!=null) {
 							selected[i][j]=(Integer.parseInt(r.getCells().get(getTable().getColumnNamesToLowerCase().get(j)).getValue()));
-							System.out.println(selected[i][j]);
 						} else {
 							selected[i][j]=null;
 						}
 					} else if (getTable().getColumnTypes().get(getTable().getColumnNamesToLowerCase().get(j)).equals("varchar")) {
 						selected[i][j] = r.getCells().get(getTable().getColumnNamesToLowerCase().get(j)).getValue();
-						System.out.println(selected[i][j]);
 					}
 				}
 			}
@@ -145,7 +143,6 @@ public class SelectFrom extends OurQuery {
 			for (int i = 0; i < getTable().getRows().size(); i++) {
 				Row r = getTable().getRows().get(i);
 				if (RelationalSolver.getInstance().isRowSolvingCondition(r, getCondition())) {
-					System.out.println(getColumnType());
 					if (getColumnType().equals("varchar")) {
 						selectedPartOfColumn.add(getTable().getRow(i).getCells().get(getColumn().toLowerCase()).getValue());
 					} else {

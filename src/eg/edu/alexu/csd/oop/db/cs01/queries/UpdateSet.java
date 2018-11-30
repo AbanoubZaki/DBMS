@@ -33,7 +33,7 @@ public class UpdateSet extends OurQuery {
 			return 0;
 		}
 		if(getTable().getData()==null) {
-			new SQLException("table not found");
+			new SQLException("Table not found.");
 			return 0;
 		}
 		for (int i = 0; i < columnNames.size(); i++) {

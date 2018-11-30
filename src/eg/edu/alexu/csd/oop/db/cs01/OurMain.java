@@ -1,16 +1,29 @@
 package eg.edu.alexu.csd.oop.db.cs01;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.SQLException;
+import java.util.Scanner;
 
 public class OurMain {
-	public static void main(String[] args) throws SQLException {
+	public static void main(String[] args) throws SQLException, IOException {
 
+		
+		while (true) {
+			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+			String query = br.readLine();
+			if (query.equals("exit")) {
+				break;
+			}
+			GeneralParser.getInstance().parse(query);
+		}
 //		GeneralParser.getInstance().parse("");
 		
-		GeneralParser.getInstance().parse("CREATE DATABASE school;");
-		GeneralParser.getInstance().parse("create table s4 (names varchar , coursesNo int, creditHours int);");
-		GeneralParser.getInstance().parse("insert into s4 values(bebo, 6 , 18);");
-		
+//		GeneralParser.getInstance().parse("CREATE DATABASE school;");
+//		GeneralParser.getInstance().parse("create table s4 (names varchar , coursesNo int, creditHours int);");
+//		GeneralParser.getInstance().parse("insert into s4 values(bebo, 6 , 18);");
+//		
 //		GeneralParser.getInstance().parse("DELETE FROM s4;");
 		
 //		GeneralParser.getInstance().parse("CREATE TABLE S (ID int, FirstN varchar, LastN varchar, City varchar);");
