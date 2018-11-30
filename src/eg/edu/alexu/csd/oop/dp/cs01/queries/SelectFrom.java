@@ -57,7 +57,7 @@ public class SelectFrom extends OurQuery {
 
 	@Override
 	public void setColumnType() {
-		this.columnType  = getTable().getColumnTypes().get(getColumn());
+		this.columnType  = getTable().getColumnTypes().get(getColumn().toLowerCase());
 	}
 
 	@Override

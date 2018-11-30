@@ -8,14 +8,15 @@ public class OurMain {
 	public static void main(String[] args) throws SQLException {
 
 		GeneralParser.getInstance().parse("CREATE DATABASE school;");
-		GeneralParser.getInstance().parse("CREATE TABLE S (ID int, FirstN varchar, LastN varchar, City varchar);");
+//		GeneralParser.getInstance().parse("CREATE TABLE S (ID int, FirstN varchar, LastN varchar, City varchar);");
 //		GeneralParser.getInstance().parse(
-//				"INSERT INTO S (LastN ,FirstN ,City) VALUES ('Asharf', 'Abanoub', 'Alex');");
+//				"INSERT INTO S (id, LastN ,FirstN ,City) VALUES (4 ,'Asharf', 'Abanoub', 'Alex');");
 //		GeneralParser.getInstance().parse("CREATE TABLE S2 (ID int, FirstN varchar, LastN varchar, City varchar);");
-		GeneralParser.getInstance().parse(
-				"INSERT INTO S (LastN ,FirstN ,City) VALUES ('mico', 'said', 'Alex');");
+//		GeneralParser.getInstance().parse(
+//				"INSERT INTO S2 (LastN ,FirstN ,City) VALUES ('mico2', 'said', 'Alex');");
 //		GeneralParser.getInstance().parse("drop TABLE s2");	
-//		GeneralParser.getInstance().parse("SELECT * FROM s2;");
+//		GeneralParser.getInstance().parse("UPDATE s SET id = 4, City= 'Frankfurt' WHERE ID >= 2;");
+		GeneralParser.getInstance().parse("UPDATE s2 SET id = 4 WHERE firstn ='said';");
 //		for(int i=0;i<GeneralParser.getInstance().getCurrentData().length;i++) {
 //			for(int j=0;j<GeneralParser.getInstance().getCurrentData()[i].length;j++)
 //				System.out.println(GeneralParser.getInstance().getCurrentData()[i][j]);

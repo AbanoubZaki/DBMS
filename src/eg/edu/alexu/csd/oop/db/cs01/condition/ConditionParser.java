@@ -27,8 +27,11 @@ public class ConditionParser {
 		if(table==null)
 			return null;
 		if (theMatcher.find()) {
-			String op = theMatcher.group(2).replace("=", "==");
-			op = op.replace("<>","!=");
+			String op = theMatcher.group(2);
+			if(op.equals("="))
+				op+=op;
+			if(op.equals("<>"))
+				op="!=";
 			RelationalOperand leftAgrument = null;
 			RelationalOperand rightAgrument = null;
 			if(!table.getColumnNamesToLowerCase().contains(theMatcher.group(1).toLowerCase())) {

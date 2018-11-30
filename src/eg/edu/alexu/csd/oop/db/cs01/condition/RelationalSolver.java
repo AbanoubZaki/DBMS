@@ -42,7 +42,7 @@ public class RelationalSolver {
 		ScriptEngineManager sem = new ScriptEngineManager();
 		ScriptEngine sm = sem.getEngineByName("JavaScript");
 		try {
-			System.out.println(sm.eval(var1.getOperand().toLowerCase()+operation+var2.getOperand().toLowerCase()));
+			System.out.println(var1.getOperand().toLowerCase()+operation+var2.getOperand().toLowerCase());
 			return (boolean) sm.eval(var1.getOperand().toLowerCase()+operation+var2.getOperand().toLowerCase());
 		} catch (ScriptException e) {
 			System.out.println("error");

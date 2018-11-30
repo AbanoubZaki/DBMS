@@ -14,7 +14,7 @@ public class dataChecker {
 
 	public String checkType(String dataWord) {
 		try {
-			Integer.parseInt(dataWord);
+			Integer.parseInt(dataWord.replaceAll(" ", ""));
 			return "int";
 		} catch (NumberFormatException e) {
 			return "varchar";
