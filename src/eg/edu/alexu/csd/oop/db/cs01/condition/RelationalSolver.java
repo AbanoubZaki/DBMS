@@ -9,7 +9,11 @@ import eg.edu.alexu.csd.oop.db.cs01.modules.Row;
 public class RelationalSolver {
 
 	private static RelationalSolver solver;
+	private ScriptEngineManager sem;
+	private ScriptEngine sm ;
 	private RelationalSolver() {
+		sem = new ScriptEngineManager();
+		sm = sem.getEngineByName("JavaScript");
 	}
 	public static RelationalSolver getInstance() {
 		if(solver==null) {
@@ -39,14 +43,12 @@ public class RelationalSolver {
 		
 	}
 	public boolean getRelationResult(RelationalOperand var1 ,RelationalOperand var2 ,String operation) {
-		ScriptEngineManager sem = new ScriptEngineManager();
-		ScriptEngine sm = sem.getEngineByName("JavaScript");
+		if(var1.getOperand()==null||var1.getOperand()==null)
+			return false;
 		try {
-			System.out.println(var1.getOperand().toLowerCase()+operation+var2.getOperand().toLowerCase());
 			return (boolean) sm.eval(var1.getOperand().toLowerCase()+operation+var2.getOperand().toLowerCase());
 		} catch (ScriptException e) {
 			System.out.println("error");
-			
 		}
 		return false;
 	}

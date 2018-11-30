@@ -2,8 +2,6 @@ package eg.edu.alexu.csd.oop.db.cs01;
 
 import java.sql.SQLException;
 
-import eg.edu.alexu.csd.oop.dp.cs01.queries.IQuery;
-
 public class OurMain {
 	public static void main(String[] args) throws SQLException {
 
@@ -12,11 +10,11 @@ public class OurMain {
 //		GeneralParser.getInstance().parse(
 //				"INSERT INTO S (id, LastN ,FirstN ,City) VALUES (4 ,'Asharf', 'Abanoub', 'Alex');");
 //		GeneralParser.getInstance().parse("CREATE TABLE S2 (ID int, FirstN varchar, LastN varchar, City varchar);");
-//		GeneralParser.getInstance().parse(
-//				"INSERT INTO S2 (LastN ,FirstN ,City) VALUES ('mico2', 'said', 'Alex');");
+		GeneralParser.getInstance().parse(
+				"INSERT INTO S2 (LastN ,FirstN ,City) VALUES ('mico', 'said', 'Alex');");
 //		GeneralParser.getInstance().parse("drop TABLE s2");	
 //		GeneralParser.getInstance().parse("UPDATE s SET id = 4, City= 'Frankfurt' WHERE ID >= 2;");
-		GeneralParser.getInstance().parse("UPDATE s2 SET id = 4 WHERE firstn ='said';");
+		GeneralParser.getInstance().parse("DELETE FROM s4;");
 //		for(int i=0;i<GeneralParser.getInstance().getCurrentData().length;i++) {
 //			for(int j=0;j<GeneralParser.getInstance().getCurrentData()[i].length;j++)
 //				System.out.println(GeneralParser.getInstance().getCurrentData()[i][j]);

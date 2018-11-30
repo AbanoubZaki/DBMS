@@ -1,5 +1,6 @@
 package eg.edu.alexu.csd.oop.dp.cs01.queries;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import eg.edu.alexu.csd.oop.db.cs01.condition.RelationalCondition;
@@ -15,12 +16,16 @@ public class DeleteFrom extends OurQuery {
 	}
 	
 	@Override
-	public int execute2() {
+	public int execute2() throws SQLException {
+		
+		if(getTable().getColumnTypes().isEmpty()) {
+			throw new SQLException("no such table: "+getTable().getTableName());
+		}
 		int effectedRows = 0;
 		 effectedRows = getTable().getRows().size();
 		if (getCondition().getStringCondition() == null) {
 			 effectedRows = getTable().getRows().size();
-			getTable().setRows(null);
+			getTable().getRows().clear();
 			return effectedRows;
 		}else if (getCondition().getStringCondition() != null) {
 			ArrayList<Row> remainingRows = new ArrayList<>();
