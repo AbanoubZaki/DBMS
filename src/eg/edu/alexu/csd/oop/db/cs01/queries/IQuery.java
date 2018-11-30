@@ -1,4 +1,4 @@
-package eg.edu.alexu.csd.oop.dp.cs01.queries;
+package eg.edu.alexu.csd.oop.db.cs01.queries;
 
 import java.sql.SQLException;
 
@@ -28,9 +28,8 @@ public interface IQuery {
 	 * successfully executed. returns false if a problem occurred.
 	 * 
 	 * @return
-	 * @throws SQLException 
 	 */
-	public boolean execute1() throws SQLException;
+	public boolean execute1();
 	
 	
 	public int execute2() throws SQLException;

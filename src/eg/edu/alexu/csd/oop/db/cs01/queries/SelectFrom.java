@@ -1,6 +1,5 @@
-package eg.edu.alexu.csd.oop.dp.cs01.queries;
+package eg.edu.alexu.csd.oop.db.cs01.queries;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import eg.edu.alexu.csd.oop.db.cs01.condition.ConditionParser;
@@ -57,7 +56,7 @@ public class SelectFrom extends OurQuery {
 
 	@Override
 	public void setColumnType() {
-		this.columnType  = getTable().getColumnTypes().get(getColumn().toLowerCase());
+		this.columnType  = getTable().getColumnTypes().get(getColumn());
 	}
 
 	@Override
@@ -71,10 +70,7 @@ public class SelectFrom extends OurQuery {
 	}
 
 	@Override
-	public boolean execute1() throws SQLException {
-		if(getTable().getColumnTypes().isEmpty()) {
-			throw new SQLException("no such table: "+getTable().getTableName());
-		}
+	public boolean execute1() {
 		if (getColumn() == null && getCondition().getStringCondition() == null) {
 			// 1st constructor
 			setSelected(getTable().getData());

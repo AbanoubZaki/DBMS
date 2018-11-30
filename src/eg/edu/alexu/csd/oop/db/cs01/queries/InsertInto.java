@@ -1,6 +1,5 @@
-package eg.edu.alexu.csd.oop.dp.cs01.queries;
+package eg.edu.alexu.csd.oop.db.cs01.queries;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import eg.edu.alexu.csd.oop.db.cs01.dataChecker;
@@ -31,9 +30,10 @@ public class InsertInto extends OurQuery {
 	 * table in the file using file manager.
 	 */
 	@Override
-	public int execute2()throws SQLException {
-		if(getTable().getColumnTypes().isEmpty()) {
-			throw new SQLException("no such table: "+getTable().getTableName());
+	public int execute2() {
+		if (getTable()==null||getTable().getColumnTypes()==null) {
+			System.out.println("Table not found.");
+			return 0;
 		}
 		if (getTable().getColumnTypes() == null) {
 			System.out.println("column types dismatch happened");

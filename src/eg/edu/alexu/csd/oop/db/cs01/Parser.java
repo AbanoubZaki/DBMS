@@ -7,15 +7,15 @@ import java.util.regex.Pattern;
 
 import eg.edu.alexu.csd.oop.db.cs01.condition.RelationalCondition;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
-import eg.edu.alexu.csd.oop.dp.cs01.queries.CreateDatabase;
-import eg.edu.alexu.csd.oop.dp.cs01.queries.CreateTable;
-import eg.edu.alexu.csd.oop.dp.cs01.queries.DeleteFrom;
-import eg.edu.alexu.csd.oop.dp.cs01.queries.DropDatabase;
-import eg.edu.alexu.csd.oop.dp.cs01.queries.DropTable;
-import eg.edu.alexu.csd.oop.dp.cs01.queries.IQuery;
-import eg.edu.alexu.csd.oop.dp.cs01.queries.InsertInto;
-import eg.edu.alexu.csd.oop.dp.cs01.queries.SelectFrom;
-import eg.edu.alexu.csd.oop.dp.cs01.queries.UpdateSet;
+import eg.edu.alexu.csd.oop.db.cs01.queries.CreateDatabase;
+import eg.edu.alexu.csd.oop.db.cs01.queries.CreateTable;
+import eg.edu.alexu.csd.oop.db.cs01.queries.DeleteFrom;
+import eg.edu.alexu.csd.oop.db.cs01.queries.DropDatabase;
+import eg.edu.alexu.csd.oop.db.cs01.queries.DropTable;
+import eg.edu.alexu.csd.oop.db.cs01.queries.IQuery;
+import eg.edu.alexu.csd.oop.db.cs01.queries.InsertInto;
+import eg.edu.alexu.csd.oop.db.cs01.queries.SelectFrom;
+import eg.edu.alexu.csd.oop.db.cs01.queries.UpdateSet;
 
 public class Parser {
 

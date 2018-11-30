@@ -4,7 +4,7 @@ import java.sql.SQLException;
 
 import eg.edu.alexu.csd.oop.db.Database;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
-import eg.edu.alexu.csd.oop.dp.cs01.queries.IQuery;
+import eg.edu.alexu.csd.oop.db.cs01.queries.IQuery;
 
 public class OurSql implements Database {
 

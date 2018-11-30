@@ -1,4 +1,4 @@
-package eg.edu.alexu.csd.oop.dp.cs01.queries;
+package eg.edu.alexu.csd.oop.db.cs01.queries;
 
 import java.sql.SQLException;
 
@@ -29,7 +29,7 @@ public class OurQuery implements IQuery {
 	}	
 	
 	@Override
-	public boolean execute1() throws SQLException {
+	public boolean execute1() {
 		return false;
 	}
 

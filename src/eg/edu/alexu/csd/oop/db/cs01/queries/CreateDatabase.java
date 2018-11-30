@@ -1,4 +1,4 @@
-package eg.edu.alexu.csd.oop.dp.cs01.queries;
+package eg.edu.alexu.csd.oop.db.cs01.queries;
 
 import eg.edu.alexu.csd.oop.db.cs01.fileManager.FileManager;
 

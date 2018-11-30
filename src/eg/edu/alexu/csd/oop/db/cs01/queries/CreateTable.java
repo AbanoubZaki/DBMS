@@ -1,4 +1,4 @@
-package eg.edu.alexu.csd.oop.dp.cs01.queries;
+package eg.edu.alexu.csd.oop.db.cs01.queries;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -21,7 +21,11 @@ public class CreateTable extends OurQuery {
 			System.out.println("Duplicates found in column names.");
 			return false;
 		}
-		return FileManager.getInstance().createTable(getTable());
+		if(!FileManager.getInstance().createTable(getTable())) {
+			FileManager.getInstance().readTable(getTable());
+			return false;
+		}
+		return true;
 	}
 
 }
