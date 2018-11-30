@@ -1,15 +1,23 @@
 package eg.edu.alexu.csd.oop.db.cs01.condition;
 
+import java.util.ArrayList;
+
 public class LogicalCondition {
 	
-	private RelationalCondition condition1;
+	private ArrayList<RelationalCondition> relationalConditions;
 	
-	private RelationalCondition condition2;
-	
-	private String logicalSign;
-	
-	private String logicalOperation;
-	
+	/**
+	 * @return the relationalConditions
+	 */
+	public ArrayList<RelationalCondition> getRelationalConditions() {
+		return relationalConditions;
+	}
+	/**
+	 * @param relationalConditions the relationalConditions to set
+	 */
+	public void setRelationalConditions(ArrayList<RelationalCondition> relationalConditions) {
+		this.relationalConditions = relationalConditions;
+	}
 	private String stringCondition;
 	/**
 	 * @return the stringCondition
@@ -23,41 +31,12 @@ public class LogicalCondition {
 	public void setStringCondition(String stringCondition) {
 		this.stringCondition = stringCondition;
 	}
-
-	public LogicalCondition(String logicalOperation) {
-		setLogicalOperation(logicalOperation);
-	}
 	
-	public RelationalCondition getCondition1() {
-		return condition1;
-	}
-
-	public void setCondition1(RelationalCondition condition1) {
-		this.condition1 = condition1;
-	}
-
-	public RelationalCondition getCondition2() {
-		return condition2;
-	}
-
-	public void setCondition2(RelationalCondition condition2) {
-		this.condition2 = condition2;
-	}
-
-	public String getLogicalSign() {
-		return logicalSign;
-	}
-
-	public void setLogicalSign(String logicalSign) {
-		this.logicalSign = logicalSign;
-	}
-
-	public String getLogicalOperation() {
-		return logicalOperation;
-	}
-
-	public void setLogicalOperation(String logicalOperation) {
-		this.logicalOperation = logicalOperation;
+	public LogicalCondition(String stringCondition) {
+		
+		this.stringCondition=stringCondition;
+		LogicalCondition condition = ConditionParser.getInstance().stringToLogicalCondition(stringCondition);
+		setRelationalConditions(condition.getRelationalConditions());
 	}
 		
 	

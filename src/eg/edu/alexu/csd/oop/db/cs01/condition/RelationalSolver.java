@@ -1,19 +1,11 @@
 package eg.edu.alexu.csd.oop.db.cs01.condition;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
-
 import eg.edu.alexu.csd.oop.db.cs01.modules.Row;
 
 public class RelationalSolver {
 
 	private static RelationalSolver solver;
-	private ScriptEngineManager sem;
-	private ScriptEngine sm ;
 	private RelationalSolver() {
-		sem = new ScriptEngineManager();
-		sm = sem.getEngineByName("JavaScript");
 	}
 	public static RelationalSolver getInstance() {
 		if(solver==null) {
@@ -35,22 +27,18 @@ public class RelationalSolver {
 			return compareValueCol(row, condition);
 		
 	}
-	public boolean compareTwoValue(RelationalCondition condition) {
+	private boolean compareTwoValue(RelationalCondition condition) {
 		if(!condition.getLeftAgrument().getType().equals(condition.getRightAgrument().getType())) {
 			System.out.println("error");
 		}
 		return getRelationResult(condition.getLeftAgrument(), condition.getRightAgrument(), condition.getOperation());
 		
 	}
-	public boolean getRelationResult(RelationalOperand var1 ,RelationalOperand var2 ,String operation) {
+	private boolean getRelationResult(RelationalOperand var1 ,RelationalOperand var2 ,String operation) {
 		if(var1.getOperand()==null||var1.getOperand()==null)
 			return false;
-		try {
-			return (boolean) sm.eval(var1.getOperand().toLowerCase()+operation+var2.getOperand().toLowerCase());
-		} catch (ScriptException e) {
-			System.out.println("error");
-		}
-		return false;
+			return JavaScriptEngine.getInstance().getResult(var1.getOperand().toLowerCase()+operation+var2.getOperand().toLowerCase());
+			
 	}
 	private boolean compareValueCol(Row row , RelationalCondition condition){
 		if(!condition.getLeftAgrument().isVariable()) {
@@ -59,7 +47,7 @@ public class RelationalSolver {
 
 		}else {
 			RelationalOperand rp = new RelationalOperand(row.getCellByColumn(condition.getRightAgrument().getOperand()), false,condition.getRightAgrument().getType());
-			return getRelationResult(rp,condition.getRightAgrument(), condition.getOperation());		
+			return getRelationResult(rp,condition.getLeftAgrument(), condition.getOperation());		
 		}			
 	}
 	private boolean compareTwoCol(Row row , RelationalCondition condition) {

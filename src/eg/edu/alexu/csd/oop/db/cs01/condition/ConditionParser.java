@@ -50,9 +50,7 @@ public class ConditionParser {
 	}
 	
 	public LogicalCondition stringToLogicalCondition(String logicalCondition) {
-		Table table = Table.getInstance();
-		if(table==null)
+			// regex
 			return null;
-		return null;
 	}
 }
