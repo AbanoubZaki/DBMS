@@ -9,6 +9,7 @@ import java.util.Scanner;
 public class OurMain {
 	public static void main(String[] args) throws SQLException, IOException {
 
+		System.out.println("Enter Queries :");
 		
 		while (true) {
 			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));

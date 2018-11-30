@@ -162,8 +162,7 @@ public class Parser {
 			Table.getInstance(theMatchers.get(4).group(1),theMainDataBase);
 			IQuery insertIntoTableColumnsAndValuesQuery = new InsertInto(Table.getInstance(), columnNames, values);
 			return insertIntoTableColumnsAndValuesQuery;
-		} else if (theMatchers.get(5).find()) {// if the query match insert Into Table Values
-												// Only.
+		} else if (theMatchers.get(5).find()) {// if the query match insert Into Table Values Only.
 			if (theMainDataBase == null) {
 				System.out.println("There is NO DataBase selected");
 				return null;

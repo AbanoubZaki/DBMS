@@ -39,7 +39,7 @@ public class InsertInto extends OurQuery {
 			System.out.println("Datatype mismatch happened.");
 			return 0;
 		}
-		if (columnNames == null) {
+		if (columnNames == null || columnNames.isEmpty()) {
 			columnNames = getTable().getColumnNamesToLowerCase();
 			// no of values must be equal to no of columns.
 			if (values.size() != columnNames.size()) {
