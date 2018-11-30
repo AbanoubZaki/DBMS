@@ -88,6 +88,7 @@ public class FileManager {
 		File tableFile = new File(pathTable+".Xml");
 		File DTDFile = new File(pathTable+".dtd");
 		if(tableFile.exists() && DTDFile.exists()) {
+			System.out.println("Failed to create table, Table already exists.");
 			return false;
 		}
 	    DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();

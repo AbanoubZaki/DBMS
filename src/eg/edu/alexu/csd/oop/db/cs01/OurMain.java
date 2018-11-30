@@ -8,8 +8,10 @@ public class OurMain {
 //		GeneralParser.getInstance().parse("");
 		
 		GeneralParser.getInstance().parse("CREATE DATABASE school;");
-		GeneralParser.getInstance().parse("create table s4 (names varchar , coursesNo int);");
-		GeneralParser.getInstance().parse("insert into s4 values(bebo, 6);");
+		GeneralParser.getInstance().parse("create table s4 (names varchar , coursesNo int, creditHours int);");
+		GeneralParser.getInstance().parse("insert into s4 values(bebo, 6 , 18);");
+		
+//		GeneralParser.getInstance().parse("DELETE FROM s4;");
 		
 //		GeneralParser.getInstance().parse("CREATE TABLE S (ID int, FirstN varchar, LastN varchar, City varchar);");
 //		GeneralParser.getInstance().parse(
@@ -19,7 +21,7 @@ public class OurMain {
 //				"INSERT INTO S2 (LastN ,FirstN ,City) VALUES ('mico', 'said', 'Alex');");
 //		GeneralParser.getInstance().parse("drop TABLE s2");	
 //		GeneralParser.getInstance().parse("UPDATE s SET id = 4, City= 'Frankfurt' WHERE ID >= 2;");
-		GeneralParser.getInstance().parse("DELETE FROM s4;");
+		
 //		for(int i=0;i<GeneralParser.getInstance().getCurrentData().length;i++) {
 //			for(int j=0;j<GeneralParser.getInstance().getCurrentData()[i].length;j++)
 //				System.out.println(GeneralParser.getInstance().getCurrentData()[i][j]);

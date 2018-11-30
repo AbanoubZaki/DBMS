@@ -221,7 +221,7 @@ public class Table {
 		public void run(){
 			if(table!=null&&!table.getColumnTypes().isEmpty()) {
 				FileManager.getInstance().writeTable(table);
-				System.out.println("done");
+				System.out.println("done ;)");
 			}
 		}
 	}
