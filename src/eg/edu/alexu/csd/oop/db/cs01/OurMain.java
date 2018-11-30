@@ -10,8 +10,8 @@ public class OurMain {
 //		GeneralParser.getInstance().parse(
 //				"INSERT INTO S (id, LastN ,FirstN ,City) VALUES (4 ,'Asharf', 'Abanoub', 'Alex');");
 //		GeneralParser.getInstance().parse("CREATE TABLE S2 (ID int, FirstN varchar, LastN varchar, City varchar);");
-		GeneralParser.getInstance().parse(
-				"INSERT INTO S2 (LastN ,FirstN ,City) VALUES ('mico', 'said', 'Alex');");
+//		GeneralParser.getInstance().parse(
+//				"INSERT INTO S2 (LastN ,FirstN ,City) VALUES ('mico', 'said', 'Alex');");
 //		GeneralParser.getInstance().parse("drop TABLE s2");	
 //		GeneralParser.getInstance().parse("UPDATE s SET id = 4, City= 'Frankfurt' WHERE ID >= 2;");
 		GeneralParser.getInstance().parse("DELETE FROM s4;");
