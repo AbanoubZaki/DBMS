@@ -246,7 +246,7 @@ public class FileManager {
 				 typesElement.appendChild(typeElement);
 			 }
 			 rootEle.appendChild(typesElement);
-			 	for(Row r:table.getRows()) {
+			 for(Row r:table.getRows()) {
 			 		Element e = dom.createElement("row");
 			 		for(String col:table.getColumnNamesAsGiven()) {
 			 			Element elementCell = dom.createElement(col);
@@ -256,7 +256,7 @@ public class FileManager {
 			 				elementCell.appendChild(dom.createTextNode("null"));
 			 			e.appendChild(elementCell);
 			 		}
-			 		rootEle.appendChild(e);
+			 		rootEle.appendChild(e);	
 			 }
 		 		dom.appendChild(rootEle);
 		 	      Transformer tr = TransformerFactory.newInstance().newTransformer();

@@ -33,7 +33,7 @@ public class DeleteFrom extends OurQuery {
 		
 		int effectedRows = getTable().getRows().size();
 		if (getCondition().getStringCondition() == null) {
-			getTable().setRows(null);
+			getTable().getRows().clear();
 			return effectedRows;
 		}else if (getCondition().getStringCondition() != null) {
 			ArrayList<Row> remainingRows = new ArrayList<>();

@@ -5,7 +5,12 @@ import java.sql.SQLException;
 public class OurMain {
 	public static void main(String[] args) throws SQLException {
 
+//		GeneralParser.getInstance().parse("");
+		
 		GeneralParser.getInstance().parse("CREATE DATABASE school;");
+		GeneralParser.getInstance().parse("create table s4 (names varchar , coursesNo int);");
+		GeneralParser.getInstance().parse("insert into s4 values(bebo, 6);");
+		
 //		GeneralParser.getInstance().parse("CREATE TABLE S (ID int, FirstN varchar, LastN varchar, City varchar);");
 //		GeneralParser.getInstance().parse(
 //				"INSERT INTO S (id, LastN ,FirstN ,City) VALUES (4 ,'Asharf', 'Abanoub', 'Alex');");
