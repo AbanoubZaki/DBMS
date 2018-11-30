@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
-import java.util.Scanner;
 
 public class OurMain {
 	public static void main(String[] args) throws SQLException, IOException {
@@ -19,8 +18,11 @@ public class OurMain {
 			}
 			GeneralParser.getInstance().parse(query);
 			if (GeneralParser.getInstance().getCurrentData() != null) {
-				System.out.println(GeneralParser.getInstance().getCurrentData().length);
-				System.out.println(GeneralParser.getInstance().getCurrentData()[0].length);
+				for(int i=0;i<GeneralParser.getInstance().getCurrentData().length;i++) {
+					for(int j=0;j<GeneralParser.getInstance().getCurrentData()[i].length;j++)
+						System.out.print(GeneralParser.getInstance().getCurrentData()[i][j]+" ");
+					System.out.println();
+				}
 			}
 		}
 //		GeneralParser.getInstance().parse("");
@@ -49,6 +51,6 @@ public class OurMain {
 		 * INSERT INTO Persons (PersonID ,LastName ,FirstName ,City) VALUES
 		 * (5, 'Asharf', 'Abanoub', 'Alex'); DROP TABLE Persons;
 		 */
-
+//select * from logicalConditions where CustomerID = 2 and City = "alex"
 	}
 }

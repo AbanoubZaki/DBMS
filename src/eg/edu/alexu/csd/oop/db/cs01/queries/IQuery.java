@@ -2,7 +2,7 @@ package eg.edu.alexu.csd.oop.db.cs01.queries;
 
 import java.sql.SQLException;
 
-import eg.edu.alexu.csd.oop.db.cs01.condition.RelationalCondition;
+import eg.edu.alexu.csd.oop.db.cs01.condition.LogicalCondition;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
 
 public interface IQuery {
@@ -28,8 +28,9 @@ public interface IQuery {
 	 * successfully executed. returns false if a problem occurred.
 	 * 
 	 * @return
+	 * @throws SQLException 
 	 */
-	public boolean execute1();
+	public boolean execute1() throws SQLException;
 	
 	
 	public int execute2() throws SQLException;
@@ -45,9 +46,9 @@ public interface IQuery {
 
 	public String getColumn();
 
-	public void setCondition(RelationalCondition condition);
+	public void setCondition(LogicalCondition condition);
 
-	public RelationalCondition getCondition();
+	public LogicalCondition getCondition();
 	
 	public void setSelected(Object[][] selected);
 	
@@ -57,7 +58,6 @@ public interface IQuery {
 	
 	public int getColumnIndex();
 
-	void setColumnType();
-	
+	void setColumnType();	
 	
 }

@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import eg.edu.alexu.csd.oop.db.cs01.condition.RelationalCondition;
+import eg.edu.alexu.csd.oop.db.cs01.condition.LogicalCondition;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
 import eg.edu.alexu.csd.oop.db.cs01.queries.CreateDatabase;
 import eg.edu.alexu.csd.oop.db.cs01.queries.CreateTable;
@@ -31,13 +31,13 @@ public class Parser {
 		final String drobTablePattern = "(?i)\\bdrop\\b (?i)\\btable\\b (\\w+) ?;? ?";
 		final String insertIntoTableColumnsAndValuesPattern = "(?i)\\bINSERT\\b\\s(?i)\\bINTO\\b\\s([\\d\\w]+)\\s?\\(([\\s\\w\\d,]*)\\)\\s?(?i)\\bVALUES\\b\\s?\\(([\\s\\w\\d,']*)\\s?\\) ?;? ?";
 		final String insertIntoTableValuesOnlyPattern = "(?i)\\binsert\\b (?i)\\binto\\b (\\w+) (?i)\\bvalues\\b ?\\( ?(( ?['\"]? ?\\w+ ?['\"]? ?,?)+)\\) ?;? ?";
-		final String selectAllFromTablePattern = "(?i)\\bselect\\b \\* (?i)\\bfrom\\b (\\w+) ?(((?i)\\bwhere\\b) ?([\\s\\w()><!=']+))? ?;? ?";
-		final String selectColumnFromTablePattern = "(?i)\\bselect\\b (\\w+) (?i)\\bfrom\\b (\\w+) ?(((?i)\\bwhere\\b) ?([\\s\\w()><!=']+))? ?;? ?";
-		final String updateTableSetColumnPattern = "(?i)\\bupdate\\b (\\w+) (?i)\\bset\\b (( ?(\\w+)( +)?= ?['\"]? ?(\\w)+ ?['\"]? ?,?)+) ?(((?i)\\bwhere\\b) ?([\\s\\w()><!=']+))? ?;? ?";
-		final String deleteFromTablePattern = "(?i)\\bdelete\\b (?i)\\bfrom\\b (\\w+) ?(((?i)\\bwhere\\b) ?([\\s\\w()><!=']+))? ?;? ?";
+		final String selectAllFromTablePattern = "(?i)\\bselect\\b \\* (?i)\\bfrom\\b (\\w+) ?(((?i)\\bwhere\\b) ?([\\s\\w()><!='\"]+))? ?;? ?";
+		final String selectColumnFromTablePattern = "(?i)\\bselect\\b (\\w+) (?i)\\bfrom\\b (\\w+) ?(((?i)\\bwhere\\b) ?([\\s\\w()><!='\"]+))? ?;? ?";
+		final String updateTableSetColumnPattern = "(?i)\\bupdate\\b (\\w+) (?i)\\bset\\b (( ?(\\w+)( +)?= ?['\"]? ?(\\w)+ ?['\"]? ?,?)+) ?(((?i)\\bwhere\\b) ?([\\s\\w()><!='\"]+))? ?;? ?";
+		final String deleteFromTablePattern = "(?i)\\bdelete\\b (?i)\\bfrom\\b (\\w+) ?(((?i)\\bwhere\\b) ?([\\s\\w()><!='\"]+))? ?;? ?";
 
 		// Adding regex-es to the ArrayList.
-		
+
 		allPatternStrings.add(createDataBasePattern);// 0.
 		allPatternStrings.add(drobDataBasePattern);// 1.
 		allPatternStrings.add(createTablePattern);// 2.
@@ -62,7 +62,6 @@ public class Parser {
 	 * carry all patterns.
 	 */
 	ArrayList<String> allPatternStrings = new ArrayList<>();
-	
 
 	public IQuery parseQuery(String theQuery) {
 		// ArrayLists for patterns and matchers.
@@ -76,7 +75,7 @@ public class Parser {
 		 * were entered.
 		 */
 		theQuery = theQuery.replaceAll("( +)", " ");
-		
+
 		// Filling patterns and matchers ArrayLists.
 		for (int i = 0; i < allPatternStrings.size(); i++) {
 			Pattern pattern;
@@ -86,8 +85,6 @@ public class Parser {
 			thePatterns.add(pattern);
 			theMatchers.add(matcher);
 		}
-
-		
 
 		// Creating the right query.
 		if (theMatchers.get(0).find()) {// if the query match create data base.
@@ -122,8 +119,8 @@ public class Parser {
 				}
 			}
 			// group(1) is the name of the table.
-//			Table.getInstance(theMatchers.get(2).group(1));
-			Table.getInstance(theMatchers.get(2).group(1),theMainDataBase);
+			// Table.getInstance(theMatchers.get(2).group(1));
+			Table.getInstance(theMatchers.get(2).group(1), theMainDataBase);
 			Table.getInstance().setAllColumnNamesAndTypes(columnsName, columnsType);
 			IQuery createTableQuery = new CreateTable(Table.getInstance());
 			return createTableQuery;
@@ -133,8 +130,8 @@ public class Parser {
 				return null;
 			}
 			// group(1) is the name of the table.
-//			Table.getInstance(theMatchers.get(3).group(1));
-			Table.getInstance(theMatchers.get(3).group(1),theMainDataBase);
+			// Table.getInstance(theMatchers.get(3).group(1));
+			Table.getInstance(theMatchers.get(3).group(1), theMainDataBase);
 			IQuery dropTableQuery = new DropTable(Table.getInstance());
 			return dropTableQuery;
 		} else if (theMatchers.get(4).find()) {// if the query match insert Into Table Columns
@@ -158,8 +155,8 @@ public class Parser {
 			// converting array to ArrayList.
 			ArrayList<String> values = new ArrayList<String>(Arrays.asList(valuesArray));
 			// group(1) is the name of the table.
-//			Table.getInstance(theMatchers.get(4).group(1));
-			Table.getInstance(theMatchers.get(4).group(1),theMainDataBase);
+			// Table.getInstance(theMatchers.get(4).group(1));
+			Table.getInstance(theMatchers.get(4).group(1), theMainDataBase);
 			IQuery insertIntoTableColumnsAndValuesQuery = new InsertInto(Table.getInstance(), columnNames, values);
 			return insertIntoTableColumnsAndValuesQuery;
 		} else if (theMatchers.get(5).find()) {// if the query match insert Into Table Values Only.
@@ -173,8 +170,8 @@ public class Parser {
 			// converting array to ArrayList.
 			ArrayList<String> values = new ArrayList<String>(Arrays.asList(valuesArray));
 			// group(1) is the name of the table.
-//			Table.getInstance(theMatchers.get(5).group(1));
-			Table.getInstance(theMatchers.get(5).group(1),theMainDataBase);
+			// Table.getInstance(theMatchers.get(5).group(1));
+			Table.getInstance(theMatchers.get(5).group(1), theMainDataBase);
 			IQuery insertIntoTableValuesOnlyQuery = new InsertInto(Table.getInstance(), values);
 			return insertIntoTableValuesOnlyQuery;
 		} else if (theMatchers.get(6).find()) {// select * from tabel_name where condition.
@@ -183,10 +180,10 @@ public class Parser {
 				return null;
 			}
 			// group(1) is the name of the table.
-//			Table.getInstance(theMatchers.get(6).group(1));
-			Table.getInstance(theMatchers.get(6).group(1),theMainDataBase);
+			// Table.getInstance(theMatchers.get(6).group(1));
+			Table.getInstance(theMatchers.get(6).group(1), theMainDataBase);
 			// group(4) is the condition it may equals null.
-			RelationalCondition selectAllFromTableCondition = new RelationalCondition(theMatchers.get(6).group(4));
+			LogicalCondition selectAllFromTableCondition = new LogicalCondition(theMatchers.get(6).group(4));
 			IQuery selectAllFromTableQuery = new SelectFrom(Table.getInstance(), selectAllFromTableCondition);
 			return selectAllFromTableQuery;
 		} else if (theMatchers.get(7).find()) {// select column from tabel_name where
@@ -196,10 +193,10 @@ public class Parser {
 				return null;
 			}
 			// group(2) is the table name.
-//			Table.getInstance(theMatchers.get(7).group(2));
-			Table.getInstance(theMatchers.get(7).group(2),theMainDataBase);
+			// Table.getInstance(theMatchers.get(7).group(2));
+			Table.getInstance(theMatchers.get(7).group(2), theMainDataBase);
 			// group(5) is the condition it may equals null.
-			RelationalCondition selectColumnFromTableCondition = new RelationalCondition(theMatchers.get(7).group(5));
+			LogicalCondition selectColumnFromTableCondition = new LogicalCondition(theMatchers.get(7).group(5));
 			// group(1) is the column name.
 			IQuery selectColumnFromTableQuery = new SelectFrom(Table.getInstance(), theMatchers.get(7).group(1),
 					selectColumnFromTableCondition);
@@ -228,10 +225,10 @@ public class Parser {
 				}
 			}
 			// group(1) is the table name.
-//			Table.getInstance(theMatchers.get(8).group(1));
-			Table.getInstance(theMatchers.get(8).group(1),theMainDataBase);
+			// Table.getInstance(theMatchers.get(8).group(1));
+			Table.getInstance(theMatchers.get(8).group(1), theMainDataBase);
 			// group(8) is the condition it may equals null.
-			RelationalCondition updateTableSetColumnCondition = new RelationalCondition(theMatchers.get(8).group(9));
+			LogicalCondition updateTableSetColumnCondition = new LogicalCondition(theMatchers.get(8).group(9));
 			IQuery updateTableSetColumnQuery = new UpdateSet(Table.getInstance(), columnNames, values,
 					updateTableSetColumnCondition);
 			return updateTableSetColumnQuery;
@@ -241,10 +238,10 @@ public class Parser {
 				return null;
 			}
 			// group(1) is the table name.
-//			Table.getInstance(theMatchers.get(9).group(1));
-			Table.getInstance(theMatchers.get(9).group(1),theMainDataBase);
+			// Table.getInstance(theMatchers.get(9).group(1));
+			Table.getInstance(theMatchers.get(9).group(1), theMainDataBase);
 			// group(4) is the condition it may equals null.
-			RelationalCondition deleteFromTableCondition = new RelationalCondition(theMatchers.get(9).group(4));
+			LogicalCondition deleteFromTableCondition = new LogicalCondition(theMatchers.get(9).group(4));
 			IQuery deleteFromTableQuery = new DeleteFrom(Table.getInstance(), deleteFromTableCondition);
 			return deleteFromTableQuery;
 		}

@@ -35,8 +35,7 @@ public class LogicalCondition {
 	public LogicalCondition(String stringCondition) {
 		
 		this.stringCondition=stringCondition;
-		LogicalCondition condition = ConditionParser.getInstance().stringToLogicalCondition(stringCondition);
-		setRelationalConditions(condition.getRelationalConditions());
+		setRelationalConditions(ConditionParser.getInstance().stringToLogicalCondition(stringCondition));
 	}
 		
 	

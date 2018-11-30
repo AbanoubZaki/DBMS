@@ -1,5 +1,7 @@
 package eg.edu.alexu.csd.oop.db.cs01.condition;
 
+import java.sql.SQLException;
+
 import eg.edu.alexu.csd.oop.db.cs01.modules.Row;
 
 public class LogicalSolver {
@@ -16,16 +18,16 @@ public class LogicalSolver {
 	private boolean getLogicalResult(LogicalCondition logicalCondition) {
 		String logicalString = logicalCondition.getStringCondition();
 		for(RelationalCondition relationalCondition:logicalCondition.getRelationalConditions()) {
-			logicalString.replace(relationalCondition.getStringCondition(), Boolean.toString(relationalCondition.isTrueValue()));
+			logicalString = logicalString.replace(relationalCondition.getStringCondition(), Boolean.toString(relationalCondition.isTrueValue()));
 		}
 		logicalString = logicalString.toLowerCase();
-		logicalString.replaceAll("not", "!");
-		logicalString.replaceAll("and", "&&");
-		logicalString.replaceAll("or", "||");
+		logicalString = logicalString.replaceAll("not", "!");
+		logicalString =	logicalString.replaceAll("and", "&&");
+		logicalString = logicalString.replaceAll("or", "||");
 		return JavaScriptEngine.getInstance().getResult(logicalString);
 		
 	}
-	public boolean isRowSolvingCondition(Row row , LogicalCondition condition) {
+	public boolean isRowSolvingCondition(Row row , LogicalCondition condition) throws SQLException {
 		for(RelationalCondition relationalCondition:condition.getRelationalConditions()) {
 			relationalCondition.setTrueValue(RelationalSolver.getInstance().isRowSolvingCondition(row, relationalCondition));
 		}

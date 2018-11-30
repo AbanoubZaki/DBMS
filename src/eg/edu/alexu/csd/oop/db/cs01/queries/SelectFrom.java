@@ -1,10 +1,10 @@
 package eg.edu.alexu.csd.oop.db.cs01.queries;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
-import eg.edu.alexu.csd.oop.db.cs01.condition.ConditionParser;
-import eg.edu.alexu.csd.oop.db.cs01.condition.RelationalCondition;
-import eg.edu.alexu.csd.oop.db.cs01.condition.RelationalSolver;
+import eg.edu.alexu.csd.oop.db.cs01.condition.LogicalCondition;
+import eg.edu.alexu.csd.oop.db.cs01.condition.LogicalSolver;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Row;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
 
@@ -23,7 +23,7 @@ public class SelectFrom extends OurQuery {
 	 * @param table
 	 * @param condition
 	 */
-	public SelectFrom(Table table, RelationalCondition condition) {
+	public SelectFrom(Table table, LogicalCondition condition) {
 		setTable(table);
 		setCondition(condition);
 	}
@@ -36,7 +36,7 @@ public class SelectFrom extends OurQuery {
 	 * @param column
 	 * @param condition
 	 */
-	public SelectFrom(Table table, String column, RelationalCondition condition) {
+	public SelectFrom(Table table, String column, LogicalCondition condition) {
 		setTable(table);
 		setCondition(condition);
 		setColumn(column.toLowerCase());
@@ -69,7 +69,7 @@ public class SelectFrom extends OurQuery {
 	}
 
 	@Override
-	public boolean execute1() {
+	public boolean execute1() throws SQLException {
 		if (getColumn() == null && getCondition().getStringCondition() == null) {
 			// 1st constructor
 			setSelected(getTable().getData());
@@ -103,7 +103,7 @@ public class SelectFrom extends OurQuery {
 			//fetches all the table using the condition.
 			ArrayList<Row> rowsValidateCondition = new ArrayList<>();
 			for (Row r:getTable().getRows()) {
-				if (RelationalSolver.getInstance().isRowSolvingCondition(r, getCondition())) {
+				if (LogicalSolver.getInstance().isRowSolvingCondition(r, getCondition())) {
 					rowsValidateCondition.add(r);
 				}
 			}
@@ -135,12 +135,11 @@ public class SelectFrom extends OurQuery {
 			if (!getTable().getColumnNamesToLowerCase().contains(getColumn().toLowerCase())) {
 				return false;
 			}
-			setCondition(ConditionParser.getInstance().stringToRelationalCondition(getCondition().getStringCondition()));
 			ArrayList<Object> selectedPartOfColumn = new ArrayList<>();
 			
 			for (int i = 0; i < getTable().getRows().size(); i++) {
 				Row r = getTable().getRows().get(i);
-				if (RelationalSolver.getInstance().isRowSolvingCondition(r, getCondition())) {
+				if (LogicalSolver.getInstance().isRowSolvingCondition(r, getCondition())) {
 					if (getColumnType().equals("varchar")) {
 						selectedPartOfColumn.add(getTable().getRow(i).getCells().get(getColumn().toLowerCase()).getValue());
 					} else {

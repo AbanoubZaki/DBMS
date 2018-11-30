@@ -41,13 +41,17 @@ public class RelationalCondition {
 			return;
 		this.stringCondition=stringCondition;
 		RelationalCondition r = ConditionParser.getInstance().stringToRelationalCondition(stringCondition);
+		if(r==null)
+			return;
 		setLeftAgrument(r.getLeftAgrument());
 		setRightAgrument(r.getRightAgrument());
 		setOperation(r.getOperation());
 	}
 	public RelationalCondition(RelationalOperand leftAgrument, RelationalOperand rightAgrument, String operation){
-		if(!leftAgrument.getType().equals(rightAgrument.getType()))
-			return;
+		if(leftAgrument!=null&&rightAgrument!=null) {
+			if(!leftAgrument.getType().equals(rightAgrument.getType()))
+				return;
+		}
 		this.leftAgrument = leftAgrument;
 		this.rightAgrument = rightAgrument;
 		this.operation = operation;

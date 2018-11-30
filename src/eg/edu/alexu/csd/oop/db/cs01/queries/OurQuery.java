@@ -2,14 +2,14 @@ package eg.edu.alexu.csd.oop.db.cs01.queries;
 
 import java.sql.SQLException;
 
-import eg.edu.alexu.csd.oop.db.cs01.condition.RelationalCondition;
+import eg.edu.alexu.csd.oop.db.cs01.condition.LogicalCondition;
 import eg.edu.alexu.csd.oop.db.cs01.fileManager.FileManager;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
 
 public class OurQuery implements IQuery {
 
 	private Table table;
-	private RelationalCondition condition;
+	private LogicalCondition condition;
 	private String column;
 	
 	public OurQuery() {
@@ -29,7 +29,7 @@ public class OurQuery implements IQuery {
 	}	
 	
 	@Override
-	public boolean execute1() {
+	public boolean execute1() throws SQLException {
 		return false;
 	}
 
@@ -54,12 +54,12 @@ public class OurQuery implements IQuery {
 	}
 
 	@Override
-	public void setCondition(RelationalCondition condition) {
-		this.condition = condition;
+	public void setCondition(LogicalCondition condition2) {
+		this.condition = condition2;
 	}
 
 	@Override
-	public RelationalCondition getCondition() {
+	public LogicalCondition getCondition() {
 		return condition;
 	}
 

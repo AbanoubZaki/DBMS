@@ -1,5 +1,7 @@
 package eg.edu.alexu.csd.oop.db.cs01.condition;
 
+import java.sql.SQLException;
+
 import eg.edu.alexu.csd.oop.db.cs01.modules.Row;
 
 public class RelationalSolver {
@@ -13,11 +15,17 @@ public class RelationalSolver {
 		}
 		return solver;
 	}
-	public boolean isRowSolvingCondition(Row row , RelationalCondition condition){
+	public boolean isRowSolvingCondition(Row row , RelationalCondition condition) throws SQLException{
 		// value , value
 		if (condition.getLeftAgrument() == null || condition.getRightAgrument() == null) {
-			System.out.println("Condition error.");
-			return false;
+			if(condition.getOperation()==null)
+				return true;
+		throw new SQLException("incomplete condition");
+		}
+		if (condition.getLeftAgrument().getOperand() == null || condition.getRightAgrument().getOperand() == null) {
+			if(condition.getOperation()==null)
+				return true;
+		throw new SQLException("incomplete condition");
 		}
 		if(condition.getLeftAgrument().isVariable()&&condition.getRightAgrument().isVariable())
 			return compareTwoValue(condition);
@@ -35,9 +43,8 @@ public class RelationalSolver {
 		
 	}
 	private boolean getRelationResult(RelationalOperand var1 ,RelationalOperand var2 ,String operation) {
-		if(var1.getOperand()==null||var1.getOperand()==null)
-			return false;
-			return JavaScriptEngine.getInstance().getResult(var1.getOperand().toLowerCase()+operation+var2.getOperand().toLowerCase());
+		
+		return JavaScriptEngine.getInstance().getResult(var1.getOperand().toLowerCase()+operation+var2.getOperand().toLowerCase());
 			
 	}
 	private boolean compareValueCol(Row row , RelationalCondition condition){
