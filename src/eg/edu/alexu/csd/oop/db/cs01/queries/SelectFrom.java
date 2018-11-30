@@ -39,9 +39,8 @@ public class SelectFrom extends OurQuery {
 	public SelectFrom(Table table, String column, RelationalCondition condition) {
 		setTable(table);
 		setCondition(condition);
-		setColumn(column);
+		setColumn(column.toLowerCase());
 		setColumnType();
-		setColumnIndexAndType();
 	}
 	
 	@Override
@@ -89,6 +88,7 @@ public class SelectFrom extends OurQuery {
 			selected = new Object[getTable().getRows().size()][1];
 			for (int i = 0; i < getTable().getRows().size(); i++) {
 				// row of data to be filled with objects.
+				System.out.println(getColumnType());
 				if (getColumnType().equals("varchar")) {
 					selected[i][0] = getTable().getRow(i).getCells().get(getColumn().toLowerCase()).getValue();
 				} else {

@@ -18,6 +18,10 @@ public class OurMain {
 				break;
 			}
 			GeneralParser.getInstance().parse(query);
+			if (GeneralParser.getInstance().getCurrentData() != null) {
+				System.out.println(GeneralParser.getInstance().getCurrentData().length);
+				System.out.println(GeneralParser.getInstance().getCurrentData()[0].length);
+			}
 		}
 //		GeneralParser.getInstance().parse("");
 		

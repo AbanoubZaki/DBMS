@@ -52,9 +52,7 @@ public interface IQuery {
 	public void setSelected(Object[][] selected);
 	
 	public Object[][] getSelected();
-	
-	public void setColumnIndexAndType();
-	
+		
 	public String getColumnType();
 	
 	public int getColumnIndex();

@@ -74,11 +74,6 @@ public class OurQuery implements IQuery {
 	}
 
 	@Override
-	public void setColumnIndexAndType() {
-		
-	}
-
-	@Override
 	public String getColumnType() {
 		return null;
 	}
