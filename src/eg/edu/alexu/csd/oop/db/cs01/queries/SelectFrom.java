@@ -101,14 +101,12 @@ public class SelectFrom extends OurQuery {
 		} else if (getColumn() == null) {
 			// 3rd constructor
 			//fetches all the table using the condition.
-			System.out.println(getTable().getRows().size());
 			ArrayList<Row> rowsValidateCondition = new ArrayList<>();
 			for (Row r:getTable().getRows()) {
 				if (RelationalSolver.getInstance().isRowSolvingCondition(r, getCondition())) {
 					rowsValidateCondition.add(r);
 				}
 			}
-			System.out.println(getTable().getRows().size());
 			selected = new Object[rowsValidateCondition.size()][getTable().getColumnNamesAsGiven().size()];
 			for (int i = 0; i < rowsValidateCondition.size(); i++) {
 				// row of data to be filled with objects.
