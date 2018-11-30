@@ -219,7 +219,7 @@ public class Table {
 
 		@Override
 		public void run(){
-			if(table!=null&&!table.getColumnTypes().isEmpty()) {
+			if(table!=null&&!table.getColumnTypes().isEmpty()&&!table.getRows().isEmpty()) {
 				FileManager.getInstance().writeTable(table);
 				System.out.println("Done ;)");
 			}
