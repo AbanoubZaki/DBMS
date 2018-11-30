@@ -6,6 +6,19 @@ public class RelationalCondition {
 	private RelationalOperand rightAgrument;
 	private String operation;
 	private String stringCondition;
+	private boolean trueValue;
+	/**
+	 * @return the trueValue
+	 */
+	public boolean isTrueValue() {
+		return trueValue;
+	}
+	/**
+	 * @param trueValue the trueValue to set
+	 */
+	public void setTrueValue(boolean trueValue) {
+		this.trueValue = trueValue;
+	}
 	/**
 	 * @return the stringCondition
 	 */
