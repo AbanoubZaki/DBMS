@@ -31,10 +31,10 @@ public class Parser {
 		final String drobTablePattern = "(?i)\\bdrop\\b (?i)\\btable\\b (\\w+) ?;? ?";
 		final String insertIntoTableColumnsAndValuesPattern = "(?i)\\bINSERT\\b\\s(?i)\\bINTO\\b\\s([\\d\\w]+)\\s?\\(([\\s\\w\\d,]*)\\)\\s?(?i)\\bVALUES\\b\\s?\\(([\\s\\w\\d,']*)\\s?\\) ?;? ?";
 		final String insertIntoTableValuesOnlyPattern = "(?i)\\binsert\\b (?i)\\binto\\b (\\w+) (?i)\\bvalues\\b ?\\( ?(( ?['\"]? ?\\w+ ?['\"]? ?,?)+)\\) ?;? ?";
-		final String selectAllFromTablePattern = "(?i)\\bselect\\b \\* (?i)\\bfrom\\b (\\w+) ?(((?i)\\bwhere\\b) ?(((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?(((?i)\\bor\\b|(?i)\\band\\b) ?((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?)?))? ?;? ?";
-		final String selectColumnFromTablePattern = "(?i)\\bselect\\b (\\w+) (?i)\\bfrom\\b (\\w+) ?(((?i)\\bwhere\\b) ?(((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?(((?i)\\bor\\b|(?i)\\band\\b) ?((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?)?))? ?;? ?";
-		final String updateTableSetColumnPattern = "(?i)\\bupdate\\b (\\w+) (?i)\\bset\\b (( ?(\\w+)( +)?= ?['\"]? ?(\\w)+ ?['\"]? ?,?)+)(((?i)\\bwhere\\b) ?(((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?(((?i)\\bor\\b|(?i)\\band\\b) ?((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^\\s]+))? ?)?))? ?;? ?";
-		final String deleteFromTablePattern = "(?i)\\bdelete\\b (?i)\\bfrom\\b (\\w+) ?(((?i)\\bwhere\\b) ?(((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?(((?i)\\bor\\b|(?i)\\band\\b) ?((?i)\\bnot\\b)? ?([^;\\s]+) ?(([!=><]{1,2}) ?([^;\\s]+))? ?)?))? ?;? ?";
+		final String selectAllFromTablePattern = "(?i)\\bselect\\b \\* (?i)\\bfrom\\b (\\w+) ?(((?i)\\bwhere\\b) ?([\\s\\w()><!=']+))? ?;? ?";
+		final String selectColumnFromTablePattern = "(?i)\\bselect\\b (\\w+) (?i)\\bfrom\\b (\\w+) ?(((?i)\\bwhere\\b) ?([\\s\\w()><!=']+))? ?;? ?";
+		final String updateTableSetColumnPattern = "(?i)\\bupdate\\b (\\w+) (?i)\\bset\\b (( ?(\\w+)( +)?= ?['\"]? ?(\\w)+ ?['\"]? ?,?)+) ?(((?i)\\bwhere\\b) ?([\\s\\w()><!=']+))? ?;? ?";
+		final String deleteFromTablePattern = "(?i)\\bdelete\\b (?i)\\bfrom\\b (\\w+) ?(((?i)\\bwhere\\b) ?([\\s\\w()><!=']+))? ?;? ?";
 
 		// Adding regex-es to the ArrayList.
 		
