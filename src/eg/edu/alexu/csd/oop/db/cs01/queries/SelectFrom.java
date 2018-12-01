@@ -11,7 +11,7 @@ import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
 public class SelectFrom extends OurQuery {
 
 	private Object[][] selected;
-	
+
 	ArrayList<String> columns;
 
 	/**
@@ -62,7 +62,7 @@ public class SelectFrom extends OurQuery {
 			/**
 			 * if its a imaginary column the return false.
 			 */
-			for (String s:columns) {
+			for (String s : columns) {
 				if (!Table.getInstance().getColumnNamesToLowerCase().contains(s.toLowerCase())) {
 					throw new SQLException("Column \"" + s + "\" not found.");
 				}
@@ -71,11 +71,22 @@ public class SelectFrom extends OurQuery {
 			for (int i = 0; i < Table.getInstance().getRows().size(); i++) {
 				for (int j = 0; j < columns.size(); j++) {
 					// row of data to be filled with objects.
-					if (Table.getInstance().getColumnTypes().get(columns.get(j).toLowerCase()).equals("varchar")) {
-						selected[i][j] = Table.getInstance().getRow(i).getCells().get(columns.get(j).toLowerCase()).getValue();
+					if (Table.getInstance().getRow(i).getCells().get(columns.get(j).toLowerCase()) != null) {
+						if (Table.getInstance().getRow(i).getCells().get(columns.get(j).toLowerCase())
+								.getValue() != null) {
+							if (Table.getInstance().getColumnTypes().get(columns.get(j).toLowerCase())
+									.equals("varchar")) {
+								selected[i][j] = Table.getInstance().getRow(i).getCells()
+										.get(columns.get(j).toLowerCase()).getValue();
+							} else {
+								selected[i][j] = Integer.parseInt(Table.getInstance().getRow(i).getCells()
+										.get(columns.get(j).toLowerCase()).getValue());
+							}
+						} else {
+							selected[i][j] = null;
+						}
 					} else {
-						selected[i][j] = Integer.parseInt(
-								Table.getInstance().getRow(i).getCells().get(columns.get(j).toLowerCase()).getValue());
+						selected[i][j] = null;
 					}
 				}
 			}
@@ -106,8 +117,12 @@ public class SelectFrom extends OurQuery {
 						}
 					} else if (Table.getInstance().getColumnTypes()
 							.get(Table.getInstance().getColumnNamesToLowerCase().get(j)).equals("varchar")) {
-						selected[i][j] = r.getCells().get(Table.getInstance().getColumnNamesToLowerCase().get(j))
-								.getValue();
+						if (r.getCells().get(Table.getInstance().getColumnNamesToLowerCase().get(j)) == null) {
+							selected[i][j] = null;
+						} else {
+							selected[i][j] = r.getCells().get(Table.getInstance().getColumnNamesToLowerCase().get(j))
+									.getValue();
+						}
 					}
 				}
 			}
@@ -120,25 +135,27 @@ public class SelectFrom extends OurQuery {
 			/**
 			 * if its a imaginary column the return false.
 			 */
-			for (String s:columns) {
+			for (String s : columns) {
 				if (!Table.getInstance().getColumnNamesToLowerCase().contains(s.toLowerCase())) {
 					throw new SQLException("Column \"" + s + "\" not found.");
 				}
 			}
-			ArrayList< ArrayList<Object> > selectedPartOfTable = new ArrayList<>();
+			ArrayList<ArrayList<Object>> selectedPartOfTable = new ArrayList<>();
 
 			for (int i = 0; i < Table.getInstance().getRows().size(); i++) {
 				Row r = Table.getInstance().getRows().get(i);
-				ArrayList< Object > selectedPartOfRow = new ArrayList<>();
+				ArrayList<Object> selectedPartOfRow = new ArrayList<>();
 				for (int j = 0; j < columns.size(); j++) {
 					if (LogicalSolver.getInstance().isRowSolvingCondition(r, getCondition())) {
-						if (Table.getInstance().getColumnTypes().get(columns.get(j).toLowerCase()).equals("varchar")) {
-							selectedPartOfRow.add(
-									Table.getInstance().getRow(i).getCells().get(columns.get(j).toLowerCase()).getValue());
+						if (r.getCells().get(columns.get(j).toLowerCase()) == null) {
+							selectedPartOfRow.add(null);
+						} else if (Table.getInstance().getColumnTypes().get(columns.get(j).toLowerCase())
+								.equals("varchar")) {
+							selectedPartOfRow.add(Table.getInstance().getRow(i).getCells()
+									.get(columns.get(j).toLowerCase()).getValue());
 						} else {
-							if (r.getCells().get(columns.get(j).toLowerCase()) != null)
-								selectedPartOfRow.add(Integer.parseInt(Table.getInstance().getRow(i).getCells()
-										.get(columns.get(j).toLowerCase()).getValue()));
+							selectedPartOfRow.add(Integer.parseInt(Table.getInstance().getRow(i).getCells()
+									.get(columns.get(j).toLowerCase()).getValue()));
 						}
 					}
 				}

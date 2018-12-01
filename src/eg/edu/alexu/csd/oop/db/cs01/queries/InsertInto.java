@@ -64,6 +64,8 @@ public class InsertInto extends OurQuery {
 			} else {
 				if (!values.get(i).contains("\"") && !values.get(i).contains("'")) {
 					values.set(i, "'" + values.get(i) + "'");
+				} else {
+					values.set(i, values.get(i).replace("\"", "'"));
 				}
 				insertedRow.updateCell(columnNames.get(i).toLowerCase(), new Cell(values.get(i)));
 			}

@@ -67,7 +67,7 @@ public class Table {
 			table = null;
 		}
 		for (Table t : tables) {
-			if (t.getTableName().equalsIgnoreCase(tableName)) {
+			if (t.getTableName().equalsIgnoreCase(tableName) && t.getDatabaseName().equalsIgnoreCase(currenDataBaseName)) {
 				table = t;
 				currentTableName = tableName;
 				return t;

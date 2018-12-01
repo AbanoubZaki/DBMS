@@ -46,6 +46,8 @@ public class UpdateSet extends OurQuery {
 		for (String s:values) {
 			if ((!s.contains("\"") && !s.contains("'")) && dataChecker.getInstance().checkType(s).equals("varchar")) {
 				values.set(values.indexOf(s), "'" + s + "'");
+			} else {
+				values.set(values.indexOf(s), s.replace("\"", "'"));
 			}
 		}
 		if (getCondition().getStringCondition() == null) {
