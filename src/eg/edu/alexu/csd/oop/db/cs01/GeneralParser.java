@@ -8,9 +8,10 @@ public class GeneralParser {
 	private boolean checkerExecute;
 	private Object[][] currentData;
 	private int updatedRows;
+
 	private GeneralParser() {
 		checkerExecute = false;
-		updatedRows=0;
+		updatedRows = 0;
 	}
 
 	/**
@@ -78,8 +79,9 @@ public class GeneralParser {
 				|| query.toLowerCase().contains("delete") ) {
 			
 			setUpdatedRows(	OurSql.getInstance().executeUpdateQuery(query));
-		}	
-		
+		} else {
+			throw new SQLException("You entered a rotten query.");
+		}
 	}
 
 }
