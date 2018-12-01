@@ -204,7 +204,7 @@ public class Parser {
 		} else if (theMatchers.get(8).find()) {// update tabel name set c1 = v1, ... where
 												// condition.
 			if (theMainDataBase == null) {
-				System.out.println("There is NO DataBase selected");
+				System.out.println("There is on database selected");
 				return null;
 			}
 			String[] sets;
@@ -245,7 +245,7 @@ public class Parser {
 			IQuery deleteFromTableQuery = new DeleteFrom(deleteFromTableCondition);
 			return deleteFromTableQuery;
 		}
-		theMainDataBase = null;
+		theMainDataBase = "";
 		return null;
 	}
 }

@@ -20,5 +20,4 @@ public class dataChecker {
 			return "varchar";
 		}
 	}
-
 }

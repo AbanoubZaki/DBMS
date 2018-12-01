@@ -71,14 +71,25 @@ public class GeneralParser {
 				&& (query.toLowerCase().contains("database") || query.toLowerCase().contains("table"))) {
 			
 			setCheckerExecute(OurSql.getInstance().executeStructureQuery(query));
+			if (isCheckerExecute()) {
+				System.out.println("You have made changes to the databases.");
+				setCheckerExecute(false);
+			}
 			
 		}else if (query.toLowerCase().contains("select")) {
 			setCurrentData(	OurSql.getInstance().executeQuery(query));
+			for(int i=0;i<GeneralParser.getInstance().getCurrentData().length;i++) {
+				for(int j=0;j<GeneralParser.getInstance().getCurrentData()[i].length;j++)
+					System.out.print(GeneralParser.getInstance().getCurrentData()[i][j]+" ");
+				System.out.println();
+			}
+			setCurrentData(null);
 		}else if (query.toLowerCase().contains("update")
 				|| query.toLowerCase().contains("insert") 
 				|| query.toLowerCase().contains("delete") ) {
 			
 			setUpdatedRows(	OurSql.getInstance().executeUpdateQuery(query));
+			System.out.println("You have made changes to " + getUpdatedRows() + " rows.");
 		} else {
 			throw new SQLException("You entered a rotten query.");
 		}

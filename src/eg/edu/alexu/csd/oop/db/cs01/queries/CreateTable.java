@@ -11,6 +11,9 @@ public class CreateTable extends OurQuery {
 
 	@Override
 	public boolean execute1() throws SQLException {
+		if (Table.getInstance().getDatabaseName() == null || Table.getInstance().getDatabaseName().equals("")) {
+			throw new SQLException("Database not found.");
+		}
 		if (Table.getInstance() == null || Table.getInstance().getColumnNamesAsGiven().size() == 0) {
 			throw new SQLException("Table not found.");
 		}
