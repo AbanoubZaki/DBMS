@@ -5,11 +5,12 @@ import eg.edu.alexu.csd.oop.db.cs01.fileManager.FileManager;
 public class DropDatabase extends OurQuery{
 
 	private String databaseName;
+	
 	public DropDatabase(String databasaNme) {
-		// TODO Auto-generated constructor stub
 		super();
 		this.databaseName = databasaNme;
 	}
+	
 	@Override
 	public boolean execute1() {
 		if (databaseName == null) {

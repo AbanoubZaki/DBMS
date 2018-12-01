@@ -11,20 +11,22 @@ import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
 
 public class DeleteFrom extends OurQuery {
 
-	public DeleteFrom(Table table, LogicalCondition condition) {
-		setTable(table);
+	public DeleteFrom(LogicalCondition condition) {
 		setCondition(condition);
 	}
 	
 	@Override
 	public int execute2() throws SQLException {
+		if (Table.getInstance() == null || Table.getInstance().getColumnNamesAsGiven().size() == 0) {
+			throw new SQLException("Table not found.");
+		}
 		/**
 		 * check if table exists.
 		 */
-		String pathTable = getTable().getDatabaseName();
+		String pathTable = Table.getInstance().getDatabaseName();
 		if(!pathTable.contains(System.getProperty("file.separator")))
 			pathTable="databases"+System.getProperty("file.separator")+pathTable;
-		pathTable+=System.getProperty("file.separator")+ getTable().getTableName();
+		pathTable+=System.getProperty("file.separator")+ Table.getInstance().getTableName();
 		File tableFile = new File(pathTable+".Xml");
 		File DTDFile = new File(pathTable+".dtd");
 		if(!tableFile.exists() || !DTDFile.exists()) {
@@ -32,19 +34,19 @@ public class DeleteFrom extends OurQuery {
 			return 0;
 		}
 		
-		int effectedRows = getTable().getRows().size();
+		int effectedRows = Table.getInstance().getRows().size();
 		if (getCondition().getStringCondition() == null) {
-			getTable().getRows().clear();
+			Table.getInstance().getRows().clear();
 			return effectedRows;
 		}else if (getCondition().getStringCondition() != null) {
 			ArrayList<Row> remainingRows = new ArrayList<>();
-			for (Row r:getTable().getRows()) {
+			for (Row r:Table.getInstance().getRows()) {
 				if (!LogicalSolver.getInstance().isRowSolvingCondition(r, getCondition())) {
 					remainingRows.add(r);
 				}
 			}
-			getTable().setRows(remainingRows);
-			 effectedRows -= getTable().getRows().size();
+			Table.getInstance().setRows(remainingRows);
+			 effectedRows -= Table.getInstance().getRows().size();
 		}
 		
 		return effectedRows;

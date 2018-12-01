@@ -1,5 +1,6 @@
 package eg.edu.alexu.csd.oop.db.cs01.queries;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import eg.edu.alexu.csd.oop.db.cs01.dataChecker;
@@ -13,34 +14,32 @@ public class InsertInto extends OurQuery {
 
 	private ArrayList<String> values;
 
-	public InsertInto(Table table, ArrayList<String> values) {
+	public InsertInto(ArrayList<String> values) {
 		this.columnNames = null;
 		this.values = values;
-		setTable(table);
 	}
 
-	public InsertInto(Table table, ArrayList<String> columnNames, ArrayList<String> values) {
+	public InsertInto(ArrayList<String> columnNames, ArrayList<String> values) {
 		this.columnNames = columnNames;
 		this.values = values;
-		setTable(table);
 	}
 
 	/**
 	 * after the table has been read in the constructor add the row then write the
 	 * table in the file using file manager.
+	 * @throws SQLException 
 	 */
 	@Override
-	public int execute2() {
-		if (getTable()==null||getTable().getColumnTypes()==null) {
-			System.out.println("Table not found.");
-			return 0;
+	public int execute2() throws SQLException {
+		if (Table.getInstance() == null || Table.getInstance().getColumnNamesAsGiven().size() == 0) {
+			throw new SQLException("Table not found.");
 		}
-		if (getTable().getColumnTypes() == null) {
+		if (Table.getInstance().getColumnTypes() == null) {
 			System.out.println("Datatype mismatch happened.");
 			return 0;
 		}
 		if (columnNames == null || columnNames.isEmpty()) {
-			columnNames = getTable().getColumnNamesToLowerCase();
+			columnNames = Table.getInstance().getColumnNamesToLowerCase();
 			// no of values must be equal to no of columns.
 			if (values.size() != columnNames.size()) {
 				System.out.println(
@@ -49,15 +48,15 @@ public class InsertInto extends OurQuery {
 			}
 		}
 		for (int i = 0; i < columnNames.size(); i++) {
-			if (!getTable().getColumnNamesToLowerCase().contains(columnNames.get(i).toLowerCase())) {
+			if (!Table.getInstance().getColumnNamesToLowerCase().contains(columnNames.get(i).toLowerCase())) {
 				System.out.println("Column names not found.");
 				return 0;
 			}
 		}
-		Row insertedRow = new Row(getTable());
+		Row insertedRow = new Row(Table.getInstance());
 		for (int i = 0; i < values.size(); i++) {
-			if (getTable().getColumnTypes().get(columnNames.get(i).toLowerCase()).equals("int")) {
-				if (getTable().getColumnTypes().get(columnNames.get(i).toLowerCase())
+			if (Table.getInstance().getColumnTypes().get(columnNames.get(i).toLowerCase()).equals("int")) {
+				if (Table.getInstance().getColumnTypes().get(columnNames.get(i).toLowerCase())
 						.equals(dataChecker.getInstance().checkType(values.get(i)))) {
 					insertedRow.updateCell(columnNames.get(i).toLowerCase(), new Cell(values.get(i)));
 				} else
@@ -65,7 +64,7 @@ public class InsertInto extends OurQuery {
 			} else
 				insertedRow.updateCell(columnNames.get(i).toLowerCase(), new Cell(values.get(i)));
 		}
-		getTable().addRow(insertedRow);
+		Table.getInstance().addRow(insertedRow);
 		return 1;
 	}
 }

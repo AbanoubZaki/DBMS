@@ -12,19 +12,13 @@ public class SelectFrom extends OurQuery {
 
 	private Object[][] selected;
 
-	private String columnType;
-
-	private int columnIndex = -1;
-
 	/**
 	 * fetch all the table for the condition returning the selected rows. if
 	 * condition is null return all the table.
 	 * 
-	 * @param table
 	 * @param condition
 	 */
-	public SelectFrom(Table table, LogicalCondition condition) {
-		setTable(table);
+	public SelectFrom(LogicalCondition condition) {
 		setCondition(condition);
 	}
 
@@ -32,99 +26,88 @@ public class SelectFrom extends OurQuery {
 	 * fetch a certain column for the condition returning the selected rows. if
 	 * condition is null return one column (whole column)
 	 * 
-	 * @param table
 	 * @param column
 	 * @param condition
 	 */
-	public SelectFrom(Table table, String column, LogicalCondition condition) {
-		setTable(table);
+	public SelectFrom(String column, LogicalCondition condition) {
 		setCondition(condition);
 		setColumn(column.toLowerCase());
-		setColumnType();
 	}
-	
+
 	@Override
 	public void setSelected(Object[][] selected) {
 		this.selected = selected;
 	}
-	
+
 	@Override
 	public Object[][] getSelected() {
 		return selected;
 	}
 
 	@Override
-	public void setColumnType() {
-		this.columnType  = getTable().getColumnTypes().get(getColumn());
-	}
-
-	@Override
-	public String getColumnType() {
-		return columnType;
-	}
-
-	@Override
-	public int getColumnIndex() {
-		return columnIndex;
-	}
-
-	@Override
 	public boolean execute1() throws SQLException {
+		if (Table.getInstance() == null || Table.getInstance().getColumnNamesAsGiven().size() == 0) {
+			throw new SQLException("Table not found.");
+		}
 		if (getColumn() == null && getCondition().getStringCondition() == null) {
 			// 1st constructor
-			setSelected(getTable().getData());
+			setSelected(Table.getInstance().getData());
 			return true;
 
 		} else if (getColumn() != null && getCondition().getStringCondition() == null) {
 			// 2nd constructor
-			//return a whole column.
+			// return a whole column.
 			/**
 			 * if its a imaginary column the return false.
 			 */
-			if (!getTable().getColumnNamesToLowerCase().contains(getColumn().toLowerCase())) {
+			if (!Table.getInstance().getColumnNamesToLowerCase().contains(getColumn())) {
 				System.out.println("Column \"" + getColumn() + "\" not found.");
 				return false;
 			}
-			selected = new Object[getTable().getRows().size()][1];
-			for (int i = 0; i < getTable().getRows().size(); i++) {
+			selected = new Object[Table.getInstance().getRows().size()][1];
+			for (int i = 0; i < Table.getInstance().getRows().size(); i++) {
 				// row of data to be filled with objects.
-				System.out.println(getColumnType());
-				if (getColumnType().equals("varchar")) {
-					selected[i][0] = getTable().getRow(i).getCells().get(getColumn().toLowerCase()).getValue();
+				if (Table.getInstance().getColumnTypes().get(getColumn() ).equals("varchar")) {
+					selected[i][0] = Table.getInstance().getRow(i).getCells().get(getColumn() ).getValue();
 				} else {
-					selected[i][0] = Integer.parseInt(getTable().getRow(i).getCells().get(getColumn().toLowerCase()).getValue());
+					selected[i][0] = Integer.parseInt(
+							Table.getInstance().getRow(i).getCells().get(getColumn() ).getValue());
 				}
 			}
 			setSelected(selected);
 			return true;
-			
+
 		} else if (getColumn() == null) {
 			// 3rd constructor
-			//fetches all the table using the condition.
+			// fetches all the table using the condition.
 			ArrayList<Row> rowsValidateCondition = new ArrayList<>();
-			for (Row r:getTable().getRows()) {
+			for (Row r : Table.getInstance().getRows()) {
 				if (LogicalSolver.getInstance().isRowSolvingCondition(r, getCondition())) {
 					rowsValidateCondition.add(r);
 				}
 			}
-			selected = new Object[rowsValidateCondition.size()][getTable().getColumnNamesAsGiven().size()];
+			selected = new Object[rowsValidateCondition.size()][Table.getInstance().getColumnNamesAsGiven().size()];
 			for (int i = 0; i < rowsValidateCondition.size(); i++) {
 				// row of data to be filled with objects.
 				Row r = rowsValidateCondition.get(i);
-				for (int j = 0; j < getTable().getColumnNamesToLowerCase().size(); j++) {
-					if (getTable().getColumnTypes().get(getTable().getColumnNamesToLowerCase().get(j)).equals("int")) {
-						if(r.getCells().get(getTable().getColumnNamesToLowerCase().get(j))!=null) {
-							selected[i][j]=(Integer.parseInt(r.getCells().get(getTable().getColumnNamesToLowerCase().get(j)).getValue()));
+				for (int j = 0; j < Table.getInstance().getColumnNamesToLowerCase().size(); j++) {
+					if (Table.getInstance().getColumnTypes().get(Table.getInstance().getColumnNamesToLowerCase().get(j))
+							.equals("int")) {
+						if (r.getCells().get(Table.getInstance().getColumnNamesToLowerCase().get(j)) != null) {
+							selected[i][j] = (Integer.parseInt(r.getCells()
+									.get(Table.getInstance().getColumnNamesToLowerCase().get(j)).getValue()));
 						} else {
-							selected[i][j]=null;
+							selected[i][j] = null;
 						}
-					} else if (getTable().getColumnTypes().get(getTable().getColumnNamesToLowerCase().get(j)).equals("varchar")) {
-						selected[i][j] = r.getCells().get(getTable().getColumnNamesToLowerCase().get(j)).getValue();
+					} else if (Table.getInstance().getColumnTypes()
+							.get(Table.getInstance().getColumnNamesToLowerCase().get(j)).equals("varchar")) {
+						selected[i][j] = r.getCells().get(Table.getInstance().getColumnNamesToLowerCase().get(j))
+								.getValue();
 					}
 				}
 			}
 			setSelected(selected);
-			
+
 			return true;
 		} else if (getColumn() != null && getCondition().getStringCondition() != null) {
 			// 4th constructor
@@ -132,19 +115,21 @@ public class SelectFrom extends OurQuery {
 			/**
 			 * if its a imaginary column the return false.
 			 */
-			if (!getTable().getColumnNamesToLowerCase().contains(getColumn().toLowerCase())) {
+			if (!Table.getInstance().getColumnNamesToLowerCase().contains(getColumn() )) {
 				return false;
 			}
 			ArrayList<Object> selectedPartOfColumn = new ArrayList<>();
-			
-			for (int i = 0; i < getTable().getRows().size(); i++) {
-				Row r = getTable().getRows().get(i);
+
+			for (int i = 0; i < Table.getInstance().getRows().size(); i++) {
+				Row r = Table.getInstance().getRows().get(i);
 				if (LogicalSolver.getInstance().isRowSolvingCondition(r, getCondition())) {
-					if (getColumnType().equals("varchar")) {
-						selectedPartOfColumn.add(getTable().getRow(i).getCells().get(getColumn().toLowerCase()).getValue());
+					if (Table.getInstance().getColumnTypes().get(getColumn() ).equals("varchar")) {
+						selectedPartOfColumn.add(
+								Table.getInstance().getRow(i).getCells().get(getColumn() ).getValue());
 					} else {
-						if(r.getCells().get(getColumn().toLowerCase())!=null)
-							selectedPartOfColumn.add(Integer.parseInt(getTable().getRow(i).getCells().get(getColumn().toLowerCase()).getValue()));
+						if (r.getCells().get(getColumn() ) != null)
+							selectedPartOfColumn.add(Integer.parseInt(Table.getInstance().getRow(i).getCells()
+									.get(getColumn() ).getValue()));
 					}
 				}
 			}

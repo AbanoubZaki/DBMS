@@ -10,20 +10,6 @@ public interface IQuery {
 	// Builder pattern i think.
 
 	/**
-	 * sets the name of the table.
-	 * 
-	 * @param table
-	 */
-	public void setTable(Table table);
-
-	/**
-	 * gets the name of the table.
-	 * 
-	 * @return
-	 */
-	public Table getTable();
-
-	/**
 	 * Executes the query. action that the query performs returns true if it is
 	 * successfully executed. returns false if a problem occurred.
 	 * 
@@ -40,8 +26,6 @@ public interface IQuery {
 	 * 
 	 * @return
 	 */
-	public boolean readTable();
-
 	public void setColumn(String column);
 
 	public String getColumn();
@@ -54,10 +38,4 @@ public interface IQuery {
 	
 	public Object[][] getSelected();
 		
-	public String getColumnType();
-	
-	public int getColumnIndex();
-
-	void setColumnType();	
-	
 }

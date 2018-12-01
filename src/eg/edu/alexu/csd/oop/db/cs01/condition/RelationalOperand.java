@@ -17,30 +17,35 @@ public class RelationalOperand {
 	public void setOperand(String operand) {
 		this.operand = operand;
 	}
+	
 	/**
 	 * @param variable the variable to set
 	 */
 	public void setVariable(boolean variable) {
 		this.variable = variable;
 	}
+	
 	/**
 	 * @param type the type to set
 	 */
 	public void setType(String type) {
 		this.type = type;
 	}
+	
 	/**
 	 * @return the operand
 	 */
 	public String getOperand() {
 		return operand;
 	}
+	
 	/**
 	 * @return the variable
 	 */
 	public boolean isVariable() {
 		return variable;
 	}
+	
 	/**
 	 * @return the type
 	 */

@@ -25,13 +25,12 @@ public class LogicalSolver {
 		logicalString =	logicalString.replaceAll("and", "&&");
 		logicalString = logicalString.replaceAll("or", "||");
 		return JavaScriptEngine.getInstance().getResult(logicalString);
-		
 	}
+	
 	public boolean isRowSolvingCondition(Row row , LogicalCondition condition) throws SQLException {
 		for(RelationalCondition relationalCondition:condition.getRelationalConditions()) {
 			relationalCondition.setTrueValue(RelationalSolver.getInstance().isRowSolvingCondition(row, relationalCondition));
 		}
 		return getLogicalResult(condition);
-		
 	}
 }

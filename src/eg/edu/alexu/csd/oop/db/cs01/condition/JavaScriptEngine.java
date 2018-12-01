@@ -22,8 +22,7 @@ public class JavaScriptEngine {
 		try {
 			return (boolean) sm.eval(condition);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			System.out.println("error in script");
+			System.out.println("Error in script");
 		}
 		return false;
 	}

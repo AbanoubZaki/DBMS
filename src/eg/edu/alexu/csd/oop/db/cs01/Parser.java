@@ -24,7 +24,7 @@ public class Parser {
 
 	private Parser() {
 		theMainDataBase = null;
-		// Creating regex-es for queries.
+		// Creating regexes for queries.
 		final String createDataBasePattern = "(?i)\\bcreate\\b (?i)\\bdatabase\\b ([\\w\\\\]+) ?;? ?";
 		final String drobDataBasePattern = "(?i)\\bdrop\\b (?i)\\bdatabase\\b ([\\w\\\\]+) ?;? ?";
 		final String createTablePattern = "(?i)\\bcreate\\b (?i)\\btable\\b (\\w+) ?\\( ?(( ?\\w+ (int|varchar) ?,?)+) ?\\) ?;? ?";
@@ -122,7 +122,7 @@ public class Parser {
 			// Table.getInstance(theMatchers.get(2).group(1));
 			Table.getInstance(theMatchers.get(2).group(1), theMainDataBase);
 			Table.getInstance().setAllColumnNamesAndTypes(columnsName, columnsType);
-			IQuery createTableQuery = new CreateTable(Table.getInstance());
+			IQuery createTableQuery = new CreateTable();
 			return createTableQuery;
 		} else if (theMatchers.get(3).find()) {// if the query match drop table.
 			if (theMainDataBase == null) {
@@ -132,7 +132,7 @@ public class Parser {
 			// group(1) is the name of the table.
 			// Table.getInstance(theMatchers.get(3).group(1));
 			Table.getInstance(theMatchers.get(3).group(1), theMainDataBase);
-			IQuery dropTableQuery = new DropTable(Table.getInstance());
+			IQuery dropTableQuery = new DropTable();
 			return dropTableQuery;
 		} else if (theMatchers.get(4).find()) {// if the query match insert Into Table Columns
 												// And Values.
@@ -157,7 +157,7 @@ public class Parser {
 			// group(1) is the name of the table.
 			// Table.getInstance(theMatchers.get(4).group(1));
 			Table.getInstance(theMatchers.get(4).group(1), theMainDataBase);
-			IQuery insertIntoTableColumnsAndValuesQuery = new InsertInto(Table.getInstance(), columnNames, values);
+			IQuery insertIntoTableColumnsAndValuesQuery = new InsertInto(columnNames, values);
 			return insertIntoTableColumnsAndValuesQuery;
 		} else if (theMatchers.get(5).find()) {// if the query match insert Into Table Values Only.
 			if (theMainDataBase == null) {
@@ -172,7 +172,7 @@ public class Parser {
 			// group(1) is the name of the table.
 			// Table.getInstance(theMatchers.get(5).group(1));
 			Table.getInstance(theMatchers.get(5).group(1), theMainDataBase);
-			IQuery insertIntoTableValuesOnlyQuery = new InsertInto(Table.getInstance(), values);
+			IQuery insertIntoTableValuesOnlyQuery = new InsertInto(values);
 			return insertIntoTableValuesOnlyQuery;
 		} else if (theMatchers.get(6).find()) {// select * from tabel_name where condition.
 			if (theMainDataBase == null) {
@@ -184,7 +184,7 @@ public class Parser {
 			Table.getInstance(theMatchers.get(6).group(1), theMainDataBase);
 			// group(4) is the condition it may equals null.
 			LogicalCondition selectAllFromTableCondition = new LogicalCondition(theMatchers.get(6).group(4));
-			IQuery selectAllFromTableQuery = new SelectFrom(Table.getInstance(), selectAllFromTableCondition);
+			IQuery selectAllFromTableQuery = new SelectFrom(selectAllFromTableCondition);
 			return selectAllFromTableQuery;
 		} else if (theMatchers.get(7).find()) {// select column from tabel_name where
 												// condition.
@@ -198,7 +198,7 @@ public class Parser {
 			// group(5) is the condition it may equals null.
 			LogicalCondition selectColumnFromTableCondition = new LogicalCondition(theMatchers.get(7).group(5));
 			// group(1) is the column name.
-			IQuery selectColumnFromTableQuery = new SelectFrom(Table.getInstance(), theMatchers.get(7).group(1),
+			IQuery selectColumnFromTableQuery = new SelectFrom(theMatchers.get(7).group(1),
 					selectColumnFromTableCondition);
 			return selectColumnFromTableQuery;
 		} else if (theMatchers.get(8).find()) {// update tabel name set c1 = v1, ... where
@@ -229,7 +229,7 @@ public class Parser {
 			Table.getInstance(theMatchers.get(8).group(1), theMainDataBase);
 			// group(8) is the condition it may equals null.
 			LogicalCondition updateTableSetColumnCondition = new LogicalCondition(theMatchers.get(8).group(9));
-			IQuery updateTableSetColumnQuery = new UpdateSet(Table.getInstance(), columnNames, values,
+			IQuery updateTableSetColumnQuery = new UpdateSet(columnNames, values,
 					updateTableSetColumnCondition);
 			return updateTableSetColumnQuery;
 		} else if (theMatchers.get(9).find()) {// DELETE FROM table_name WHERE condition.
@@ -242,7 +242,7 @@ public class Parser {
 			Table.getInstance(theMatchers.get(9).group(1), theMainDataBase);
 			// group(4) is the condition it may equals null.
 			LogicalCondition deleteFromTableCondition = new LogicalCondition(theMatchers.get(9).group(4));
-			IQuery deleteFromTableQuery = new DeleteFrom(Table.getInstance(), deleteFromTableCondition);
+			IQuery deleteFromTableQuery = new DeleteFrom(deleteFromTableCondition);
 			return deleteFromTableQuery;
 		}
 		theMainDataBase = null;

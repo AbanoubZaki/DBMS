@@ -10,16 +10,18 @@ import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
 public class ConditionParser {
 
 	private static ConditionParser parser;
+	
 	private ConditionParser() {
 	}
+	
 	public static ConditionParser getInstance() {
 		if(parser==null)
 			parser = new ConditionParser();
 		return parser;
 	}
+	
 	public RelationalCondition stringToRelationalCondition(String relationalCondition) {
-		//remove all spaces to increase the speed of regex matching decreasing steps of matching
-//		relationalCondition = relationalCondition.replace(" ", "");
+
 		String stringConditionPattern = "(([^;\\s<>!=()]+) ?(([!=><]{1,2}) ?((['\"] ?([^;<>!=()]+) ?['\"])|[^;\\s<>!=()'\"]+)?)?)";
 		Pattern thePattern = Pattern.compile(stringConditionPattern);
 		Matcher theMatcher = thePattern.matcher(relationalCondition);
@@ -36,6 +38,7 @@ public class ConditionParser {
 			}
 			RelationalOperand leftAgrument = null;
 			RelationalOperand rightAgrument = null;
+			
 			if(theMatcher.group(2)!=null) {
 				if(!table.getColumnNamesToLowerCase().contains(theMatcher.group(2).toLowerCase())) {
 					leftAgrument = new RelationalOperand(theMatcher.group(2), !table.getColumnNamesToLowerCase().contains(theMatcher.group(2).toLowerCase()),dataChecker.getInstance().checkType(theMatcher.group(2)));
@@ -43,6 +46,7 @@ public class ConditionParser {
 					leftAgrument = new RelationalOperand(theMatcher.group(2), !table.getColumnNamesToLowerCase().contains(theMatcher.group(2).toLowerCase()),table.getColumnTypes().get(theMatcher.group(2).toLowerCase()));
 				}
 			}
+			
 			if(theMatcher.group(5)!=null) {
 				if(!table.getColumnNamesToLowerCase().contains(theMatcher.group(5).toLowerCase())) {
 					rightAgrument = new RelationalOperand(theMatcher.group(5), !table.getColumnNamesToLowerCase().contains(theMatcher.group(5).toLowerCase()),dataChecker.getInstance().checkType(theMatcher.group(5)));
@@ -60,13 +64,11 @@ public class ConditionParser {
 		ArrayList<RelationalCondition>conditions = new ArrayList<RelationalCondition>();
 		if(logicalCondition==null)
 			return null;
-//		final String relationlConditionPattern = "(([^;\\s<>!=()]+) ?(([!=><]{1,2}) ?([^;\\s<>!=()]+)?)?)";
 		final String relationlConditionPattern = "(([^;\\s<>!=()]+) ?(([!=><]{1,2}) ?((['\"] ?([^;<>!=()]+) ?['\"])|[^;\\s<>!=()'\"]+)?)?)";
 		logicalCondition = logicalCondition.replaceAll(" +", " ");
 		Pattern p = Pattern.compile(relationlConditionPattern);
 		Matcher operation = p.matcher(logicalCondition);
 		while (operation.find()) {
-//			String s = operation.group(1).replaceAll(" ", "");
 			String s = operation.group(1);
 			if(!s.replaceAll(" ", "").equals("or") && !s.replaceAll(" ", "").equals("and") && !s.replaceAll(" ", "").equals("not")) {
 				conditions.add(new RelationalCondition(s));

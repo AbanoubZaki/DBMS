@@ -13,24 +13,28 @@ public class RelationalCondition {
 	public boolean isTrueValue() {
 		return trueValue;
 	}
+	
 	/**
 	 * @param trueValue the trueValue to set
 	 */
 	public void setTrueValue(boolean trueValue) {
 		this.trueValue = trueValue;
 	}
+	
 	/**
 	 * @return the stringCondition
 	 */
 	public String getStringCondition() {
 		return stringCondition;
 	}
+	
 	/**
 	 * @param stringCondition the stringCondition to set
 	 */
 	public void setStringCondition(String stringCondition) {
 		this.stringCondition = stringCondition;
 	}
+	
 	/**
 	 * @param leftAgrument
 	 * @param rightAgrument

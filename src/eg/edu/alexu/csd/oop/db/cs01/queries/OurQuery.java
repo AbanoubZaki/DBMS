@@ -8,25 +8,8 @@ import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
 
 public class OurQuery implements IQuery {
 
-	private Table table;
 	private LogicalCondition condition;
 	private String column;
-	
-	public OurQuery() {
-	}
-	
-	public OurQuery(Table table) {
-		this.table = table;
-	}
-	
-	public Table getTable() {
-		return table;
-	}
-
-	public void setTable(Table table) {
-		this.table = table;
-//		readTable();
-	}	
 	
 	@Override
 	public boolean execute1() throws SQLException {
@@ -36,11 +19,6 @@ public class OurQuery implements IQuery {
 	@Override
 	public int execute2() throws SQLException {
 		return 0;
-	}
-	
-	@Override
-	public boolean readTable() {
-		return FileManager.getInstance().readTable(table);
 	}
 	
 	@Override
@@ -71,21 +49,6 @@ public class OurQuery implements IQuery {
 	@Override
 	public Object[][] getSelected() {
 		return null;
-	}
-
-	@Override
-	public String getColumnType() {
-		return null;
-	}
-
-	@Override
-	public int getColumnIndex() {
-		return 0;
-	}
-
-	public void setColumnType() {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

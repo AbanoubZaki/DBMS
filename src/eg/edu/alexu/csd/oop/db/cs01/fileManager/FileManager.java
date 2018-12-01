@@ -39,6 +39,7 @@ public class FileManager {
 	
 	//singleton pattern
 	private static FileManager instance;
+	
 	private FileManager() {
 	}
 	
@@ -63,7 +64,7 @@ public class FileManager {
 	 * @param databaseName
 	 */
 	public boolean dropDB(String databaseName) {
-		if(!databaseName.contains(System.getProperty("file.separator")))
+	if(!databaseName.contains(System.getProperty("file.separator")))
 			databaseName="databases"+System.getProperty("file.separator")+databaseName;
 	File db = new File(databaseName);
 	if(!db.exists())
