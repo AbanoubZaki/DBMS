@@ -13,15 +13,15 @@ public abstract class OurQuery implements IQuery {
 	@Override
 	public abstract boolean execute() throws SQLException;
 	
-	@Override
-	public void setColumn(String column) {
-		this.column = column;
-	}
-
-	@Override
-	public String getColumn() {
-		return column;
-	}
+//	@Override
+//	public void setColumn(String column) {
+//		this.column = column;
+//	}
+//
+//	@Override
+//	public String getColumn() {
+//		return column;
+//	}
 
 	@Override
 	public void setCondition(LogicalCondition condition2) {

@@ -17,12 +17,12 @@ import eg.edu.alexu.csd.oop.db.cs01.queries.InsertInto;
 import eg.edu.alexu.csd.oop.db.cs01.queries.SelectFrom;
 import eg.edu.alexu.csd.oop.db.cs01.queries.UpdateSet;
 
-public class Parser {
+public class QueryFactory {
 
 	// Singleton pattern.
-	private static Parser instance;
+	private static QueryFactory instance;
 
-	private Parser() {
+	private QueryFactory() {
 		theMainDataBase = null;
 		// Creating regexes for queries.
 		final String createDataBasePattern = "(?i)\\bcreate\\b (?i)\\bdatabase\\b ([\\w\\\\]+) ?;? ?";
@@ -32,7 +32,7 @@ public class Parser {
 		final String insertIntoTableColumnsAndValuesPattern = "(?i)\\bINSERT\\b\\s(?i)\\bINTO\\b\\s([\\d\\w]+)\\s?\\(([\\s\\w\\d,]*)\\)\\s?(?i)\\bVALUES\\b\\s?\\(([\\s\\w\\d\\W,']*)\\s?\\) ?;? ?";
 		final String insertIntoTableValuesOnlyPattern = "(?i)\\binsert\\b (?i)\\binto\\b (\\w+) (?i)\\bvalues\\b ?\\( ?(( ?['\"]? ?[\\w\\s\\d\\W]+ ?['\"]? ?,?)+)\\) ?;? ?";
 		final String selectAllFromTablePattern = "(?i)\\bselect\\b \\* (?i)\\bfrom\\b (\\w+) ?(((?i)\\bwhere\\b) ?([\\s\\w()><!='\"]+))? ?;? ?";
-		final String selectColumnFromTablePattern = "(?i)\\bselect\\b (\\w+) (?i)\\bfrom\\b (\\w+) ?(((?i)\\bwhere\\b) ?([\\s\\w()><!='\"]+))? ?;? ?";
+		final String selectColumnFromTablePattern = "(?i)\\bselect\\b ([\\w,\\s]+) (?i)\\bfrom\\b (\\w+) ?(((?i)\\bwhere\\b) ?([\\s\\w()><!='\"]+))? ?;? ?";
 		final String updateTableSetColumnPattern = "(?i)\\bupdate\\b (\\w+) (?i)\\bset\\b (( ?(\\w+)( +)?= ?['\"]? ?(\\w)+ ?['\"]? ?,?)+) ?(((?i)\\bwhere\\b) ?([\\s\\w()><!='\"]+))? ?;? ?";
 		final String deleteFromTablePattern = "(?i)\\bdelete\\b (?i)\\bfrom\\b (\\w+) ?(((?i)\\bwhere\\b) ?([\\s\\w()><!='\"]+))? ?;? ?";
 
@@ -50,9 +50,9 @@ public class Parser {
 		allPatternStrings.add(deleteFromTablePattern);// 9.
 	}
 
-	public static Parser getInstance() {
+	public static QueryFactory getInstance() {
 		if (instance == null) {
-			instance = new Parser();
+			instance = new QueryFactory();
 		}
 		return instance;
 	}
@@ -198,8 +198,9 @@ public class Parser {
 			// group(5) is the condition it may equals null.
 			LogicalCondition selectColumnFromTableCondition = new LogicalCondition(theMatchers.get(7).group(5));
 			// group(1) is the column name.
-			IQuery selectColumnFromTableQuery = new SelectFrom(theMatchers.get(7).group(1),
-					selectColumnFromTableCondition);
+			String columns[] = theMatchers.get(7).group(1).split(" ?, ?");
+			ArrayList<String> columnsList = new ArrayList<String>(Arrays.asList(columns));
+			IQuery selectColumnFromTableQuery = new SelectFrom(columnsList, selectColumnFromTableCondition);
 			return selectColumnFromTableQuery;
 		} else if (theMatchers.get(8).find()) {// update tabel name set c1 = v1, ... where
 												// condition.
@@ -207,31 +208,67 @@ public class Parser {
 				System.out.println("There is on database selected");
 				return null;
 			}
-			String[] sets;
-			ArrayList<String> columnNames = new ArrayList<>();
-			ArrayList<String> values = new ArrayList<>();
-			// pattern to split column name from the new value.
-			String setsPattern = " ?(\\w+) ?= ?(['\"]? ?(\\w+) ?['\"]?) ?";
-			// group(2) is the all of the sets.
-			sets = theMatchers.get(8).group(2).split(" ?, ?");
-			// compiling sets pattern
-			Pattern p = Pattern.compile(setsPattern);
-			// filling ArrayLists columnNames & values.
-			for (int i = 0; i < sets.length; i++) {
-				Matcher setsMatcher = p.matcher(sets[i]);
-				if (setsMatcher.find()) {
-					columnNames.add(setsMatcher.group(1));
-					values.add(setsMatcher.group(2));
+//			theQuery = theQuery.toLowerCase().replace("where", ",where");
+			if (theQuery.toLowerCase().contains("where")) {
+				String confirmingPatternString = "((?i)\\bUPDATE\\b\\s+)(\\w+)\\s+((?i)\\bSET\\b)\\s+([\\w\\s=,'\"]+)\\s+(((?i)\\bWHERE\\b)(.+))";
+				Pattern confirmingPattern;
+				Matcher confirmingatcher;
+				confirmingPattern = Pattern.compile(confirmingPatternString);
+				theQuery = theQuery.replace(";", "");
+				confirmingatcher = confirmingPattern.matcher(theQuery);
+				if (confirmingatcher.find()) {
+					String[] sets;
+					ArrayList<String> columnNames = new ArrayList<>();
+					ArrayList<String> values = new ArrayList<>();
+					// pattern to split column name from the new value.
+					String setsPattern = " ?(\\w+) ?= ?(['\"]?([\\w\\s]+)['\"]?)";
+					// group(4) is the all of the sets.
+					sets = confirmingatcher.group(4).split(" ?, ?");
+					// compiling sets pattern
+					Pattern p = Pattern.compile(setsPattern);
+					// filling ArrayLists columnNames & values.
+					for (int i = 0; i < sets.length; i++) {
+						Matcher setsMatcher = p.matcher(sets[i]);
+						if (setsMatcher.find()) {
+							columnNames.add(setsMatcher.group(1));
+							values.add(setsMatcher.group(2));
+						}
+					}
+					// group(1) is the table name.
+					// Table.getInstance(theMatchers.get(8).group(1));
+					Table.getInstance(confirmingatcher.group(2), theMainDataBase);
+					// group(8) is the condition it may equals null.
+					LogicalCondition updateTableSetColumnCondition = new LogicalCondition(confirmingatcher.group(7));
+					IQuery updateTableSetColumnQuery = new UpdateSet(columnNames, values, updateTableSetColumnCondition);
+					return updateTableSetColumnQuery;
 				}
+			} else {
+				String[] sets;
+				ArrayList<String> columnNames = new ArrayList<>();
+				ArrayList<String> values = new ArrayList<>();
+				// pattern to split column name from the new value.
+				String setsPattern = " ?(\\w+) ?= ?(['\"]?([\\w\\s]+)['\"]?)";
+				// group(2) is the all of the sets.
+				sets = theMatchers.get(8).group(2).split(" ?, ?");
+				// compiling sets pattern
+				Pattern p = Pattern.compile(setsPattern);
+				// filling ArrayLists columnNames & values.
+				for (int i = 0; i < sets.length; i++) {
+					Matcher setsMatcher = p.matcher(sets[i]);
+					if (setsMatcher.find()) {
+						columnNames.add(setsMatcher.group(1));
+						values.add(setsMatcher.group(2));
+					}
+				}
+				// group(1) is the table name.
+				// Table.getInstance(theMatchers.get(8).group(1));
+				Table.getInstance(theMatchers.get(8).group(1), theMainDataBase);
+				// group(8) is the condition it may equals null.
+				LogicalCondition updateTableSetColumnCondition = new LogicalCondition(theMatchers.get(8).group(9));
+				IQuery updateTableSetColumnQuery = new UpdateSet(columnNames, values, updateTableSetColumnCondition);
+				return updateTableSetColumnQuery;
 			}
-			// group(1) is the table name.
-			// Table.getInstance(theMatchers.get(8).group(1));
-			Table.getInstance(theMatchers.get(8).group(1), theMainDataBase);
-			// group(8) is the condition it may equals null.
-			LogicalCondition updateTableSetColumnCondition = new LogicalCondition(theMatchers.get(8).group(9));
-			IQuery updateTableSetColumnQuery = new UpdateSet(columnNames, values,
-					updateTableSetColumnCondition);
-			return updateTableSetColumnQuery;
+			
 		} else if (theMatchers.get(9).find()) {// DELETE FROM table_name WHERE condition.
 			if (theMainDataBase == null) {
 				System.out.println("There is no database selected");

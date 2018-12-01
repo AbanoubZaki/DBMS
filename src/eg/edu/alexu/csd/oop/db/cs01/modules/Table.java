@@ -194,12 +194,27 @@ public class Table {
 			Row r = getRows().get(i);
 			for (int j = 0; j < getColumnNamesToLowerCase().size(); j++) {
 				if (getColumnTypes().get(getColumnNamesToLowerCase().get(j)).equals("int")) {
-					if(r.getCells().get(getColumnNamesToLowerCase().get(j))!=null)
-					data[i][j]=(Integer.parseInt(r.getCells().get(getColumnNamesToLowerCase().get(j)).getValue()));
-					else
+					if(r.getCells().get(getColumnNamesToLowerCase().get(j)) != null) {
+						if (r.getCells().get(getColumnNamesToLowerCase().get(j)).getValue() != null) {
+							data[i][j]=(Integer.parseInt(r.getCells().get(getColumnNamesToLowerCase().get(j)).getValue()));
+						} else {
+							data[i][j]=null;
+						}
+					}
+					else {
 						data[i][j]=null;
+					}
 				} else if (getColumnTypes().get(getColumnNamesToLowerCase().get(j)).equals("varchar")) {
-					data[i][j] = r.getCells().get(getColumnNamesToLowerCase().get(j)).getValue();
+					if(r.getCells().get(getColumnNamesToLowerCase().get(j)) !=null) {
+						if (r.getCells().get(getColumnNamesToLowerCase().get(j)).getValue() != null) {
+							data[i][j] = r.getCells().get(getColumnNamesToLowerCase().get(j)).getValue();
+						} else {
+							data[i][j]=null;
+						}
+					}
+					else {
+						data[i][j]=null;
+					}
 				}
 			}
 		}

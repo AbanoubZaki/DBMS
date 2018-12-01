@@ -13,6 +13,9 @@ public class OurMain {
 		while (true) {
 			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 			String query = br.readLine();
+			if (query == null || query.equals("")) {
+				continue;
+			}
 			if (query.equals("exit")) {
 				break;
 			}

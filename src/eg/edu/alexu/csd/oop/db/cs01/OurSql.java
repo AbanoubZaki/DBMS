@@ -43,7 +43,7 @@ public class OurSql implements Database {
 
 	@Override
 	public boolean executeStructureQuery(String query) throws SQLException {
-		IQuery objectQuery = Parser.getInstance().parseQuery(query);
+		IQuery objectQuery = QueryFactory.getInstance().parseQuery(query);
 		if (objectQuery == null) {
 			throw new SQLException("Structure Query Failed , syntax error.");
 		}
@@ -53,7 +53,7 @@ public class OurSql implements Database {
 
 	@Override
 	public Object[][] executeQuery(String query) throws SQLException {
-		IQuery selectQuery = Parser.getInstance().parseQuery(query);
+		IQuery selectQuery = QueryFactory.getInstance().parseQuery(query);
 		if (selectQuery == null) {
 			throw new SQLException("Selection Query Failed , syntax error.");
 		}
@@ -63,7 +63,7 @@ public class OurSql implements Database {
 
 	@Override
 	public int executeUpdateQuery(String query) throws SQLException {
-		IQuery objectQuery = Parser.getInstance().parseQuery(query);
+		IQuery objectQuery = QueryFactory.getInstance().parseQuery(query);
 		if (objectQuery == null) {
 			throw new SQLException("Updating Query  Failed , syntax error.");
 		}
