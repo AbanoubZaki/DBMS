@@ -2,8 +2,6 @@ package eg.edu.alexu.csd.oop.db.cs01.gui;
 
 import java.sql.SQLException;
 
-import com.sun.javafx.scene.control.skin.PaginationSkin;
-
 import eg.edu.alexu.csd.oop.db.cs01.GeneralParser;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,7 +10,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 
 public class TheController {
 
@@ -38,7 +35,7 @@ public class TheController {
 				GeneralParser.getInstance().parse(entreQuery.getText());
 				if (GeneralParser.getInstance().isCheckerExecute()) {
 					errorLable.setTextFill(Color.GREEN);
-					errorLable.setText("You have made a change : "+GeneralParser.getInstance().getUpdatedRows());
+					errorLable.setText("You have made a change : " + GeneralParser.getInstance().getUpdatedRows());
 				}
 			} catch (SQLException e) {
 				errorLable.setText(e.getMessage());
