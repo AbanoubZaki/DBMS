@@ -19,16 +19,15 @@ public class ConditionParser {
 	}
 	public RelationalCondition stringToRelationalCondition(String relationalCondition) {
 		//remove all spaces to increase the speed of regex matching decreasing steps of matching
-		relationalCondition = relationalCondition.replace(" ", "");
-		relationalCondition = " " + relationalCondition;
-		String stringConditionPattern = " \\s* ?(['\\\"]? ?\\w+['\\\"]?)\\s* ?([><=!]{1,2})?\\s* ?(['\\\"]? ?\\w+['\\\"]?)? ?";
+//		relationalCondition = relationalCondition.replace(" ", "");
+		String stringConditionPattern = "(([^;\\s<>!=()]+) ?(([!=><]{1,2}) ?((['\"] ?([^;<>!=()]+) ?['\"])|[^;\\s<>!=()'\"]+)?)?)";
 		Pattern thePattern = Pattern.compile(stringConditionPattern);
 		Matcher theMatcher = thePattern.matcher(relationalCondition);
 		Table table = Table.getInstance();
 		if(table==null)
 			return null;
 		if (theMatcher.find()) {
-			String op = theMatcher.group(2);
+			String op = theMatcher.group(4);
 			if(op!=null) {
 				if(op.equals("="))
 					op+=op;
@@ -37,18 +36,18 @@ public class ConditionParser {
 			}
 			RelationalOperand leftAgrument = null;
 			RelationalOperand rightAgrument = null;
-			if(theMatcher.group(1)!=null) {
-				if(!table.getColumnNamesToLowerCase().contains(theMatcher.group(1).toLowerCase())) {
-					leftAgrument = new RelationalOperand(theMatcher.group(1), !table.getColumnNamesToLowerCase().contains(theMatcher.group(1).toLowerCase()),dataChecker.getInstance().checkType(theMatcher.group(1)));
+			if(theMatcher.group(2)!=null) {
+				if(!table.getColumnNamesToLowerCase().contains(theMatcher.group(2).toLowerCase())) {
+					leftAgrument = new RelationalOperand(theMatcher.group(2), !table.getColumnNamesToLowerCase().contains(theMatcher.group(2).toLowerCase()),dataChecker.getInstance().checkType(theMatcher.group(2)));
 				}else {
-					leftAgrument = new RelationalOperand(theMatcher.group(1), !table.getColumnNamesToLowerCase().contains(theMatcher.group(1).toLowerCase()),table.getColumnTypes().get(theMatcher.group(1).toLowerCase()));
+					leftAgrument = new RelationalOperand(theMatcher.group(2), !table.getColumnNamesToLowerCase().contains(theMatcher.group(2).toLowerCase()),table.getColumnTypes().get(theMatcher.group(2).toLowerCase()));
 				}
 			}
-			if(theMatcher.group(3)!=null) {
-				if(!table.getColumnNamesToLowerCase().contains(theMatcher.group(3).toLowerCase())) {
-					rightAgrument = new RelationalOperand(theMatcher.group(3), !table.getColumnNamesToLowerCase().contains(theMatcher.group(3).toLowerCase()),dataChecker.getInstance().checkType(theMatcher.group(3)));
+			if(theMatcher.group(5)!=null) {
+				if(!table.getColumnNamesToLowerCase().contains(theMatcher.group(5).toLowerCase())) {
+					rightAgrument = new RelationalOperand(theMatcher.group(5), !table.getColumnNamesToLowerCase().contains(theMatcher.group(5).toLowerCase()),dataChecker.getInstance().checkType(theMatcher.group(5)));
 				}else {
-					rightAgrument = new RelationalOperand(theMatcher.group(3), !table.getColumnNamesToLowerCase().contains(theMatcher.group(3).toLowerCase()),table.getColumnTypes().get(theMatcher.group(3).toLowerCase()));
+					rightAgrument = new RelationalOperand(theMatcher.group(5), !table.getColumnNamesToLowerCase().contains(theMatcher.group(5).toLowerCase()),table.getColumnTypes().get(theMatcher.group(5).toLowerCase()));
 				}
 			}
 			return new RelationalCondition(leftAgrument, rightAgrument,op );
@@ -61,7 +60,8 @@ public class ConditionParser {
 		ArrayList<RelationalCondition>conditions = new ArrayList<RelationalCondition>();
 		if(logicalCondition==null)
 			return null;
-		final String relationlConditionPattern = "(([^;\\s<>!=()]+) ?(([!=><]{1,2}) ?([^;\\s<>!=()]+)?)?)";
+//		final String relationlConditionPattern = "(([^;\\s<>!=()]+) ?(([!=><]{1,2}) ?([^;\\s<>!=()]+)?)?)";
+		final String relationlConditionPattern = "(([^;\\s<>!=()]+) ?(([!=><]{1,2}) ?((['\"] ?([^;<>!=()]+) ?['\"])|[^;\\s<>!=()'\"]+)?)?)";
 		logicalCondition = logicalCondition.replaceAll(" +", " ");
 		Pattern p = Pattern.compile(relationlConditionPattern);
 		Matcher operation = p.matcher(logicalCondition);
