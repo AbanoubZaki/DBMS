@@ -17,11 +17,13 @@ public class InsertInto extends OurQuery {
 	public InsertInto(ArrayList<String> values) {
 		this.columnNames = null;
 		this.values = values;
+		setUpdatedRows(0);
 	}
 
 	public InsertInto(ArrayList<String> columnNames, ArrayList<String> values) {
 		this.columnNames = columnNames;
 		this.values = values;
+		setUpdatedRows(0);
 	}
 
 	/**
@@ -30,41 +32,44 @@ public class InsertInto extends OurQuery {
 	 * @throws SQLException 
 	 */
 	@Override
-	public int execute2() throws SQLException {
+	public boolean execute() throws SQLException {
 		if (Table.getInstance() == null || Table.getInstance().getColumnNamesAsGiven().size() == 0) {
 			throw new SQLException("Table not found.");
 		}
 		if (Table.getInstance().getColumnTypes() == null) {
-			System.out.println("Datatype mismatch happened.");
-			return 0;
+			throw new SQLException("Datatype mismatch happened.");
 		}
 		if (columnNames == null || columnNames.isEmpty()) {
 			columnNames = Table.getInstance().getColumnNamesToLowerCase();
 			// no of values must be equal to no of columns.
 			if (values.size() != columnNames.size()) {
-				System.out.println(
-						"you have entered " + values.size() + " but table needs " + columnNames.size() + " values.");
-				return 0;
+				throw new SQLException("you have entered " + values.size() + " but table needs " + columnNames.size() + " values."); 
 			}
 		}
 		for (int i = 0; i < columnNames.size(); i++) {
 			if (!Table.getInstance().getColumnNamesToLowerCase().contains(columnNames.get(i).toLowerCase())) {
-				System.out.println("Column names not found.");
-				return 0;
+				throw new SQLException("Column names not found.");
 			}
 		}
+		
 		Row insertedRow = new Row(Table.getInstance());
 		for (int i = 0; i < values.size(); i++) {
 			if (Table.getInstance().getColumnTypes().get(columnNames.get(i).toLowerCase()).equals("int")) {
 				if (Table.getInstance().getColumnTypes().get(columnNames.get(i).toLowerCase())
 						.equals(dataChecker.getInstance().checkType(values.get(i)))) {
 					insertedRow.updateCell(columnNames.get(i).toLowerCase(), new Cell(values.get(i)));
-				} else
-					return 0;
-			} else
+				} else {
+					throw new SQLException("Datatype mismatch happened.");
+				}
+			} else {
+				if (!values.get(i).contains("\"") && !values.get(i).contains("'")) {
+					values.set(i, "'" + values.get(i) + "'");
+				}
 				insertedRow.updateCell(columnNames.get(i).toLowerCase(), new Cell(values.get(i)));
+			}
 		}
 		Table.getInstance().addRow(insertedRow);
-		return 1;
+		setUpdatedRows(1);
+		return true;
 	}
 }

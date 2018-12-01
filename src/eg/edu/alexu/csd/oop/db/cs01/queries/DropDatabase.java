@@ -12,7 +12,7 @@ public class DropDatabase extends OurQuery{
 	}
 	
 	@Override
-	public boolean execute1() {
+	public boolean execute() {
 		if (databaseName == null) {
 			return false;
 		}

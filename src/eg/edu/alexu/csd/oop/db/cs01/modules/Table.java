@@ -77,6 +77,9 @@ public class Table {
 		if(table!=null) {
 			FileManager.getInstance().writeTable(table);
 		}
+		if (currenDataBaseName == null) {
+			return null;
+		}
 		table = new Table();
 		table.setTableName(tableName);
 		table.setDatabaseName(currenDataBaseName);
@@ -208,7 +211,6 @@ public class Table {
 			if (getColumnTypes().get(columnNames.get(i).toLowerCase()).equals("int")) {
 				if (dataChecker.getInstance().checkType(values.get(i)).equals("int")) {
 				} else {
-					System.out.println("Datatype mismatch happened.");
 					return false;
 				}
 			}

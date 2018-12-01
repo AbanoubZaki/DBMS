@@ -10,7 +10,7 @@ import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
 public class CreateTable extends OurQuery {
 
 	@Override
-	public boolean execute1() throws SQLException {
+	public boolean execute() throws SQLException {
 		if (Table.getInstance().getDatabaseName() == null || Table.getInstance().getDatabaseName().equals("")) {
 			throw new SQLException("Database not found.");
 		}
@@ -19,8 +19,7 @@ public class CreateTable extends OurQuery {
 		}
 		Set<String> columnsSet = new HashSet<>(Table.getInstance().getColumnNamesToLowerCase()); 
 		if(columnsSet.size() != Table.getInstance().getColumnNamesToLowerCase().size()) {
-			System.out.println("Duplicates found in column names.");
-			return false;
+			throw new SQLException("Duplicates found in column names.");
 		}
 		if(!FileManager.getInstance().createTable(Table.getInstance())) {
 			FileManager.getInstance().readTable(Table.getInstance());

@@ -8,7 +8,7 @@ import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
 public class DropTable extends OurQuery {
 	
 	@Override
-	public boolean execute1() throws SQLException {
+	public boolean execute() throws SQLException {
 		if (Table.getInstance() == null || Table.getInstance().getColumnNamesAsGiven().size() == 0) {
 			throw new SQLException("Table not found.");
 		}

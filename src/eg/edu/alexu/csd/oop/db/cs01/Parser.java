@@ -99,7 +99,7 @@ public class Parser {
 			return drobDataBaseQuery;
 		} else if (theMatchers.get(2).find()) {// if the query match create table.
 			if (theMainDataBase == null) {
-				System.out.println("There is NO DataBase selected");
+				System.out.println("There is no database selected");
 				return null;
 			}
 			String[] columns;
@@ -126,7 +126,7 @@ public class Parser {
 			return createTableQuery;
 		} else if (theMatchers.get(3).find()) {// if the query match drop table.
 			if (theMainDataBase == null) {
-				System.out.println("There is NO DataBase selected");
+				System.out.println("There is no database selected");
 				return null;
 			}
 			// group(1) is the name of the table.
@@ -137,7 +137,7 @@ public class Parser {
 		} else if (theMatchers.get(4).find()) {// if the query match insert Into Table Columns
 												// And Values.
 			if (theMainDataBase == null) {
-				System.out.println("There is NO DataBase selected");
+				System.out.println("There is no database selected");
 				return null;
 			}
 			String[] columnsArray;
@@ -161,7 +161,7 @@ public class Parser {
 			return insertIntoTableColumnsAndValuesQuery;
 		} else if (theMatchers.get(5).find()) {// if the query match insert Into Table Values Only.
 			if (theMainDataBase == null) {
-				System.out.println("There is NO DataBase selected");
+				System.out.println("There is no database selected");
 				return null;
 			}
 			String[] valuesArray;
@@ -176,7 +176,7 @@ public class Parser {
 			return insertIntoTableValuesOnlyQuery;
 		} else if (theMatchers.get(6).find()) {// select * from tabel_name where condition.
 			if (theMainDataBase == null) {
-				System.out.println("There is NO DataBase selected");
+				System.out.println("There is no database selected");
 				return null;
 			}
 			// group(1) is the name of the table.
@@ -189,7 +189,7 @@ public class Parser {
 		} else if (theMatchers.get(7).find()) {// select column from tabel_name where
 												// condition.
 			if (theMainDataBase == null) {
-				System.out.println("There is NO DataBase selected");
+				System.out.println("There is no database selected");
 				return null;
 			}
 			// group(2) is the table name.
@@ -234,7 +234,7 @@ public class Parser {
 			return updateTableSetColumnQuery;
 		} else if (theMatchers.get(9).find()) {// DELETE FROM table_name WHERE condition.
 			if (theMainDataBase == null) {
-				System.out.println("There is NO DataBase selected");
+				System.out.println("There is no database selected");
 				return null;
 			}
 			// group(1) is the table name.

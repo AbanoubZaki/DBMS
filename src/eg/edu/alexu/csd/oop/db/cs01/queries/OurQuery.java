@@ -3,23 +3,15 @@ package eg.edu.alexu.csd.oop.db.cs01.queries;
 import java.sql.SQLException;
 
 import eg.edu.alexu.csd.oop.db.cs01.condition.LogicalCondition;
-import eg.edu.alexu.csd.oop.db.cs01.fileManager.FileManager;
-import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
 
-public class OurQuery implements IQuery {
+public abstract class OurQuery implements IQuery {
 
 	private LogicalCondition condition;
 	private String column;
+	private int updatedRows;
 	
 	@Override
-	public boolean execute1() throws SQLException {
-		return false;
-	}
-
-	@Override
-	public int execute2() throws SQLException {
-		return 0;
-	}
+	public abstract boolean execute() throws SQLException;
 	
 	@Override
 	public void setColumn(String column) {
@@ -43,12 +35,21 @@ public class OurQuery implements IQuery {
 
 	@Override
 	public void setSelected(Object[][] selected) {
-		
 	}
 
 	@Override
 	public Object[][] getSelected() {
 		return null;
+	}
+
+	@Override
+	public int getUpdatedRows() {
+		return updatedRows;
+	}
+
+	@Override
+	public void setUpdatedRows(int updatedRows) {
+		this.updatedRows =  updatedRows;
 	}
 
 }

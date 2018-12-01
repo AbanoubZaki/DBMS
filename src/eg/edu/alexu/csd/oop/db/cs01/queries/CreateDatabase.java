@@ -16,7 +16,7 @@ public class CreateDatabase extends OurQuery{
 	 * @return
 	 */
 	@Override
-	public boolean execute1() {
+	public boolean execute() {
 		if (databaseName == null) {
 			return false;
 		}

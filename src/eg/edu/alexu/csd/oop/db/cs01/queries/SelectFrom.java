@@ -45,7 +45,7 @@ public class SelectFrom extends OurQuery {
 	}
 
 	@Override
-	public boolean execute1() throws SQLException {
+	public boolean execute() throws SQLException {
 		if (Table.getInstance() == null || Table.getInstance().getColumnNamesAsGiven().size() == 0) {
 			throw new SQLException("Table not found.");
 		}
@@ -61,8 +61,7 @@ public class SelectFrom extends OurQuery {
 			 * if its a imaginary column the return false.
 			 */
 			if (!Table.getInstance().getColumnNamesToLowerCase().contains(getColumn())) {
-				System.out.println("Column \"" + getColumn() + "\" not found.");
-				return false;
+				throw new SQLException("Column \"" + getColumn() + "\" not found.");
 			}
 			selected = new Object[Table.getInstance().getRows().size()][1];
 			for (int i = 0; i < Table.getInstance().getRows().size(); i++) {

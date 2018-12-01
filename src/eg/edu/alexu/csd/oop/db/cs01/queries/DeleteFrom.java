@@ -13,10 +13,11 @@ public class DeleteFrom extends OurQuery {
 
 	public DeleteFrom(LogicalCondition condition) {
 		setCondition(condition);
+		setUpdatedRows(0);
 	}
 	
 	@Override
-	public int execute2() throws SQLException {
+	public boolean execute() throws SQLException {
 		if (Table.getInstance() == null || Table.getInstance().getColumnNamesAsGiven().size() == 0) {
 			throw new SQLException("Table not found.");
 		}
@@ -30,15 +31,15 @@ public class DeleteFrom extends OurQuery {
 		File tableFile = new File(pathTable+".Xml");
 		File DTDFile = new File(pathTable+".dtd");
 		if(!tableFile.exists() || !DTDFile.exists()) {
-			System.out.println("Table not found.");
-			return 0;
+			throw new SQLException("Table not found.");
 		}
 		
 		int effectedRows = Table.getInstance().getRows().size();
 		if (getCondition().getStringCondition() == null) {
 			Table.getInstance().getRows().clear();
-			return effectedRows;
-		}else if (getCondition().getStringCondition() != null) {
+			setUpdatedRows(effectedRows);
+			return true;
+		} else if (getCondition().getStringCondition() != null) {
 			ArrayList<Row> remainingRows = new ArrayList<>();
 			for (Row r:Table.getInstance().getRows()) {
 				if (!LogicalSolver.getInstance().isRowSolvingCondition(r, getCondition())) {
@@ -48,8 +49,8 @@ public class DeleteFrom extends OurQuery {
 			Table.getInstance().setRows(remainingRows);
 			 effectedRows -= Table.getInstance().getRows().size();
 		}
-		
-		return effectedRows;
+		setUpdatedRows(effectedRows);
+		return true;
 	}
 
 }

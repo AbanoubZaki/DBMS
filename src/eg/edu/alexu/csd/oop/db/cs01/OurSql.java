@@ -47,7 +47,7 @@ public class OurSql implements Database {
 		if (objectQuery == null) {
 			throw new SQLException("Structure Query Failed , syntax error.");
 		}
-		return objectQuery.execute1();
+		return objectQuery.execute();
 		
 	}
 
@@ -57,7 +57,7 @@ public class OurSql implements Database {
 		if (selectQuery == null) {
 			throw new SQLException("Selection Query Failed , syntax error.");
 		}
-		selectQuery.execute1();
+		selectQuery.execute();
 		return selectQuery.getSelected();
 	}
 
@@ -67,7 +67,8 @@ public class OurSql implements Database {
 		if (objectQuery == null) {
 			throw new SQLException("Updating Query  Failed , syntax error.");
 		}
-		return objectQuery.execute2();
+		objectQuery.execute();
+		return objectQuery.getUpdatedRows();
 	}
 
 }
