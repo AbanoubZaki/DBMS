@@ -5,12 +5,18 @@ import java.sql.SQLException;
 import eg.edu.alexu.csd.oop.db.Database;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
 import eg.edu.alexu.csd.oop.db.cs01.queries.IQuery;
+import eg.edu.alexu.csd.oop.db.factory.SelectQueryFactory;
+import eg.edu.alexu.csd.oop.db.factory.StructureQueryFactory;
+import eg.edu.alexu.csd.oop.db.factory.UpdateQueryFactory;
 
 public class OurSql implements Database {
 
 	//Singleton pattern to only have one data manager.
 	
 	private static OurSql instance;
+	
+	
+	private String currentDataBase;
 
 	private OurSql() {
 	}
@@ -43,7 +49,9 @@ public class OurSql implements Database {
 
 	@Override
 	public boolean executeStructureQuery(String query) throws SQLException {
-		IQuery objectQuery = QueryFactory.getInstance().parseQuery(query);
+//		IQuery objectQuery = QueryFactory.getInstance().parseQuery(query);
+		IQuery objectQuery = StructureQueryFactory.getInstance().parse(query);
+//		currentDataBase = StructureQueryFactory.getInstance().getTheMainDataBase();
 		if (objectQuery == null) {
 			throw new SQLException("Structure Query Failed , syntax error.");
 		}
@@ -53,7 +61,8 @@ public class OurSql implements Database {
 
 	@Override
 	public Object[][] executeQuery(String query) throws SQLException {
-		IQuery selectQuery = QueryFactory.getInstance().parseQuery(query);
+//		IQuery selectQuery = QueryFactory.getInstance().parseQuery(query);
+		IQuery selectQuery = SelectQueryFactory.getInstance().parse(query);
 		if (selectQuery == null) {
 			throw new SQLException("Selection Query Failed , syntax error.");
 		}
@@ -63,12 +72,21 @@ public class OurSql implements Database {
 
 	@Override
 	public int executeUpdateQuery(String query) throws SQLException {
-		IQuery objectQuery = QueryFactory.getInstance().parseQuery(query);
+//		IQuery objectQuery = QueryFactory.getInstance().parseQuery(query);
+		IQuery objectQuery = UpdateQueryFactory.getInstance().parse(query);
 		if (objectQuery == null) {
 			throw new SQLException("Updating Query  Failed , syntax error.");
 		}
 		objectQuery.execute();
 		return objectQuery.getUpdatedRows();
+	}
+
+	public String getCurrentDataBase() {
+		return currentDataBase;
+	}
+
+	public void setCurrentDataBase(String currentDataBase) {
+		this.currentDataBase = currentDataBase;
 	}
 
 }

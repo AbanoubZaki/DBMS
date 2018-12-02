@@ -7,7 +7,7 @@ import eg.edu.alexu.csd.oop.db.cs01.condition.LogicalCondition;
 public abstract class OurQuery implements IQuery {
 
 	private LogicalCondition condition;
-	private String column;
+//	private String column;
 	private int updatedRows;
 	
 	@Override
