@@ -20,8 +20,8 @@ public class StructureQueryFactory extends OurQueryFactory {
 
 	private StructureQueryFactory() {
 		// Creating regexes for queries.
-		final String createDataBasePattern = "(?i)\\bcreate\\b (?i)\\bdatabase\\b ([\\w\\\\]+) ?;? ?";
-		final String drobDataBasePattern = "(?i)\\bdrop\\b (?i)\\bdatabase\\b ([\\w\\\\]+) ?;? ?";
+		final String createDataBasePattern = "(?i)\\bcreate\\b (?i)\\bdatabase\\b ([\\w\\"+System.getProperty("file.separator")+"]+) ?;? ?";
+		final String drobDataBasePattern = "(?i)\\bdrop\\b (?i)\\bdatabase\\b ([\\w\\"+System.getProperty("file.separator")+"]+) ?;? ?";
 		final String createTablePattern = "(?i)\\bcreate\\b (?i)\\btable\\b (\\w+) ?\\( ?(( ?\\w+ (int|varchar) ?,?)+) ?\\) ?;? ?";
 		final String drobTablePattern = "(?i)\\bdrop\\b (?i)\\btable\\b (\\w+) ?;? ?";
 		// Adding regex-es to the ArrayList.
@@ -103,8 +103,7 @@ public class StructureQueryFactory extends OurQueryFactory {
 			return createTableQuery;
 		} else if (theMatchers.get(3).find()) {// if the query match drop table.
 			if (OurSql.getInstance().getCurrentDataBase() == null) {
-				System.out.println("There is no database selected");
-				return null;
+				throw new SQLException("There is no database selected");
 			}
 			// group(1) is the name of the table.
 			// Table.getInstance(theMatchers.get(3).group(1));

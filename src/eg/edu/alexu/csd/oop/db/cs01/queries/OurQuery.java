@@ -7,21 +7,10 @@ import eg.edu.alexu.csd.oop.db.cs01.condition.LogicalCondition;
 public abstract class OurQuery implements IQuery {
 
 	private LogicalCondition condition;
-//	private String column;
 	private int updatedRows;
 	
 	@Override
 	public abstract boolean execute() throws SQLException;
-	
-//	@Override
-//	public void setColumn(String column) {
-//		this.column = column;
-//	}
-//
-//	@Override
-//	public String getColumn() {
-//		return column;
-//	}
 
 	@Override
 	public void setCondition(LogicalCondition condition2) {

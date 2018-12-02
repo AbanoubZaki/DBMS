@@ -1,5 +1,6 @@
 package eg.edu.alexu.csd.oop.db.factory;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.regex.Matcher;
@@ -42,7 +43,7 @@ public class UpdateQueryFactory extends OurQueryFactory {
 	private ArrayList<String> allPatternStrings = new ArrayList<>();
 
 	@Override
-	public IQuery parse(String theQuery) {
+	public IQuery parse(String theQuery) throws SQLException {
 		// ArrayLists for patterns and matchers.
 		ArrayList<Pattern> thePatterns = new ArrayList<>();
 		ArrayList<Matcher> theMatchers = new ArrayList<>();
@@ -67,8 +68,7 @@ public class UpdateQueryFactory extends OurQueryFactory {
 		if (theMatchers.get(0).find()) {// if the query match insert Into Table Columns
 			// And Values.
 			if (OurSql.getInstance().getCurrentDataBase() == null) {
-				System.out.println("There is no database selected");
-				return null;
+				throw new SQLException("There is no database selected");
 			}
 			String[] columnsArray;
 			String[] valuesArray;
@@ -77,8 +77,7 @@ public class UpdateQueryFactory extends OurQueryFactory {
 // group(5) is values of each column string.
 			valuesArray = theMatchers.get(0).group(3).split(" ?, ?");
 			if (columnsArray.length != valuesArray.length) {
-				System.out.println("could not prepare statement.");
-				return null;
+				throw new SQLException("could not prepare statement.");
 			}
 // converting array to ArrayList.
 			ArrayList<String> columnNames = new ArrayList<String>(Arrays.asList(columnsArray));
@@ -91,8 +90,7 @@ public class UpdateQueryFactory extends OurQueryFactory {
 			return insertIntoTableColumnsAndValuesQuery;
 		} else if (theMatchers.get(1).find()) {// if the query match insert Into Table Values Only.
 			if (OurSql.getInstance().getCurrentDataBase() == null) {
-				System.out.println("There is no database selected");
-				return null;
+				throw new SQLException("There is no database selected");
 			}
 			String[] valuesArray;
 // group(2) is a string contains all values for the columns.
@@ -107,8 +105,7 @@ public class UpdateQueryFactory extends OurQueryFactory {
 		} else if (theMatchers.get(2).find()) {// update tabel name set c1 = v1, ... where
 			// condition.
 			if (OurSql.getInstance().getCurrentDataBase() == null) {
-				System.out.println("There is on database selected");
-				return null;
+				throw new SQLException("There is no database selected");
 			}
 //theQuery = theQuery.toLowerCase().replace("where", ",where");
 			if (theQuery.toLowerCase().contains("where")) {
@@ -174,8 +171,7 @@ public class UpdateQueryFactory extends OurQueryFactory {
 
 		} else if (theMatchers.get(3).find()) {// DELETE FROM table_name WHERE condition.
 			if (OurSql.getInstance().getCurrentDataBase() == null) {
-				System.out.println("There is no database selected");
-				return null;
+				throw new SQLException("There is no database selected");
 			}
 // group(1) is the table name.
 // Table.getInstance(theMatchers.get(3).group(1));

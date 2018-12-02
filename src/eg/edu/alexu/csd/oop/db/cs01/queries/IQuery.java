@@ -17,10 +17,6 @@ public interface IQuery {
 	 */
 	public boolean execute() throws SQLException;
 
-//	public void setColumn(String column);
-//
-//	public String getColumn();
-
 	public void setCondition(LogicalCondition condition);
 
 	public LogicalCondition getCondition();

@@ -1,5 +1,6 @@
 package eg.edu.alexu.csd.oop.db.factory;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.regex.Matcher;
@@ -36,7 +37,7 @@ public class SelectQueryFactory extends OurQueryFactory {
 	private ArrayList<String> allPatternStrings = new ArrayList<>();
 
 	@Override
-	public IQuery parse(String theQuery) {
+	public IQuery parse(String theQuery) throws SQLException {
 		// ArrayLists for patterns and matchers.
 		ArrayList<Pattern> thePatterns = new ArrayList<>();
 		ArrayList<Matcher> theMatchers = new ArrayList<>();
@@ -60,8 +61,7 @@ public class SelectQueryFactory extends OurQueryFactory {
 		// Creating the right query.
 		if (theMatchers.get(0).find()) {// select * from tabel_name where condition.
 			if (OurSql.getInstance().getCurrentDataBase() == null) {
-				System.out.println("There is no database selected");
-				return null;
+				throw new SQLException("There is no database selected");
 			}
 			// group(1) is the name of the table.
 			// Table.getInstance(theMatchers.get(0).group(1));
@@ -73,8 +73,7 @@ public class SelectQueryFactory extends OurQueryFactory {
 		} else if (theMatchers.get(1).find()) {// select column from tabel_name where
 												// condition.
 			if (OurSql.getInstance().getCurrentDataBase() == null) {
-				System.out.println("There is no database selected");
-				return null;
+				throw new SQLException("There is no database selected");
 			}
 			// group(2) is the table name.
 			// Table.getInstance(theMatchers.get(1).group(2));
