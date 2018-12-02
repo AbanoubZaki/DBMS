@@ -1,5 +1,6 @@
 package eg.edu.alexu.csd.oop.db.factory;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -40,7 +41,7 @@ public class StructureQueryFactory extends OurQueryFactory {
 	// carry all patterns.
 	private ArrayList<String> allPatternStrings = new ArrayList<>();
 
-	public IQuery parse(String theQuery) {
+	public IQuery parse(String theQuery) throws SQLException{
 		// ArrayLists for patterns and matchers.
 		ArrayList<Pattern> thePatterns = new ArrayList<>();
 		ArrayList<Matcher> theMatchers = new ArrayList<>();
@@ -76,8 +77,7 @@ public class StructureQueryFactory extends OurQueryFactory {
 			return drobDataBaseQuery;
 		} else if (theMatchers.get(2).find()) {// if the query match create table.
 			if (OurSql.getInstance().getCurrentDataBase() == null) {
-				System.out.println("There is no database selected");
-				return null;
+				throw new SQLException("There is no database selected");
 			}
 			String[] columns;
 			// group(2) is a string contains all columns beside their types example
