@@ -157,8 +157,10 @@ public class SelectFrom extends OurQuery {
 							selectedPartOfRow.add(Table.getInstance().getRow(i).getCells()
 									.get(columns.get(j).toLowerCase()).getValue());
 						} else {
-							selectedPartOfRow.add(Integer.parseInt(Table.getInstance().getRow(i).getCells()
-									.get(columns.get(j).toLowerCase()).getValue()));
+							if (Table.getInstance().getRow(i).getCells().get(columns.get(j).toLowerCase()).getValue() != null) {
+								selectedPartOfRow.add(Integer.parseInt(Table.getInstance().getRow(i).getCells()
+										.get(columns.get(j).toLowerCase()).getValue()));
+							}
 						}
 					}
 				}
