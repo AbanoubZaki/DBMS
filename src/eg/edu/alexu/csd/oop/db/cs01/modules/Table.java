@@ -74,8 +74,10 @@ public class Table {
 			}
 		}
 		// to save the table before select anther one.
-		if(table!=null) {
+		if(table!=null&&!table.getColumnTypes().isEmpty()&&!table.getRows().isEmpty()) {
 			FileManager.getInstance().writeTable(table);
+		}else {
+			tables.remove(table);
 		}
 		if (currenDataBaseName == null) {
 			return null;
