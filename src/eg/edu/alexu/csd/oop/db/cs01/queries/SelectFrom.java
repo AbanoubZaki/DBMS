@@ -51,6 +51,9 @@ public class SelectFrom extends OurQuery {
 		if (Table.getInstance() == null || Table.getInstance().getColumnNamesAsGiven().size() == 0) {
 			throw new SQLException("Table not found.");
 		}
+		if (Table.getInstance().getData() == null || Table.getInstance().getData().length == 0) {
+			System.out.println("Table is empty.");
+		}
 		if (columns == null && getCondition().getStringCondition() == null) {
 			// 1st constructor
 			setSelected(Table.getInstance().getData());
