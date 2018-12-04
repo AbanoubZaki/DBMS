@@ -5,8 +5,25 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
+import java.util.ArrayList;
 
-public class OurStatement implements Statement{
+public class OurStatement implements Statement {
+
+	private boolean isClosed;
+	private ArrayList<String> batches;
+	private Connection connection;
+	private ResultSet resultSet;
+
+	public OurStatement(Connection connection) {
+		this.isClosed = false;
+		this.batches = new ArrayList<String>();
+		this.connection = connection;
+	}
+
+	private void exceptionIfColsed() throws SQLException {
+		if (isClosed)
+			throw new SQLException();
+	}
 
 	@Override
 	public boolean isWrapperFor(Class<?> iface) throws SQLException {
@@ -20,8 +37,8 @@ public class OurStatement implements Statement{
 
 	@Override
 	public void addBatch(String sql) throws SQLException {
-		// TODO Auto-generated method stub
-		
+		exceptionIfColsed();
+		batches.add(sql);
 	}
 
 	@Override
@@ -31,8 +48,8 @@ public class OurStatement implements Statement{
 
 	@Override
 	public void clearBatch() throws SQLException {
-		// TODO Auto-generated method stub
-		
+		exceptionIfColsed();
+		this.batches = new ArrayList<String>();
 	}
 
 	@Override
@@ -43,7 +60,9 @@ public class OurStatement implements Statement{
 	@Override
 	public void close() throws SQLException {
 		// TODO Auto-generated method stub
-		
+		this.isClosed = true;
+		this.connection=null;
+		this.batches = new ArrayList<String>();
 	}
 
 	@Override
@@ -108,7 +127,8 @@ public class OurStatement implements Statement{
 	@Override
 	public Connection getConnection() throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		exceptionIfColsed();
+		return connection;
 	}
 
 	@Override
@@ -189,7 +209,7 @@ public class OurStatement implements Statement{
 
 	@Override
 	public boolean isClosed() throws SQLException {
-		throw new UnsupportedOperationException();
+		return isClosed;
 	}
 
 	@Override
@@ -235,7 +255,7 @@ public class OurStatement implements Statement{
 	@Override
 	public void setQueryTimeout(int seconds) throws SQLException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

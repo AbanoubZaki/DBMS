@@ -51,6 +51,38 @@ public class Table {
 
 	private ArrayList<Row> tableRows;
 	
+	private ArrayList<Row> selectedRows;
+	
+	private ArrayList<String>selectedColumns;
+	
+	/**
+	 * @return the selectedColumns
+	 */
+	public ArrayList<String> getSelectedColumns() {
+		return selectedColumns;
+	}
+
+	/**
+	 * @param selectedColumns the selectedColumns to set
+	 */
+	public void setSelectedColumns(ArrayList<String> selectedColumns) {
+		this.selectedColumns = selectedColumns;
+	}
+
+	/**
+	 * @return the selectedRows
+	 */
+	public ArrayList<Row> getSelectedRows() {
+		return selectedRows;
+	}
+
+	/**
+	 * @param selectedRows the selectedRows to set
+	 */
+	public void setSelectedRows(ArrayList<Row> selectedRows) {
+		this.selectedRows = selectedRows;
+	}
+
 	private Table() {
 		this.databaseName = new String();
 		this.tableName = new String();

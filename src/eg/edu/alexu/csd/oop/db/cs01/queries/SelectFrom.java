@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import eg.edu.alexu.csd.oop.db.cs01.condition.LogicalCondition;
 import eg.edu.alexu.csd.oop.db.cs01.condition.LogicalSolver;
+import eg.edu.alexu.csd.oop.db.cs01.modules.Cell;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Row;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
 
@@ -57,11 +58,12 @@ public class SelectFrom extends OurQuery {
 		if (columns == null && getCondition().getStringCondition() == null) {
 			// 1st constructor
 			setSelected(Table.getInstance().getData());
+			Table.getInstance().setSelectedRows(Table.getInstance().getRows());
+			Table.getInstance().setSelectedColumns(Table.getInstance().getColumnNamesToLowerCase());
 			return true;
 
 		} else if (columns != null && getCondition().getStringCondition() == null) {
 			// 2nd constructor
-			// return a whole column.
 			/**
 			 * if its a imaginary column the return false.
 			 */
@@ -70,8 +72,11 @@ public class SelectFrom extends OurQuery {
 					throw new SQLException("Column \"" + s + "\" not found.");
 				}
 			}
+			Table.getInstance().setSelectedColumns(this.columns);
 			selected = new Object[Table.getInstance().getRows().size()][columns.size()];
+			ArrayList<Row> selectedRows = new ArrayList<Row>();
 			for (int i = 0; i < Table.getInstance().getRows().size(); i++) {
+				Row r = new Row(Table.getInstance());
 				for (int j = 0; j < columns.size(); j++) {
 					// row of data to be filled with objects.
 					if (Table.getInstance().getRow(i).getCells().get(columns.get(j).toLowerCase()) != null) {
@@ -81,9 +86,15 @@ public class SelectFrom extends OurQuery {
 									.equals("varchar")) {
 								selected[i][j] = Table.getInstance().getRow(i).getCells()
 										.get(columns.get(j).toLowerCase()).getValue();
+								Cell newCell = new Cell(Table.getInstance().getRow(i).getCells()
+										.get(columns.get(j).toLowerCase()).getValue());
+								r.updateCell(columns.get(j), newCell);
 							} else {
 								selected[i][j] = Integer.parseInt(Table.getInstance().getRow(i).getCells()
 										.get(columns.get(j).toLowerCase()).getValue());
+								Cell newCell = new Cell(Table.getInstance().getRow(i).getCells()
+										.get(columns.get(j).toLowerCase()).getValue());
+								r.updateCell(columns.get(j), newCell);
 							}
 						} else {
 							selected[i][j] = null;
@@ -92,7 +103,9 @@ public class SelectFrom extends OurQuery {
 						selected[i][j] = null;
 					}
 				}
+				selectedRows.add(r);
 			}
+			Table.getInstance().setSelectedRows(selectedRows);
 			setSelected(selected);
 			return true;
 
@@ -105,6 +118,7 @@ public class SelectFrom extends OurQuery {
 					rowsValidateCondition.add(r);
 				}
 			}
+			Table.getInstance().setSelectedColumns(this.columns);
 			selected = new Object[rowsValidateCondition.size()][Table.getInstance().getColumnNamesAsGiven().size()];
 			for (int i = 0; i < rowsValidateCondition.size(); i++) {
 				// row of data to be filled with objects.
@@ -129,12 +143,13 @@ public class SelectFrom extends OurQuery {
 					}
 				}
 			}
+			Table.getInstance().setSelectedRows(rowsValidateCondition);
 			setSelected(selected);
 
 			return true;
 		} else if (columns != null && getCondition().getStringCondition() != null) {
 			// 4th constructor
-			// returns a part of one column only which matches the condition.
+			// returns a part of some columns which matches the condition.
 			/**
 			 * if its a imaginary column the return false.
 			 */
@@ -143,10 +158,12 @@ public class SelectFrom extends OurQuery {
 					throw new SQLException("Column \"" + s + "\" not found.");
 				}
 			}
+			Table.getInstance().setSelectedColumns(this.columns);
 			ArrayList<ArrayList<Object>> selectedPartOfTable = new ArrayList<>();
-
+			ArrayList<Row> selectedRows = new ArrayList<Row>();
 			for (int i = 0; i < Table.getInstance().getRows().size(); i++) {
 				Row r = Table.getInstance().getRows().get(i);
+				Row selectedRow = new Row(Table.getInstance());
 				ArrayList<Object> selectedPartOfRow = new ArrayList<>();
 				for (int j = 0; j < columns.size(); j++) {
 					if (LogicalSolver.getInstance().isRowSolvingCondition(r, getCondition())) {
@@ -156,16 +173,25 @@ public class SelectFrom extends OurQuery {
 								.equals("varchar")) {
 							selectedPartOfRow.add(Table.getInstance().getRow(i).getCells()
 									.get(columns.get(j).toLowerCase()).getValue());
+							Cell newCell = new Cell(Table.getInstance().getRow(i).getCells()
+									.get(columns.get(j).toLowerCase()).getValue());
+							selectedRow.updateCell(columns.get(j), newCell);
+							
 						} else {
-							if (Table.getInstance().getRow(i).getCells().get(columns.get(j).toLowerCase()).getValue() != null) {
+							if (Table.getInstance().getRow(i).getCells().get(columns.get(j).toLowerCase())
+									.getValue() != null) {
 								selectedPartOfRow.add(Integer.parseInt(Table.getInstance().getRow(i).getCells()
 										.get(columns.get(j).toLowerCase()).getValue()));
+								Cell newCell = new Cell(Table.getInstance().getRow(i).getCells()
+										.get(columns.get(j).toLowerCase()).getValue());
+								selectedRow.updateCell(columns.get(j), newCell);
 							}
 						}
 					}
 				}
 				if (!selectedPartOfRow.isEmpty()) {
 					selectedPartOfTable.add(selectedPartOfRow);
+					selectedRows.add(selectedRow);
 				}
 			}
 			selected = new Object[selectedPartOfTable.size()][columns.size()];
@@ -174,6 +200,7 @@ public class SelectFrom extends OurQuery {
 					selected[i][j] = selectedPartOfTable.get(i).get(j);
 				}
 			}
+			Table.getInstance().setSelectedRows(selectedRows);
 			setSelected(selected);
 			return true;
 		}
