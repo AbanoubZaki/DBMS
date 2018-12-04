@@ -17,7 +17,7 @@ public class OurResultSetMetaData implements ResultSetMetaData {
 	public OurResultSetMetaData(Table table) {
 		myTable = table;
 	}
-	
+
 	@Override
 	public boolean isWrapperFor(Class<?> iface) throws SQLException {
 		throw new UnsupportedOperationException();
@@ -44,7 +44,12 @@ public class OurResultSetMetaData implements ResultSetMetaData {
 	@Override
 	public int getColumnCount() throws SQLException {
 		// TODO Auto-generated method stub
-		return myTable.getColumnNamesAsGiven().size();
+		try {
+			return myTable.getColumnNamesAsGiven().size();
+		} catch (Exception e) {
+			throw new SQLException();
+		}
+
 	}
 
 	@Override
@@ -61,7 +66,12 @@ public class OurResultSetMetaData implements ResultSetMetaData {
 	@Override
 	public String getColumnLabel(int column) throws SQLException {
 		// TODO Auto-generated method stub
-		return getCatalogName(column);
+		try {
+			return getCatalogName(column);
+		} catch (Exception e) {
+			throw new SQLException();
+		}
+
 	}
 
 	/**
@@ -70,10 +80,15 @@ public class OurResultSetMetaData implements ResultSetMetaData {
 	@Override
 	public String getColumnName(int column) throws SQLException {
 		// TODO Auto-generated method stub
-		if (column <= 0 || column > myTable.getColumnNamesAsGiven().size()) {
-			throw new SQLException("Entered index is out of range");
+		try {
+			if (column <= 0 || column > myTable.getColumnNamesAsGiven().size()) {
+				throw new SQLException("Entered index is out of range");
+			}
+			return myTable.getColumnNamesAsGiven().get(column - 1);
+		} catch (Exception e) {
+			throw new SQLException();
 		}
-		return myTable.getColumnNamesAsGiven().get(column - 1);
+
 	}
 
 	/**
@@ -82,19 +97,24 @@ public class OurResultSetMetaData implements ResultSetMetaData {
 	@Override
 	public int getColumnType(int column) throws SQLException {
 		// TODO Auto-generated method stub
-		if (column <= 0 || column > myTable.getColumnNamesAsGiven().size()) {
-			throw new SQLException("Entered index is out of range");
-		}
-		String columnName = myTable.getColumnNamesToLowerCase().get(column-1);
-		if (myTable.getColumnTypes().get(columnName) == "int") {
-			return java.sql.Types.INTEGER;
-		} else if (myTable.getColumnTypes().get(columnName) == "varchar") {
-			return java.sql.Types.VARCHAR;
-		} else if (myTable.getColumnTypes().get(columnName) == "float") {
-			return java.sql.Types.FLOAT;
-		} else if (myTable.getColumnTypes().get(columnName) == "date") {
-			return java.sql.Types.DATE;
-		} else {
+
+		try {
+			if (column <= 0 || column > myTable.getColumnNamesAsGiven().size()) {
+				throw new SQLException("Entered index is out of range");
+			}
+			String columnName = myTable.getColumnNamesToLowerCase().get(column - 1);
+			if (myTable.getColumnTypes().get(columnName) == "int") {
+				return java.sql.Types.INTEGER;
+			} else if (myTable.getColumnTypes().get(columnName) == "varchar") {
+				return java.sql.Types.VARCHAR;
+			} else if (myTable.getColumnTypes().get(columnName) == "float") {
+				return java.sql.Types.FLOAT;
+			} else if (myTable.getColumnTypes().get(columnName) == "date") {
+				return java.sql.Types.DATE;
+			} else {
+				throw new SQLException();
+			}
+		} catch (Exception e) {
 			throw new SQLException();
 		}
 	}
