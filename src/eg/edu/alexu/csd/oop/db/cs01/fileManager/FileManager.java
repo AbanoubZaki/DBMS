@@ -192,6 +192,7 @@ public class FileManager {
 			System.out.println("Database is unknown.");
 			return false;
 		}
+		table.setRows(new ArrayList<Row>());
 		String pathTable = table.getDatabaseName();
 		if (!pathTable.contains(System.getProperty("file.separator")))
 			pathTable = "databases" + System.getProperty("file.separator") + pathTable;

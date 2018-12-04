@@ -2,6 +2,7 @@ package eg.edu.alexu.csd.oop.db.cs01;
 
 import java.sql.SQLException;
 
+import eg.edu.alexu.csd.oop.db.Database;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
 
 public class GeneralParser {
@@ -10,10 +11,11 @@ public class GeneralParser {
 	private boolean checkerExecute;
 	private Object[][] currentData;
 	private int updatedRows;
-
+	private Database DB;
 	private GeneralParser() {
 		checkerExecute = false;
 		updatedRows = 0;
+		DB = OurSql.getInstance();
 	}
 
 	/**
@@ -75,14 +77,14 @@ public class GeneralParser {
 		if ((query.toLowerCase().contains("create") || query.toLowerCase().contains("drop"))
 				&& (query.toLowerCase().contains("database") || query.toLowerCase().contains("table"))) {
 
-			setCheckerExecute(OurSql.getInstance().executeStructureQuery(query));
+			setCheckerExecute(DB.executeStructureQuery(query));
 			if (isCheckerExecute()) {
 				System.out.println("You have made changes to the databases.");
 				setCheckerExecute(false);
 			}
 
 		} else if (query.toLowerCase().contains("select")) {
-			setCurrentData(OurSql.getInstance().executeQuery(query));
+			setCurrentData(DB.executeQuery(query));
 			if (getCurrentData() != null) {
 				for (int i = 0; i < Table.getInstance().getColumnNamesAsGiven().size(); i++) {
 					System.out.print(Table.getInstance().getColumnNamesAsGiven().get(i) + " ");
@@ -104,7 +106,7 @@ public class GeneralParser {
 		} else if (query.toLowerCase().contains("update") || query.toLowerCase().contains("insert")
 				|| query.toLowerCase().contains("delete")) {
 
-			setUpdatedRows(OurSql.getInstance().executeUpdateQuery(query));
+			setUpdatedRows(DB.executeUpdateQuery(query));
 			System.out.println("You have made changes to " + getUpdatedRows() + " rows.");
 		} else {
 			throw new SQLException("You entered a rotten query.");
