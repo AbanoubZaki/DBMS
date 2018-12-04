@@ -22,17 +22,17 @@ public class OurDriver implements Driver{
 
 	@Override
 	public int getMajorVersion() {
-		return 0;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public int getMinorVersion() {
-		return 0;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public Logger getParentLogger() throws SQLFeatureNotSupportedException {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class OurDriver implements Driver{
 
 	@Override
 	public boolean jdbcCompliant() {
-		return false;
+		throw new UnsupportedOperationException();
 	}
 
 }
