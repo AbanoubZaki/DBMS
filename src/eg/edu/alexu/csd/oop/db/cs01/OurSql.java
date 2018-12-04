@@ -3,11 +3,11 @@ package eg.edu.alexu.csd.oop.db.cs01;
 import java.sql.SQLException;
 
 import eg.edu.alexu.csd.oop.db.Database;
+import eg.edu.alexu.csd.oop.db.cs01.factory.SelectQueryFactory;
+import eg.edu.alexu.csd.oop.db.cs01.factory.StructureQueryFactory;
+import eg.edu.alexu.csd.oop.db.cs01.factory.UpdateQueryFactory;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
 import eg.edu.alexu.csd.oop.db.cs01.queries.IQuery;
-import eg.edu.alexu.csd.oop.db.factory.SelectQueryFactory;
-import eg.edu.alexu.csd.oop.db.factory.StructureQueryFactory;
-import eg.edu.alexu.csd.oop.db.factory.UpdateQueryFactory;
 
 public class OurSql implements Database {
 
