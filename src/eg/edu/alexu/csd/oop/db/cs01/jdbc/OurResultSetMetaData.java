@@ -3,8 +3,21 @@ package eg.edu.alexu.csd.oop.db.cs01.jdbc;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
-public class OurResultSetMetaData implements ResultSetMetaData{
+import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
 
+public class OurResultSetMetaData implements ResultSetMetaData {
+	/**
+	 * table given by the main.
+	 */
+	private Table myTable;
+
+	/**
+	 * Constructor.
+	 */
+	public OurResultSetMetaData(Table table) {
+		myTable = table;
+	}
+	
 	@Override
 	public boolean isWrapperFor(Class<?> iface) throws SQLException {
 		throw new UnsupportedOperationException();
@@ -25,10 +38,13 @@ public class OurResultSetMetaData implements ResultSetMetaData{
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * Returns the number of columns in this ResultSet object.
+	 */
 	@Override
 	public int getColumnCount() throws SQLException {
 		// TODO Auto-generated method stub
-		return 0;
+		return myTable.getColumnNamesAsGiven().size();
 	}
 
 	@Override
@@ -36,22 +52,51 @@ public class OurResultSetMetaData implements ResultSetMetaData{
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * Gets the designated column's suggested title for use in printouts and
+	 * displays. The suggested title is usually specified by the SQL AS clause. If a
+	 * SQL AS is not specified, the value returned from getColumnLabel will be the
+	 * same as the value returned by the getColumnName method.
+	 */
 	@Override
 	public String getColumnLabel(int column) throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		return getCatalogName(column);
 	}
 
+	/**
+	 * Get the designated column's name.
+	 */
 	@Override
 	public String getColumnName(int column) throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		if (column <= 0 || column > myTable.getColumnNamesAsGiven().size()) {
+			throw new SQLException("Entered index is out of range");
+		}
+		return myTable.getColumnNamesAsGiven().get(column - 1);
 	}
 
+	/**
+	 * Retrieves the designated column's SQL type.
+	 */
 	@Override
 	public int getColumnType(int column) throws SQLException {
 		// TODO Auto-generated method stub
-		return 0;
+		if (column <= 0 || column > myTable.getColumnNamesAsGiven().size()) {
+			throw new SQLException("Entered index is out of range");
+		}
+		String columnName = myTable.getColumnNamesToLowerCase().get(column-1);
+		if (myTable.getColumnTypes().get(columnName) == "int") {
+			return java.sql.Types.INTEGER;
+		} else if (myTable.getColumnTypes().get(columnName) == "varchar") {
+			return java.sql.Types.VARCHAR;
+		} else if (myTable.getColumnTypes().get(columnName) == "float") {
+			return java.sql.Types.FLOAT;
+		} else if (myTable.getColumnTypes().get(columnName) == "date") {
+			return java.sql.Types.DATE;
+		} else {
+			throw new SQLException();
+		}
 	}
 
 	@Override
@@ -74,10 +119,17 @@ public class OurResultSetMetaData implements ResultSetMetaData{
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * Gets the designated column's table name.
+	 */
 	@Override
 	public String getTableName(int column) throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		try {
+			return myTable.getTableName();
+		} catch (Exception e) {
+			throw new SQLException();
+		}
 	}
 
 	@Override
