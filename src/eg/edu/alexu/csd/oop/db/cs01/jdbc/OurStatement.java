@@ -22,7 +22,7 @@ public class OurStatement implements Statement {
 
 	private void exceptionIfColsed() throws SQLException {
 		if (isClosed)
-			throw new SQLException();
+			throw new SQLException("This statement is already closed");
 	}
 
 	@Override
@@ -60,6 +60,7 @@ public class OurStatement implements Statement {
 	@Override
 	public void close() throws SQLException {
 		// TODO Auto-generated method stub
+		exceptionIfColsed();
 		this.isClosed = true;
 		this.connection=null;
 		this.batches = new ArrayList<String>();
