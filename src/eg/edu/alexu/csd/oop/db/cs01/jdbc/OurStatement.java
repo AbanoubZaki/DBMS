@@ -7,17 +7,22 @@ import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import eg.edu.alexu.csd.oop.db.Database;
 public class OurStatement implements Statement {
 
 	private boolean isClosed;
 	private ArrayList<String> batches;
 	private Connection connection;
 	private ResultSet resultSet;
+	private Database db;
+	private int updateCount;
 
-	public OurStatement(Connection connection) {
+	public OurStatement(Connection connection, Database database) {
 		this.isClosed = false;
 		this.batches = new ArrayList<String>();
 		this.connection = connection;
+		this.db = database;
+		this.updateCount = -1;
 	}
 
 	private void exceptionIfColsed() throws SQLException {
@@ -62,8 +67,8 @@ public class OurStatement implements Statement {
 		// TODO Auto-generated method stub
 		exceptionIfColsed();
 		this.isClosed = true;
-		this.connection=null;
-		this.batches = new ArrayList<String>();
+		this.connection = null;
+		clearBatch();
 	}
 
 	@Override
@@ -73,8 +78,24 @@ public class OurStatement implements Statement {
 
 	@Override
 	public boolean execute(String sql) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+		exceptionIfColsed();
+		boolean done = false;
+		try {
+			if(sql.toLowerCase().contains("select")) {
+				db.executeQuery(sql);
+				// el mfrod a3ml set ll resultSet hna
+				// if there is dataSelected then done = true 8yr keda false
+			}else if(sql.toLowerCase().contains("create")||sql.toLowerCase().contains("drop")) {
+				db.executeStructureQuery(sql);
+				this.updateCount=-1;
+			}else {
+				this.updateCount=db.executeUpdateQuery(sql);
+			}
+			
+		} catch (Exception e) {
+			throw new SQLException(e);
+		}
+		return done;
 	}
 
 	@Override
@@ -95,7 +116,18 @@ public class OurStatement implements Statement {
 	@Override
 	public int[] executeBatch() throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		int[] updates = new int[batches.size()];
+
+		for (int i = 0; i < batches.size(); i++) {
+
+			try {
+
+			} catch (Exception e) {
+
+			}
+		}
+		return updates;
+
 	}
 
 	@Override
@@ -106,8 +138,8 @@ public class OurStatement implements Statement {
 
 	@Override
 	public int executeUpdate(String sql) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		exceptionIfColsed();
+		return db.executeUpdateQuery(sql);
 	}
 
 	@Override
@@ -195,7 +227,8 @@ public class OurStatement implements Statement {
 
 	@Override
 	public int getUpdateCount() throws SQLException {
-		throw new UnsupportedOperationException();
+
+		return updateCount;
 	}
 
 	@Override
