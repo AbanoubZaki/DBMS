@@ -31,9 +31,8 @@ public class OurResultSet implements ResultSet {
 	private int currentRowposition;
 	private Row currentRow;
 	private Table myTable;
-	private Connection myConnection = new OurConnection();
-	
-	
+	private Connection myConnection;
+
 	@Override
 	public boolean isWrapperFor(Class<?> iface) throws SQLException {
 		throw new UnsupportedOperationException();
@@ -44,6 +43,34 @@ public class OurResultSet implements ResultSet {
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * Moves the cursor to the given row number in this ResultSet object. If the row
+	 * number is positive, the cursor moves to the given row number with respect to
+	 * the beginning of the result set. The first row is row 1, the second is row 2,
+	 * and so on.
+	 * 
+	 * If the given row number is negative, the cursor moves to an absolute row
+	 * position with respect to the end of the result set. For example, calling the
+	 * method absolute(-1) positions the cursor on the last row; calling the method
+	 * absolute(-2) moves the cursor to the next-to-last row, and so on.
+	 * 
+	 * If the row number specified is zero, the cursor is moved to before the first
+	 * row.
+	 * 
+	 * An attempt to position the cursor beyond the first/last row in the result set
+	 * leaves the cursor before the first row or after the last row.
+	 * 
+	 * Note: Calling absolute(1) is the same as calling first(). Calling
+	 * absolute(-1) is the same as calling last().
+	 * 
+	 * Parameters: row - the number of the row to which the cursor should move. A
+	 * value of zero indicates that the cursor will be positioned before the first
+	 * row; a positive number indicates the row number counting from the beginning
+	 * of the result set; a negative number indicates the row number counting from
+	 * the end of the result set Returns: true if the cursor is moved to a position
+	 * in this ResultSet object; false if the cursor is before the first row or
+	 * after the last row
+	 */
 	@Override
 	public boolean absolute(int row) throws SQLException {
 		// TODO Auto-generated method stub
@@ -62,13 +89,13 @@ public class OurResultSet implements ResultSet {
 				currentRowposition = row;
 				currentRow = myTable.getRow(row - 1);
 				return true;
-			} else if (row < 0){//starting from the end.
-				if ((row * -1) > myTable.getRows().size()) {//if required is out of range.
+			} else if (row < 0) {// starting from the end.
+				if ((row * -1) > myTable.getRows().size()) {// if required is out of range.
 					currentRowposition = 0;
 					currentRow = null;
 					return false;
 				}
-				//currentRowPoosition carry the positive value of entered row
+				// currentRowPoosition carry the positive value of entered row
 				currentRowposition = myTable.getRows().size() + 1 + row;
 				currentRow = myTable.getRow(currentRowposition - 1);
 				return true;
