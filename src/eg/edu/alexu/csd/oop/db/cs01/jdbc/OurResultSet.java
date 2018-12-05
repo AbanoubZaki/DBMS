@@ -7,6 +7,7 @@ import java.net.URL;
 import java.sql.Array;
 import java.sql.Blob;
 import java.sql.Clob;
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.NClob;
 import java.sql.Ref;
@@ -22,8 +23,17 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Map;
 
+import eg.edu.alexu.csd.oop.db.cs01.modules.Row;
+import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
+
 public class OurResultSet implements ResultSet {
 
+	private int currentRowposition;
+	private Row currentRow;
+	private Table myTable;
+	private Connection myConnection = new OurConnection();
+	
+	
 	@Override
 	public boolean isWrapperFor(Class<?> iface) throws SQLException {
 		throw new UnsupportedOperationException();
@@ -37,6 +47,35 @@ public class OurResultSet implements ResultSet {
 	@Override
 	public boolean absolute(int row) throws SQLException {
 		// TODO Auto-generated method stub
+		try {
+			if (row == 0) {
+				// 0 indicates before first element.
+				currentRowposition = 0;
+				currentRow = null;
+				return false;
+			} else if (row > 0) {
+				if (row > myTable.getRows().size()) {
+					currentRowposition = myTable.getRows().size() + 1;
+					currentRow = null;
+					return false;
+				}
+				currentRowposition = row;
+				currentRow = myTable.getRow(row - 1);
+				return true;
+			} else if (row < 0){//starting from the end.
+				if ((row * -1) > myTable.getRows().size()) {//if required is out of range.
+					currentRowposition = 0;
+					currentRow = null;
+					return false;
+				}
+				//currentRowPoosition carry the positive value of entered row
+				currentRowposition = myTable.getRows().size() + 1 + row;
+				currentRow = myTable.getRow(currentRowposition - 1);
+				return true;
+			}
+		} catch (Exception e) {
+			throw new SQLException();
+		}
 		return false;
 	}
 
