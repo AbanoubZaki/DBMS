@@ -25,8 +25,8 @@ public class OurConnection implements Connection {
 	/**
 	 * all connections created.
 	 */
-	public static ArrayList<Connection> connectionPool;
-	public static ArrayList<Connection> connectionsUsed;
+	private static ArrayList<Connection> connectionPool;
+	private static ArrayList<Connection> connectionsUsed;
 	private static int MAX_NO_OF_CONNECTIONS = 15;
 
 	/**
@@ -34,15 +34,15 @@ public class OurConnection implements Connection {
 	 * to be executed. is the connection available or not to be used again if
 	 * available (isClosed = true).
 	 */
-	private Properties info;
+	private String path;
 	private ArrayList<Statement> statements;
 
-	public OurConnection() {
-		info = new Properties();
+	private OurConnection() {
+		path = new String();
 		statements = new ArrayList<>();
 	}
 
-	public static Connection getConnection(Properties info) throws SQLException {
+	public static Connection getConnection(String path) throws SQLException {
 		/**
 		 * if pool is empty create a pool and array list of used connections then put
 		 * one in it and return it.
@@ -59,27 +59,58 @@ public class OurConnection implements Connection {
 			// remove last connection.
 			connectionPool.remove(connectionPool.size() - 1);
 			c = connectionsUsed.get(connectionsUsed.size() - 1);
-			c.setClientInfo(info);
+			((OurConnection) c).setPath(path);
 			return c;
 		}
-		// check if there exist connections in the pool.
+		// check if there exist remaining connections in the pool.
 		if (connectionPool.size() > 0) {
 			connectionsUsed.add(connectionPool.get(connectionPool.size() - 1));
 			c = connectionsUsed.get(connectionsUsed.size() - 1);
-			c.setClientInfo(info);
+			((OurConnection) c).setPath(path);
 			return c;
 		} else {
 			throw new SQLException("Access denied, Maximum number of connections has been reached.");
 		}
 
 	}
-	
+
 	public ArrayList<Statement> getStatements() {
 		return statements;
 	}
+	
+	public String getPath() {
+		return path;
+	}
 
-	public void setStatements(ArrayList<Statement> statements) {
-		this.statements = statements;
+	public void setPath(String path) {
+		this.path = path;
+	}
+	
+	@Override
+	public void close() throws SQLException {
+		for (int i = 0; i < connectionsUsed.size(); i++) {
+			if (connectionsUsed.get(i).equals(this)) {
+				this.statements.clear();
+				this.path = "";
+				connectionPool.add(this);
+				connectionsUsed.remove(i);
+				return;
+			}
+		}
+		//if the compiler reached here then the connection is already closed.
+		throw new SQLException("Connection is already closed");
+	}
+	
+	
+	
+	
+	
+	
+	@Override
+	public Statement createStatement() throws SQLException {
+		Statement st = new OurStatement(this);
+		statements.add(st);
+		return st;
 	}
 	
 	@Override
@@ -106,21 +137,6 @@ public class OurConnection implements Connection {
 
 		throw new UnsupportedOperationException();
 
-	}
-
-	@Override
-	public void close() throws SQLException {
-		for (int i = 0; i < connectionsUsed.size(); i++) {
-			if (connectionsUsed.get(i).equals(this)) {
-				this.statements.clear();
-				this.info.clear();
-				connectionPool.add(this);
-				connectionsUsed.remove(i);
-				return;
-			}
-		}
-		//if the compiler reached here then the connection is already closed.
-		throw new SQLException("Connection is already closed");
 	}
 	
 	@Override
@@ -161,13 +177,6 @@ public class OurConnection implements Connection {
 	}
 
 	@Override
-	public Statement createStatement() throws SQLException {
-		Statement st = new OurStatement(this);
-		statements.add(st);
-		return st;
-	}
-
-	@Override
 	public Statement createStatement(int resultSetType, int resultSetConcurrency) throws SQLException {
 
 		throw new UnsupportedOperationException();
@@ -200,7 +209,7 @@ public class OurConnection implements Connection {
 
 	@Override
 	public Properties getClientInfo() throws SQLException {
-		return this.info;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -358,7 +367,7 @@ public class OurConnection implements Connection {
 
 	@Override
 	public void setClientInfo(Properties properties) throws SQLClientInfoException {
-		this.info = properties;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
