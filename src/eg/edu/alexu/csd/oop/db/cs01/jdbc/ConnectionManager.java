@@ -35,17 +35,20 @@ public class ConnectionManager {
 	 */
 	private static int MAX_NO_OF_CONNECTIONS = 15;
 
+	private static String currentPath;
+
 	public static Connection getConnection(String path) throws SQLException {
 		/**
 		 * if pool is empty create a pool and array list of used connections then put
 		 * one in it and return it.
 		 */
 		Connection c;
+		currentPath = path;
 		if (connectionPool == null) {
 			connectionPool = new ArrayList<>(MAX_NO_OF_CONNECTIONS);
 			connectionsUsed = new ArrayList<>(MAX_NO_OF_CONNECTIONS);
 			for (int i = 0; i < MAX_NO_OF_CONNECTIONS; i++) {
-				connectionPool.add(new OurConnection(path));
+				connectionPool.add(new OurConnection());
 			}
 			// put last connection in used array list.
 			connectionsUsed.add(connectionPool.get(connectionPool.size() - 1));
@@ -71,11 +74,9 @@ public class ConnectionManager {
 		 * to be executed. is the connection available or not to be used again if
 		 * available (isClosed = true).
 		 */
-		private String path;
 		private ArrayList<Statement> statements;
 
-		public OurConnection(String path) {
-			this.path = path;
+		public OurConnection() {
 			statements = new ArrayList<>();
 		}
 
@@ -91,7 +92,6 @@ public class ConnectionManager {
 						s.close();
 					}
 					this.statements.clear();
-					this.path = "";
 					connectionPool.add(this);
 					connectionsUsed.remove(i);
 					return;
@@ -103,7 +103,7 @@ public class ConnectionManager {
 
 		@Override
 		public Statement createStatement() throws SQLException {
-			Statement st = new OurStatement(this, this.path);
+			Statement st = new OurStatement(this, currentPath);
 			statements.add(st);
 			return st;
 		}

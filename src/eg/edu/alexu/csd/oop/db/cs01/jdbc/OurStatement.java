@@ -127,11 +127,13 @@ public class OurStatement implements Statement {
 
 			try {
 				if (this.execute(batches.get(i))) {
-					updates[i] = SUCCESS_NO_INFO;
-				} else if (this.getUpdateCount() != -1) {
-					updates[i] = this.getUpdateCount();
+					if (this.getUpdateCount() != -1) {
+						updates[i] = this.getUpdateCount();
+					} else {
+						updates[i] = SUCCESS_NO_INFO;
+					}
 				} else {
-					updates[i] = SUCCESS_NO_INFO;
+					updates[i] = EXECUTE_FAILED;
 				}
 			} catch (Exception e) {
 				updates[i] = EXECUTE_FAILED;
@@ -151,7 +153,8 @@ public class OurStatement implements Statement {
 	@Override
 	public int executeUpdate(String sql) throws SQLException {
 		exceptionIfColsed();
-		return !this.execute(sql) && getUpdateCount() != -1 ? getUpdateCount() : 0;
+		this.execute(sql);
+		return getUpdateCount() != -1 ? getUpdateCount() : 0;
 	}
 
 	@Override
@@ -314,32 +317,31 @@ public class OurStatement implements Statement {
 
 		@Override
 		public Boolean call() throws Exception {
-			boolean done = false;
 			try {
-				if (sql.toLowerCase().contains("select")) {
-					db.executeQuery(sql);
+				if (sql.toLowerCase().contains("select ")) {
+					Object[][] selectedData = db.executeQuery(sql);
 					// el mfrod a3ml set ll resultSet hna
-					// if there is dataSelected then done = true 8yr keda false
-					done = true;
-				} else if (sql.toLowerCase().contains("create") || sql.toLowerCase().contains("drop")) {
-					if (sql.toLowerCase().contains("database")) {
+
+					return selectedData != null && selectedData.length != 0;
+				} else if (sql.toLowerCase().contains("create ") || sql.toLowerCase().contains("drop ")) {
+					if (sql.toLowerCase().contains("database ")) {
 						// mesh 3rf hgyb el path mnen !!
 						int index = sql.toLowerCase().lastIndexOf("database ");
 						System.out.println(index);
 						sql = sql.substring(0, index + 9) + path + System.getProperty("file.separator")
 								+ sql.substring(index + 9);
 					}
-					System.out.println(sql);
-					db.executeStructureQuery(sql);
 					updateCount = -1;
+					return db.executeStructureQuery(sql);
 				} else {
 					updateCount = db.executeUpdateQuery(sql);
+					return true;
 				}
 
 			} catch (Exception e) {
+
 				throw new SQLException(e);
 			}
-			return done;
 		}
 	}
 
