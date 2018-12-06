@@ -24,14 +24,16 @@ public class OurStatement implements Statement {
 	private Database db;
 	private int updateCount;
 	private int timeLimit;
+	private String path;
 
-	public OurStatement(Connection connection) {
+	public OurStatement(Connection connection, String path) {
 		this.isClosed = false;
 		this.batches = new ArrayList<String>();
 		this.connection = connection;
 		this.db = OurSql.getInstance();
 		this.updateCount = -1;
 		this.timeLimit = 0;
+		this.path = path;
 	}
 
 	private void exceptionIfColsed() throws SQLException {
@@ -319,6 +321,12 @@ public class OurStatement implements Statement {
 					// if there is dataSelected then done = true 8yr keda false
 					done = true;
 				} else if (sql.toLowerCase().contains("create") || sql.toLowerCase().contains("drop")) {
+					if (sql.toLowerCase().contains("database")) {
+						// mesh 3rf hgyb el path mnen !!
+						int index = sql.toLowerCase().lastIndexOf("database ");
+						sql = sql.substring(0, index) + path + System.getProperty("file.separator")
+								+ sql.substring(index + 1);
+					}
 					db.executeStructureQuery(sql);
 					updateCount = -1;
 				} else {
