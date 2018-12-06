@@ -46,7 +46,7 @@ public class OurDriver implements Driver {
 			dir.mkdirs();
 			// give the user a connection to his database which is in the given path.
 			String path = dir.getAbsolutePath();
-			return OurConnection.getConnection(path); // pool
+			return connectionManager.getConnection(path); // pool
 		} else {
 			// then URL is not supported and is not a valid one.
 			throw new SQLException("Wrong URL has been entered.");
