@@ -6,8 +6,14 @@ import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import eg.edu.alexu.csd.oop.db.Database;
+
 public class OurStatement implements Statement {
 
 	private boolean isClosed;
@@ -16,6 +22,7 @@ public class OurStatement implements Statement {
 	private ResultSet resultSet;
 	private Database db;
 	private int updateCount;
+	private int timeLimit;
 
 	public OurStatement(Connection connection, Database database) {
 		this.isClosed = false;
@@ -23,6 +30,7 @@ public class OurStatement implements Statement {
 		this.connection = connection;
 		this.db = database;
 		this.updateCount = -1;
+		this.timeLimit = 0;
 	}
 
 	private void exceptionIfColsed() throws SQLException {
@@ -79,23 +87,16 @@ public class OurStatement implements Statement {
 	@Override
 	public boolean execute(String sql) throws SQLException {
 		exceptionIfColsed();
-		boolean done = false;
+		ExecutorService executor = Executors.newSingleThreadExecutor();
+		Future<Boolean> future = executor.submit(new Query(sql));
 		try {
-			if(sql.toLowerCase().contains("select")) {
-				db.executeQuery(sql);
-				// el mfrod a3ml set ll resultSet hna
-				// if there is dataSelected then done = true 8yr keda false
-			}else if(sql.toLowerCase().contains("create")||sql.toLowerCase().contains("drop")) {
-				db.executeStructureQuery(sql);
-				this.updateCount=-1;
-			}else {
-				this.updateCount=db.executeUpdateQuery(sql);
-			}
-			
+			return this.getQueryTimeout() == 0 ? future.get() : future.get(this.timeLimit, TimeUnit.SECONDS);
 		} catch (Exception e) {
+			future.cancel(true);
 			throw new SQLException(e);
+		} finally {
+			executor.shutdownNow();
 		}
-		return done;
 	}
 
 	@Override
@@ -115,15 +116,21 @@ public class OurStatement implements Statement {
 
 	@Override
 	public int[] executeBatch() throws SQLException {
-		// TODO Auto-generated method stub
+		exceptionIfColsed();
 		int[] updates = new int[batches.size()];
 
 		for (int i = 0; i < batches.size(); i++) {
 
 			try {
-
+				if (this.execute(batches.get(i))) {
+					updates[i] = SUCCESS_NO_INFO;
+				} else if (this.getUpdateCount() != -1) {
+					updates[i] = this.getUpdateCount();
+				} else {
+					updates[i] = SUCCESS_NO_INFO;
+				}
 			} catch (Exception e) {
-
+				updates[i] = EXECUTE_FAILED;
 			}
 		}
 		return updates;
@@ -132,14 +139,15 @@ public class OurStatement implements Statement {
 
 	@Override
 	public ResultSet executeQuery(String sql) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		exceptionIfColsed();
+		this.execute(sql);
+		return resultSet;
 	}
 
 	@Override
 	public int executeUpdate(String sql) throws SQLException {
 		exceptionIfColsed();
-		return db.executeUpdateQuery(sql);
+		return !this.execute(sql) && getUpdateCount() != -1 ? getUpdateCount() : 0;
 	}
 
 	@Override
@@ -201,8 +209,8 @@ public class OurStatement implements Statement {
 
 	@Override
 	public int getQueryTimeout() throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		exceptionIfColsed();
+		return this.timeLimit;
 	}
 
 	@Override
@@ -288,8 +296,39 @@ public class OurStatement implements Statement {
 
 	@Override
 	public void setQueryTimeout(int seconds) throws SQLException {
-		// TODO Auto-generated method stub
+		exceptionIfColsed();
+		this.timeLimit = seconds;
+	}
 
+	// class Query to make execute function is able to cancel
+	private class Query implements Callable<Boolean> {
+		private String sql;
+
+		public Query(String sql) {
+			this.sql = sql;
+		}
+
+		@Override
+		public Boolean call() throws Exception {
+			boolean done = false;
+			try {
+				if (sql.toLowerCase().contains("select")) {
+					db.executeQuery(sql);
+					// el mfrod a3ml set ll resultSet hna
+					// if there is dataSelected then done = true 8yr keda false
+					done = true;
+				} else if (sql.toLowerCase().contains("create") || sql.toLowerCase().contains("drop")) {
+					db.executeStructureQuery(sql);
+					updateCount = -1;
+				} else {
+					updateCount = db.executeUpdateQuery(sql);
+				}
+
+			} catch (Exception e) {
+				throw new SQLException(e);
+			}
+			return done;
+		}
 	}
 
 }
