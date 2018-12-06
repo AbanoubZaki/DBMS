@@ -13,6 +13,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import eg.edu.alexu.csd.oop.db.Database;
+import eg.edu.alexu.csd.oop.db.cs01.OurSql;
 
 public class OurStatement implements Statement {
 
@@ -24,11 +25,11 @@ public class OurStatement implements Statement {
 	private int updateCount;
 	private int timeLimit;
 
-	public OurStatement(Connection connection, Database database) {
+	public OurStatement(Connection connection) {
 		this.isClosed = false;
 		this.batches = new ArrayList<String>();
 		this.connection = connection;
-		this.db = database;
+		this.db = OurSql.getInstance();
 		this.updateCount = -1;
 		this.timeLimit = 0;
 	}
