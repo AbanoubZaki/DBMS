@@ -108,23 +108,6 @@ public class SanityTest {
         } catch (Throwable e){
         }
         
-        try {
-            Statement statement = connection.createStatement();
-            statement.executeUpdate("CREATE TABLE table_name11(column_name1 varchar , column_name2 int, column_name3 varchar)");
-            statement.close();
-            fail("Creating table with update query succeeded!");
-        } catch (Throwable e){
-        }
-        
-        try {
-            Statement statement = connection.createStatement();
-            statement.execute("CREATE TABLE table_name12(column_name1 varchar , column_name2 int, column_name3 varchar)");
-            statement.execute("INSERT INTO table_name12(column_NAME1, COLUMN_name3, column_name2) VALUES ('value1', 'value3', 4)");
-            statement.close();
-            fail("Inserting into table with structure query succeeded!");
-        } catch (Throwable e){
-        }
-        
         connection.close();
     }
     
