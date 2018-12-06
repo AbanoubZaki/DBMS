@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
-public class connectionManager {
+public class ConnectionManager {
 
 	/**
 	 * all connections created(our pool of connections).
@@ -34,7 +34,7 @@ public class connectionManager {
 	 * maximum no of available connections.
 	 */
 	private static int MAX_NO_OF_CONNECTIONS = 15;
-	
+
 	public static Connection getConnection(String path) throws SQLException {
 		/**
 		 * if pool is empty create a pool and array list of used connections then put
@@ -45,21 +45,19 @@ public class connectionManager {
 			connectionPool = new ArrayList<>(MAX_NO_OF_CONNECTIONS);
 			connectionsUsed = new ArrayList<>(MAX_NO_OF_CONNECTIONS);
 			for (int i = 0; i < MAX_NO_OF_CONNECTIONS; i++) {
-				connectionPool.add(new OurConnection());
+				connectionPool.add(new OurConnection(path));
 			}
 			// put last connection in used array list.
 			connectionsUsed.add(connectionPool.get(connectionPool.size() - 1));
 			// remove last connection.
 			connectionPool.remove(connectionPool.size() - 1);
 			c = connectionsUsed.get(connectionsUsed.size() - 1);
-			((OurConnection) c).setPath(path);
 			return c;
 		}
 		// check if there exist remaining connections in the pool.
 		if (connectionPool.size() > 0) {
 			connectionsUsed.add(connectionPool.get(connectionPool.size() - 1));
 			c = connectionsUsed.get(connectionsUsed.size() - 1);
-			((OurConnection) c).setPath(path);
 			return c;
 		} else {
 			throw new SQLException("Access denied, Maximum number of connections has been reached.");
@@ -67,8 +65,7 @@ public class connectionManager {
 
 	}
 
-
-	private class OurConnection implements Connection {
+	private static class OurConnection implements Connection {
 		/**
 		 * attributes of each database connection. information of connection. statements
 		 * to be executed. is the connection available or not to be used again if
@@ -77,24 +74,20 @@ public class connectionManager {
 		private String path;
 		private ArrayList<Statement> statements;
 
-		public OurConnection() {
-			path = new String();
+		public OurConnection(String path) {
+			this.path = path;
 			statements = new ArrayList<>();
 		}
 
-		private void setPath(String path) {
-			this.path = path;
-		}
-		
 		/**
-		 * when closing a connection its not actually closed but
-		 * reset it and return it to the pool so that it can be used again.
+		 * when closing a connection its not actually closed but reset it and return it
+		 * to the pool so that it can be used again.
 		 */
 		@Override
 		public void close() throws SQLException {
 			for (int i = 0; i < connectionsUsed.size(); i++) {
 				if (connectionsUsed.get(i).equals(this)) {
-					for (Statement s:statements) {
+					for (Statement s : statements) {
 						s.close();
 					}
 					this.statements.clear();
@@ -104,23 +97,17 @@ public class connectionManager {
 					return;
 				}
 			}
-			//if the compiler reached here then the connection is already closed.
+			// if the compiler reached here then the connection is already closed.
 			throw new SQLException("Connection is already closed");
 		}
-		
+
 		@Override
 		public Statement createStatement() throws SQLException {
 			Statement st = new OurStatement(this, this.path);
 			statements.add(st);
 			return st;
 		}
-		
-		
-		
-		
-		
-		
-		
+
 		@Override
 		public boolean isWrapperFor(Class<?> arg0) throws SQLException {
 
@@ -146,7 +133,7 @@ public class connectionManager {
 			throw new UnsupportedOperationException();
 
 		}
-		
+
 		@Override
 		public void commit() throws SQLException {
 
@@ -298,7 +285,8 @@ public class connectionManager {
 		}
 
 		@Override
-		public CallableStatement prepareCall(String sql, int resultSetType, int resultSetConcurrency) throws SQLException {
+		public CallableStatement prepareCall(String sql, int resultSetType, int resultSetConcurrency)
+				throws SQLException {
 
 			throw new UnsupportedOperationException();
 		}
@@ -380,7 +368,7 @@ public class connectionManager {
 
 		@Override
 		public void setClientInfo(String name, String value) throws SQLClientInfoException {
-			
+
 		}
 
 		@Override

@@ -76,10 +76,11 @@ public class OurStatement implements Statement {
 	@Override
 	public void close() throws SQLException {
 		// TODO Auto-generated method stub
-		exceptionIfColsed();
-		this.isClosed = true;
+		if (isClosed)
+			return;
 		this.connection = null;
 		clearBatch();
+		this.isClosed = true;
 	}
 
 	@Override
@@ -324,9 +325,11 @@ public class OurStatement implements Statement {
 					if (sql.toLowerCase().contains("database")) {
 						// mesh 3rf hgyb el path mnen !!
 						int index = sql.toLowerCase().lastIndexOf("database ");
-						sql = sql.substring(0, index) + path + System.getProperty("file.separator")
-								+ sql.substring(index + 1);
+						System.out.println(index);
+						sql = sql.substring(0, index + 9) + path + System.getProperty("file.separator")
+								+ sql.substring(index + 9);
 					}
+					System.out.println(sql);
 					db.executeStructureQuery(sql);
 					updateCount = -1;
 				} else {
