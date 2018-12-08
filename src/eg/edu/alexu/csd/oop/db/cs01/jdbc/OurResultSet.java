@@ -28,10 +28,11 @@ import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
 
 public class OurResultSet implements ResultSet {
 
-	private int currentRowposition;
-	private Row currentRow;
+	private int currentRowposition = 0;
+	private Row currentRow = null;
 	private Table myTable;
 	private Connection myConnection;
+	private boolean isClosed;
 
 	@Override
 	public boolean isWrapperFor(Class<?> iface) throws SQLException {
@@ -106,16 +107,35 @@ public class OurResultSet implements ResultSet {
 		return false;
 	}
 
+	/**
+	 * Moves the cursor to the end of this ResultSet object, just after the last
+	 * row. This method has no effect if the result set contains no rows.
+	 */
 	@Override
 	public void afterLast() throws SQLException {
 		// TODO Auto-generated method stub
+		try {
+			currentRowposition = myTable.getRows().size() + 1;
+			currentRow = null;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 
 	}
 
+	/**
+	 * Moves the cursor to the front of this ResultSet object, just before the first
+	 * row. This method has no effect if the result set contains no rows.
+	 */
 	@Override
 	public void beforeFirst() throws SQLException {
 		// TODO Auto-generated method stub
-
+		try {
+			currentRowposition = 0;
+			currentRow = null;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
 	@Override
@@ -128,10 +148,24 @@ public class OurResultSet implements ResultSet {
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * Releases this ResultSet object's database and JDBC resources immediately
+	 * instead of waiting for this to happen when it is automatically closed Note: A
+	 * ResultSet object is automatically closed by the Statement object that
+	 * generated it when that Statement object is closed, re-executed, or is used to
+	 * retrieve the next result from a sequence of multiple results.
+	 * 
+	 * Calling the method close on a ResultSet object that is already closed is a
+	 * no-op.
+	 */
 	@Override
 	public void close() throws SQLException {
 		// TODO Auto-generated method stub
-
+		currentRowposition = 0;
+		currentRow = null;
+		myTable = null;
+		myConnection = null;
+		isClosed = true;
 	}
 
 	@Override
@@ -145,10 +179,23 @@ public class OurResultSet implements ResultSet {
 		return 0;
 	}
 
+	/**
+	 * Moves the cursor to the first row in this ResultSet object. Returns: true if
+	 * the cursor is on a valid row; false if there are no rows in the result set
+	 */
 	@Override
 	public boolean first() throws SQLException {
 		// TODO Auto-generated method stub
-		return false;
+		try {
+			if (myTable.getRows().isEmpty()) {
+				return false;
+			}
+			currentRowposition = 1;
+			currentRow = myTable.getRow(currentRowposition - 1);
+			return true;
+		} catch (Exception e) {
+			throw new SQLException();
+		}
 	}
 
 	@Override
@@ -553,16 +600,49 @@ public class OurResultSet implements ResultSet {
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * Retrieves whether the cursor is after the last row in this ResultSet object.
+	 * Note:Support for the isAfterLast method is optional for ResultSets with a
+	 * result set type of TYPE_FORWARD_ONLY
+	 * 
+	 * Returns: true if the cursor is after the last row; false if the cursor is at
+	 * any other position or the result set contains no rows
+	 */
 	@Override
 	public boolean isAfterLast() throws SQLException {
 		// TODO Auto-generated method stub
-		return false;
+		try {
+			if (currentRowposition > myTable.getRows().size()) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (Exception e) {
+			throw new SQLException();
+		}
 	}
+
+	/**
+	 * Retrieves whether the cursor is before the first row in this ResultSet
+	 * object. Note:Support for the isBeforeFirst method is optional for ResultSets
+	 * with a result set type of TYPE_FORWARD_ONLY
+	 * 
+	 * Returns: true if the cursor is before the first row; false if the cursor is
+	 * at any other position or the result set contains no rows
+	 */
 
 	@Override
 	public boolean isBeforeFirst() throws SQLException {
 		// TODO Auto-generated method stub
-		return false;
+		try {
+			if (currentRowposition < 1) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (Exception e) {
+			throw new SQLException();
+		}
 	}
 
 	@Override
@@ -571,22 +651,67 @@ public class OurResultSet implements ResultSet {
 		return false;
 	}
 
+	/**
+	 * Retrieves whether the cursor is on the first row of this ResultSet object.
+	 * Note:Support for the isFirst method is optional for ResultSets with a result
+	 * set type of TYPE_FORWARD_ONLY
+	 * 
+	 * Returns: true if the cursor is on the first row; false otherwise
+	 */
 	@Override
 	public boolean isFirst() throws SQLException {
 		// TODO Auto-generated method stub
-		return false;
+		try {
+			if (currentRowposition == 1) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (Exception e) {
+			throw new SQLException();
+		}
 	}
 
+	/**
+	 * Retrieves whether the cursor is on the last row of this ResultSet object.
+	 * Note: Calling the method isLast may be expensive because the JDBC driver
+	 * might need to fetch ahead one row in order to determine whether the current
+	 * row is the last row in the result set. Note: Support for the isLast method is
+	 * optional for ResultSets with a result set type of TYPE_FORWARD_ONLY
+	 * 
+	 * Returns: true if the cursor is on the last row; false otherwise
+	 */
 	@Override
 	public boolean isLast() throws SQLException {
 		// TODO Auto-generated method stub
-		return false;
+		try {
+			if (currentRowposition == myTable.getRows().size()) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (Exception e) {
+			throw new SQLException();
+		}
 	}
 
+	/**
+	 * Moves the cursor to the last row in this ResultSet object. Returns: true if
+	 * the cursor is on a valid row; false if there are no rows in the result set
+	 */
 	@Override
 	public boolean last() throws SQLException {
 		// TODO Auto-generated method stub
-		return false;
+		try {
+			if (myTable.getRows().isEmpty()) {
+				return false;
+			}
+			currentRowposition = myTable.getRows().size();
+			currentRow = myTable.getRow(currentRowposition - 1);
+			return true;
+		} catch (Exception e) {
+			throw new SQLException();
+		}
 	}
 
 	@Override
@@ -599,16 +724,52 @@ public class OurResultSet implements ResultSet {
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * Moves the cursor forward one row from its current position. A ResultSet
+	 * cursor is initially positioned before the first row; the first call to the
+	 * method next makes the first row the current row; the second call makes the
+	 * second row the current row, and so on. Returns: true if the new current row
+	 * is valid; false if there are no more rows
+	 */
 	@Override
 	public boolean next() throws SQLException {
 		// TODO Auto-generated method stub
-		return false;
+		try {
+			if (currentRowposition != myTable.getSelectedRows().size()) {
+				currentRowposition = currentRowposition + 1;
+				currentRow = myTable.getSelectedRows().get(currentRowposition - 1);
+				return true;
+			} else {
+				currentRowposition = myTable.getSelectedRows().size() + 1;
+				currentRow = null;
+				return false;
+			}
+		} catch (Exception e) {
+			throw new SQLException();
+		}
 	}
 
+	/**
+	 * Moves the cursor to the previous row in this ResultSet object. Returns: true
+	 * if the cursor is now positioned on a valid row; false if the cursor is
+	 * positioned before the first row
+	 */
 	@Override
 	public boolean previous() throws SQLException {
 		// TODO Auto-generated method stub
-		return false;
+		try {
+			if (currentRowposition != 0) {
+				currentRowposition -= 1;
+				currentRow = myTable.getRow(currentRowposition - 1);
+				return true;
+			} else {
+				currentRowposition = 0;
+				currentRow = null;
+				return false;
+			}
+		} catch (Exception e) {
+			throw new SQLException();
+		}
 	}
 
 	@Override
