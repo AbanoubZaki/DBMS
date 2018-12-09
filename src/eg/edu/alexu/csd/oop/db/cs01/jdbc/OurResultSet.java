@@ -7,7 +7,6 @@ import java.net.URL;
 import java.sql.Array;
 import java.sql.Blob;
 import java.sql.Clob;
-import java.sql.Connection;
 import java.sql.Date;
 import java.sql.NClob;
 import java.sql.Ref;
@@ -20,6 +19,7 @@ import java.sql.SQLXML;
 import java.sql.Statement;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Map;
 
@@ -27,12 +27,19 @@ import eg.edu.alexu.csd.oop.db.cs01.modules.Row;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
 
 public class OurResultSet implements ResultSet {
-
+	
 	private int currentRowposition = 0;
 	private Row currentRow = null;
 	private Table myTable;
-	private Connection myConnection;
 	private boolean isClosed;
+	private ResultSetMetaData myResultSetMetaData;
+	private OurStatement myStatement;
+	
+	public OurResultSet(Table table, ResultSetMetaData resultSetMetaData, OurStatement statement) {
+		myStatement = statement;
+		myResultSetMetaData = resultSetMetaData;
+		myTable = table;
+	}
 
 	@Override
 	public boolean isWrapperFor(Class<?> iface) throws SQLException {
@@ -75,6 +82,7 @@ public class OurResultSet implements ResultSet {
 	@Override
 	public boolean absolute(int row) throws SQLException {
 		// TODO Auto-generated method stub
+		throwSqlException();
 		try {
 			if (row == 0) {
 				// 0 indicates before first element.
@@ -114,11 +122,11 @@ public class OurResultSet implements ResultSet {
 	@Override
 	public void afterLast() throws SQLException {
 		// TODO Auto-generated method stub
+		throwSqlException();
 		try {
 			currentRowposition = myTable.getSelectedRows().size() + 1;
 			currentRow = null;
 		} catch (Exception e) {
-			// TODO: handle exception
 		}
 
 	}
@@ -130,11 +138,11 @@ public class OurResultSet implements ResultSet {
 	@Override
 	public void beforeFirst() throws SQLException {
 		// TODO Auto-generated method stub
+		throwSqlException();
 		try {
 			currentRowposition = 0;
 			currentRow = null;
 		} catch (Exception e) {
-			// TODO: handle exception
 		}
 	}
 
@@ -161,10 +169,10 @@ public class OurResultSet implements ResultSet {
 	@Override
 	public void close() throws SQLException {
 		// TODO Auto-generated method stub
+		throwSqlException();
 		currentRowposition = 0;
 		currentRow = null;
 		myTable = null;
-		myConnection = null;
 		isClosed = true;
 	}
 
@@ -184,6 +192,7 @@ public class OurResultSet implements ResultSet {
 	@Override
 	public int findColumn(String columnLabel) throws SQLException {
 		// TODO Auto-generated method stub
+		throwSqlException();
 		try {
 			int columnIndex = -1;
 			for (int i = 0; i < myTable.getSelectedColumns().size(); i++) {
@@ -209,6 +218,7 @@ public class OurResultSet implements ResultSet {
 	@Override
 	public boolean first() throws SQLException {
 		// TODO Auto-generated method stub
+		throwSqlException();
 		try {
 			if (myTable.getSelectedRows().isEmpty()) {
 				return false;
@@ -407,6 +417,7 @@ public class OurResultSet implements ResultSet {
 	@Override
 	public int getInt(int columnIndex) throws SQLException {
 		// TODO Auto-generated method stub
+		throwSqlException();
 		try {
 			if ((columnIndex < 1) || (columnIndex > myTable.getSelectedColumns().size())) {
 				throw new SQLException();
@@ -425,8 +436,8 @@ public class OurResultSet implements ResultSet {
 
 	/**
 	 * Retrieves the value of the designated column in the current row of this
-	 * ResultSet object as an int in the Java programming language. 
-	 * Parameters: columnLabel - the label for the column specified with the SQL AS clause. If
+	 * ResultSet object as an int in the Java programming language. Parameters:
+	 * columnLabel - the label for the column specified with the SQL AS clause. If
 	 * the SQL AS clause was not specified, then the label is the name of the column
 	 * Returns: the column value; if the value is SQL NULL, the value returned is 0
 	 * Throws: SQLException - if the columnLabel is not valid; if a database access
@@ -471,7 +482,16 @@ public class OurResultSet implements ResultSet {
 	@Override
 	public ResultSetMetaData getMetaData() throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		try {
+			myResultSetMetaData = new OurResultSetMetaData(myTable);
+			if (isClosed == true) {
+				throw new SQLException("MetaData is closed");
+			}
+			return myResultSetMetaData;
+		} catch (Exception e) {
+			throw new SQLException("There is no selected table");
+		}
+
 	}
 
 	@Override
@@ -507,7 +527,20 @@ public class OurResultSet implements ResultSet {
 	@Override
 	public Object getObject(int columnIndex) throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		throwSqlException();
+		try {
+			ArrayList<String> myColumn = new ArrayList<>();
+			myColumn.add(myTable.getSelectedColumns().get(columnIndex - 1));
+			for (int i = 0; i < myTable.getSelectedRows().size(); i++) {
+				// Get selected rows and iterate on them
+				// In each row get the value of the selected column whose name is in
+				// myColumn.get(0)
+				myColumn.add(myTable.getSelectedRows().get(i).getCellByColumn(myColumn.get(0)));
+			}
+			return myColumn;
+		} catch (Exception e) {
+			throw new SQLException();
+		}
 	}
 
 	@Override
@@ -583,7 +616,12 @@ public class OurResultSet implements ResultSet {
 	@Override
 	public Statement getStatement() throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		throwSqlException();
+		try {
+			return myStatement;
+		} catch (Exception e) {
+			throw new SQLException();
+		}
 	}
 
 	@Override
@@ -715,6 +753,7 @@ public class OurResultSet implements ResultSet {
 	@Override
 	public boolean isAfterLast() throws SQLException {
 		// TODO Auto-generated method stub
+		throwSqlException();
 		try {
 			if (currentRowposition > myTable.getSelectedRows().size()) {
 				return true;
@@ -738,6 +777,7 @@ public class OurResultSet implements ResultSet {
 	@Override
 	public boolean isBeforeFirst() throws SQLException {
 		// TODO Auto-generated method stub
+		throwSqlException();
 		try {
 			if (currentRowposition < 1) {
 				return true;
@@ -778,6 +818,7 @@ public class OurResultSet implements ResultSet {
 	@Override
 	public boolean isFirst() throws SQLException {
 		// TODO Auto-generated method stub
+		throwSqlException();
 		try {
 			if (currentRowposition == 1) {
 				return true;
@@ -801,6 +842,7 @@ public class OurResultSet implements ResultSet {
 	@Override
 	public boolean isLast() throws SQLException {
 		// TODO Auto-generated method stub
+		throwSqlException();
 		try {
 			if (currentRowposition == myTable.getSelectedRows().size()) {
 				return true;
@@ -819,6 +861,7 @@ public class OurResultSet implements ResultSet {
 	@Override
 	public boolean last() throws SQLException {
 		// TODO Auto-generated method stub
+		throwSqlException();
 		try {
 			if (myTable.getSelectedRows().isEmpty()) {
 				return false;
@@ -851,6 +894,7 @@ public class OurResultSet implements ResultSet {
 	@Override
 	public boolean next() throws SQLException {
 		// TODO Auto-generated method stub
+		throwSqlException();
 		try {
 			if (currentRowposition != myTable.getSelectedRows().size()) {
 				currentRowposition = currentRowposition + 1;
@@ -874,6 +918,7 @@ public class OurResultSet implements ResultSet {
 	@Override
 	public boolean previous() throws SQLException {
 		// TODO Auto-generated method stub
+		throwSqlException();
 		try {
 			if (currentRowposition != 0) {
 				currentRowposition -= 1;
@@ -1345,4 +1390,8 @@ public class OurResultSet implements ResultSet {
 		throw new UnsupportedOperationException();
 	}
 
+	private void throwSqlException() throws SQLException {
+		if (isClosed())
+			throw new SQLException();
+	}
 }
