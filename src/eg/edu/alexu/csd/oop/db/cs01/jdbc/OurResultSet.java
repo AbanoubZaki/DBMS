@@ -82,23 +82,23 @@ public class OurResultSet implements ResultSet {
 				currentRow = null;
 				return false;
 			} else if (row > 0) {
-				if (row > myTable.getRows().size()) {
-					currentRowposition = myTable.getRows().size() + 1;
+				if (row > myTable.getSelectedRows().size()) {
+					currentRowposition = myTable.getSelectedRows().size() + 1;
 					currentRow = null;
 					return false;
 				}
 				currentRowposition = row;
-				currentRow = myTable.getRow(row - 1);
+				currentRow = myTable.getSelectedRows().get(row - 1);
 				return true;
 			} else if (row < 0) {// starting from the end.
-				if ((row * -1) > myTable.getRows().size()) {// if required is out of range.
+				if ((row * -1) > myTable.getSelectedRows().size()) {// if required is out of range.
 					currentRowposition = 0;
 					currentRow = null;
 					return false;
 				}
 				// currentRowPoosition carry the positive value of entered row
-				currentRowposition = myTable.getRows().size() + 1 + row;
-				currentRow = myTable.getRow(currentRowposition - 1);
+				currentRowposition = myTable.getSelectedRows().size() + 1 + row;
+				currentRow = myTable.getSelectedRows().get(currentRowposition - 1);
 				return true;
 			}
 		} catch (Exception e) {
@@ -115,7 +115,7 @@ public class OurResultSet implements ResultSet {
 	public void afterLast() throws SQLException {
 		// TODO Auto-generated method stub
 		try {
-			currentRowposition = myTable.getRows().size() + 1;
+			currentRowposition = myTable.getSelectedRows().size() + 1;
 			currentRow = null;
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -173,10 +173,33 @@ public class OurResultSet implements ResultSet {
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * Parameters: columnLabel - the label for the column specified with the SQL AS
+	 * clause. If the SQL AS clause was not specified, then the label is the name of
+	 * the column Returns: the column index of the given column name Throws:
+	 * SQLException - if the ResultSet object does not contain a column labeled
+	 * columnLabel, a database access error occurs or this method is called on a
+	 * closed result set
+	 */
 	@Override
 	public int findColumn(String columnLabel) throws SQLException {
 		// TODO Auto-generated method stub
-		return 0;
+		try {
+			int columnIndex = -1;
+			for (int i = 0; i < myTable.getSelectedColumns().size(); i++) {
+				if (columnLabel.toLowerCase().equals(myTable.getSelectedColumns().get(i).toLowerCase())) {
+					columnIndex = i;
+					break;
+				}
+			}
+			if (columnIndex >= 0) {
+				return columnIndex;
+			} else {
+				throw new SQLException();
+			}
+		} catch (Exception e) {
+			throw new SQLException();
+		}
 	}
 
 	/**
@@ -187,11 +210,11 @@ public class OurResultSet implements ResultSet {
 	public boolean first() throws SQLException {
 		// TODO Auto-generated method stub
 		try {
-			if (myTable.getRows().isEmpty()) {
+			if (myTable.getSelectedRows().isEmpty()) {
 				return false;
 			}
 			currentRowposition = 1;
-			currentRow = myTable.getRow(currentRowposition - 1);
+			currentRow = myTable.getSelectedRows().get(currentRowposition - 1);
 			return true;
 		} catch (Exception e) {
 			throw new SQLException();
@@ -373,16 +396,66 @@ public class OurResultSet implements ResultSet {
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * Retrieves the value of the designated column in the current row of this
+	 * ResultSet object as an int in the Java programming language. Parameters:
+	 * columnIndex - the first column is 1, the second is 2, ... Returns: the column
+	 * value; if the value is SQL NULL, the value returned is 0 Throws: SQLException
+	 * - if the columnIndex is not valid; if a database access error occurs or this
+	 * method is called on a closed result set
+	 */
 	@Override
 	public int getInt(int columnIndex) throws SQLException {
 		// TODO Auto-generated method stub
-		return 0;
+		try {
+			if ((columnIndex < 1) || (columnIndex > myTable.getSelectedColumns().size())) {
+				throw new SQLException();
+			} else {
+				if (currentRow.getCellByColumn(myTable.getSelectedColumns().get(columnIndex - 1)).equals(null)) {
+					return 0;
+				} else {
+					return Integer
+							.parseInt(currentRow.getCellByColumn(myTable.getSelectedColumns().get(columnIndex - 1)));
+				}
+			}
+		} catch (Exception e) {
+			throw new SQLException();
+		}
 	}
 
+	/**
+	 * Retrieves the value of the designated column in the current row of this
+	 * ResultSet object as an int in the Java programming language. 
+	 * Parameters: columnLabel - the label for the column specified with the SQL AS clause. If
+	 * the SQL AS clause was not specified, then the label is the name of the column
+	 * Returns: the column value; if the value is SQL NULL, the value returned is 0
+	 * Throws: SQLException - if the columnLabel is not valid; if a database access
+	 * error occurs or this method is called on a closed result set
+	 */
 	@Override
 	public int getInt(String columnLabel) throws SQLException {
 		// TODO Auto-generated method stub
-		return 0;
+		try {
+			int columnIndex = -1;
+			for (int i = 0; i < myTable.getSelectedColumns().size(); i++) {
+				if (columnLabel.toLowerCase().equals(myTable.getSelectedColumns().get(i).toLowerCase())) {
+					columnIndex = i;
+					break;
+				}
+			}
+			if (columnIndex >= 0) {
+				if (currentRow.getCellByColumn(myTable.getSelectedColumns().get(columnIndex - 1)).equals(null)) {
+					return 0;
+				} else {
+					return Integer
+							.parseInt(currentRow.getCellByColumn(myTable.getSelectedColumns().get(columnIndex - 1)));
+				}
+			} else {
+				throw new SQLException();
+			}
+		} catch (Exception e) {
+			throw new SQLException();
+		}
 	}
 
 	@Override
@@ -516,13 +589,44 @@ public class OurResultSet implements ResultSet {
 	@Override
 	public String getString(int columnIndex) throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		try {
+			if ((columnIndex < 1) || (columnIndex > myTable.getSelectedColumns().size())) {
+				throw new SQLException();
+			} else {
+				if (currentRow.getCellByColumn(myTable.getSelectedColumns().get(columnIndex - 1)).equals(null)) {
+					return null;
+				} else {
+					return currentRow.getCellByColumn(myTable.getSelectedColumns().get(columnIndex - 1));
+				}
+			}
+		} catch (Exception e) {
+			throw new SQLException();
+		}
 	}
 
 	@Override
 	public String getString(String columnLabel) throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		try {
+			int columnIndex = -1;
+			for (int i = 0; i < myTable.getSelectedColumns().size(); i++) {
+				if (columnLabel.toLowerCase().equals(myTable.getSelectedColumns().get(i).toLowerCase())) {
+					columnIndex = i;
+					break;
+				}
+			}
+			if (columnIndex >= 0) {
+				if (currentRow.getCellByColumn(myTable.getSelectedColumns().get(columnIndex - 1)).equals(null)) {
+					return null;
+				} else {
+					return currentRow.getCellByColumn(myTable.getSelectedColumns().get(columnIndex - 1));
+				}
+			} else {
+				throw new SQLException();
+			}
+		} catch (Exception e) {
+			throw new SQLException();
+		}
 	}
 
 	@Override
@@ -612,7 +716,7 @@ public class OurResultSet implements ResultSet {
 	public boolean isAfterLast() throws SQLException {
 		// TODO Auto-generated method stub
 		try {
-			if (currentRowposition > myTable.getRows().size()) {
+			if (currentRowposition > myTable.getSelectedRows().size()) {
 				return true;
 			} else {
 				return false;
@@ -645,10 +749,23 @@ public class OurResultSet implements ResultSet {
 		}
 	}
 
+	/**
+	 * Retrieves whether this ResultSet object has been closed. A ResultSet is
+	 * closed if the method close has been called on it, or if it is automatically
+	 * closed.
+	 */
 	@Override
 	public boolean isClosed() throws SQLException {
 		// TODO Auto-generated method stub
-		return false;
+		try {
+			if (isClosed == true) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (Exception e) {
+			throw new SQLException();
+		}
 	}
 
 	/**
@@ -685,7 +802,7 @@ public class OurResultSet implements ResultSet {
 	public boolean isLast() throws SQLException {
 		// TODO Auto-generated method stub
 		try {
-			if (currentRowposition == myTable.getRows().size()) {
+			if (currentRowposition == myTable.getSelectedRows().size()) {
 				return true;
 			} else {
 				return false;
@@ -703,11 +820,11 @@ public class OurResultSet implements ResultSet {
 	public boolean last() throws SQLException {
 		// TODO Auto-generated method stub
 		try {
-			if (myTable.getRows().isEmpty()) {
+			if (myTable.getSelectedRows().isEmpty()) {
 				return false;
 			}
-			currentRowposition = myTable.getRows().size();
-			currentRow = myTable.getRow(currentRowposition - 1);
+			currentRowposition = myTable.getSelectedRows().size();
+			currentRow = myTable.getSelectedRows().get(currentRowposition - 1);
 			return true;
 		} catch (Exception e) {
 			throw new SQLException();
@@ -760,7 +877,7 @@ public class OurResultSet implements ResultSet {
 		try {
 			if (currentRowposition != 0) {
 				currentRowposition -= 1;
-				currentRow = myTable.getRow(currentRowposition - 1);
+				currentRow = myTable.getSelectedRows().get(currentRowposition - 1);
 				return true;
 			} else {
 				currentRowposition = 0;
