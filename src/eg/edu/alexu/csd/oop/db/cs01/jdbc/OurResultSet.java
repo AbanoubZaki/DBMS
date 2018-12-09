@@ -27,15 +27,15 @@ import eg.edu.alexu.csd.oop.db.cs01.modules.Row;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
 
 public class OurResultSet implements ResultSet {
-	
+
 	private int currentRowposition = 0;
 	private Row currentRow = null;
 	private Table myTable;
 	private boolean isClosed;
 	private ResultSetMetaData myResultSetMetaData;
-	private OurStatement myStatement;
-	
-	public OurResultSet(Table table, ResultSetMetaData resultSetMetaData, OurStatement statement) {
+	private Statement myStatement;
+
+	public OurResultSet(Table table, ResultSetMetaData resultSetMetaData, Statement statement) {
 		myStatement = statement;
 		myResultSetMetaData = resultSetMetaData;
 		myTable = table;
@@ -529,15 +529,11 @@ public class OurResultSet implements ResultSet {
 		// TODO Auto-generated method stub
 		throwSqlException();
 		try {
-			ArrayList<String> myColumn = new ArrayList<>();
-			myColumn.add(myTable.getSelectedColumns().get(columnIndex - 1));
-			for (int i = 0; i < myTable.getSelectedRows().size(); i++) {
-				// Get selected rows and iterate on them
-				// In each row get the value of the selected column whose name is in
-				// myColumn.get(0)
-				myColumn.add(myTable.getSelectedRows().get(i).getCellByColumn(myColumn.get(0)));
+			String columnName = myTable.getSelectedColumns().get(columnIndex - 1);
+			if (myTable.getColumnTypes().get(columnName).equals("int")) {
+				return Integer.parseInt(currentRow.getCellByColumn(columnName));
 			}
-			return myColumn;
+			return currentRow.getCellByColumn(columnName);
 		} catch (Exception e) {
 			throw new SQLException();
 		}
@@ -920,8 +916,11 @@ public class OurResultSet implements ResultSet {
 		// TODO Auto-generated method stub
 		throwSqlException();
 		try {
-			if (currentRowposition != 0) {
+			if (currentRowposition > 0) {
 				currentRowposition -= 1;
+				if (currentRowposition == 0) {
+					return false;
+				}
 				currentRow = myTable.getSelectedRows().get(currentRowposition - 1);
 				return true;
 			} else {
@@ -930,7 +929,7 @@ public class OurResultSet implements ResultSet {
 				return false;
 			}
 		} catch (Exception e) {
-			throw new SQLException();
+			throw new SQLException(e);
 		}
 	}
 

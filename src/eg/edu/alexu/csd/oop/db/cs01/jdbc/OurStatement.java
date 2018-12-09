@@ -14,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 import eg.edu.alexu.csd.oop.db.Database;
 import eg.edu.alexu.csd.oop.db.cs01.OurSql;
+import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
 
 public class OurStatement implements Statement {
 
@@ -25,6 +26,7 @@ public class OurStatement implements Statement {
 	private int updateCount;
 	private int timeLimit;
 	private String path;
+	private Statement s;
 
 	public OurStatement(Connection connection, String path) {
 		this.isClosed = false;
@@ -34,6 +36,7 @@ public class OurStatement implements Statement {
 		this.updateCount = -1;
 		this.timeLimit = 0;
 		this.path = path;
+		s = this;
 	}
 
 	private void exceptionIfColsed() throws SQLException {
@@ -320,8 +323,9 @@ public class OurStatement implements Statement {
 			try {
 				if (sql.toLowerCase().contains("select ")) {
 					Object[][] selectedData = db.executeQuery(sql);
+					System.out.println(Table.getInstance().getSelectedColumns());
 					// el mfrod a3ml set ll resultSet hna
-
+					resultSet = new OurResultSet(Table.getInstance(), new OurResultSetMetaData(Table.getInstance()), s);
 					return selectedData != null && selectedData.length != 0;
 				} else if (sql.toLowerCase().contains("create ") || sql.toLowerCase().contains("drop ")) {
 					if (sql.toLowerCase().contains("database ")) {

@@ -118,7 +118,7 @@ public class SelectFrom extends OurQuery {
 					rowsValidateCondition.add(r);
 				}
 			}
-			Table.getInstance().setSelectedColumns(this.columns);
+			Table.getInstance().setSelectedColumns(Table.getInstance().getColumnNamesToLowerCase());
 			selected = new Object[rowsValidateCondition.size()][Table.getInstance().getColumnNamesAsGiven().size()];
 			for (int i = 0; i < rowsValidateCondition.size(); i++) {
 				// row of data to be filled with objects.
