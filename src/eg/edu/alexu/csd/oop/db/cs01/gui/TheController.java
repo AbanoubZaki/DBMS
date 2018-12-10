@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import eg.edu.alexu.csd.oop.db.cs01.jdbc.OurDriver;
 import eg.edu.alexu.csd.oop.db.cs01.jdbc.OurJDBC;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -49,12 +50,19 @@ public class TheController implements Initializable {
 			try {
 				if (!pathDone) {
 					OurJDBC.getInstance().setPath(entreQuery.getText());
-					entreQuery.setPromptText("Enter Query");
+					entreQuery.setPromptText("Enter URL");
+					entreQuery.setText("");
 					pathDone = true;
 					return;
 				}
-				errorLable.setText(OurJDBC.getInstance().run(entreQuery.getText()));
-				buildTable(OurJDBC.getInstance().getResultSet());
+				if (OurDriver.getInstance().acceptsURL(entreQuery.getText())) {
+					entreQuery.setPromptText("Enter your Query");
+					errorLable.setText(OurJDBC.getInstance().run(entreQuery.getText()));
+					entreQuery.setText("");
+				} else {
+					errorLable.setText(OurJDBC.getInstance().run(entreQuery.getText()));
+					buildTable(OurJDBC.getInstance().getResultSet());
+				}
 
 			} catch (SQLException e) {
 				errorLable.setTextFill(Color.RED);
@@ -82,7 +90,7 @@ public class TheController implements Initializable {
 				}
 			});
 			col.setResizable(true);
-			col.setPrefWidth(fillTable.getWidth()/resultSet.getMetaData().getColumnCount());
+			col.setPrefWidth(fillTable.getWidth() / resultSet.getMetaData().getColumnCount());
 			fillTable.getColumns().addAll(col);
 			System.out.println("Column [" + i + "] ");
 		}
@@ -92,9 +100,9 @@ public class TheController implements Initializable {
 			ObservableList<Object> row = FXCollections.observableArrayList();
 			for (int i = 1; i <= resultSet.getMetaData().getColumnCount(); i++) {
 				// Iterate Column
-				if(resultSet.getObject(i)!=null) {
+				if (resultSet.getObject(i) != null) {
 					row.add(resultSet.getObject(i));
-				}else {
+				} else {
 					row.add("null");
 				}
 			}
@@ -110,6 +118,7 @@ public class TheController implements Initializable {
 		entreQuery.setPromptText("Enter The Path Of Our Database");
 		pathDone = false;
 	}
+
 	@FXML
 	public void pressEnter(KeyEvent e) {
 		switch (e.getCode()) {
