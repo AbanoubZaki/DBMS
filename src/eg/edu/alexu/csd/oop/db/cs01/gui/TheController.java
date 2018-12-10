@@ -126,6 +126,7 @@ public class TheController implements Initializable {
 		switch (e.getCode()) {
 		case ENTER:
 			runBtnAct();
+			entreQuery.getParent().requestFocus();
 			break;
 		default:
 			return;
