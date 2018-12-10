@@ -88,7 +88,7 @@ public class ConditionParser {
 		ArrayList<RelationalCondition> conditions = new ArrayList<RelationalCondition>();
 		if (logicalCondition == null)
 			return null;
-		final String relationlConditionPattern = "(([^;\\s<>!=()]+) ?(([!=><]{1,2}) ?((['\"] ?([^;<>!=()]+) ?['\"])|[^;<>!=()'\"]+)?)?)";
+		final String relationlConditionPattern = "(([^;\\s<>!=()]+) ?(([!=><]{1,2}) ?((['\"] ?([^;<>!=()]+) ?['\"])|[^;\\s<>!=()'\"]+)?)?)";
 		logicalCondition = logicalCondition.replaceAll(" +", " ");
 		Pattern p = Pattern.compile(relationlConditionPattern);
 		Matcher operation = p.matcher(logicalCondition);
