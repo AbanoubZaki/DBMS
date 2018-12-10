@@ -7,10 +7,12 @@ import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import eg.edu.alexu.csd.oop.db.Database;
 import eg.edu.alexu.csd.oop.db.cs01.OurSql;
@@ -42,7 +44,7 @@ public class OurStatement implements Statement {
 	private void exceptionIfColsed() throws SQLException {
 		if (isClosed) {
 			OurLogger.warn(this.getClass(), "This statement is already closed");
-			throw new SQLException("This statement is already closed");	
+			throw new SQLException("This statement is already closed");
 		}
 	}
 
@@ -100,12 +102,13 @@ public class OurStatement implements Statement {
 		Future<Boolean> future = executor.submit(new Query(sql));
 		try {
 			return this.getQueryTimeout() == 0 ? future.get() : future.get(this.timeLimit, TimeUnit.SECONDS);
-		} catch (Exception e) {
+		} catch (SQLException | InterruptedException | ExecutionException | TimeoutException e) {
 			future.cancel(true);
-			throw new SQLException(e);
+			throw new SQLException(e.getCause().getLocalizedMessage());
 		} finally {
 			executor.shutdownNow();
 		}
+
 	}
 
 	@Override
@@ -140,7 +143,7 @@ public class OurStatement implements Statement {
 				} else {
 					updates[i] = EXECUTE_FAILED;
 				}
-			} catch (Exception e) {
+			} catch (SQLException e) {
 				updates[i] = EXECUTE_FAILED;
 			}
 		}
@@ -227,7 +230,7 @@ public class OurStatement implements Statement {
 
 	@Override
 	public ResultSet getResultSet() throws SQLException {
-		throw new UnsupportedOperationException();
+		return resultSet;
 	}
 
 	@Override
@@ -321,30 +324,25 @@ public class OurStatement implements Statement {
 		}
 
 		@Override
-		public Boolean call() throws Exception {
-			try {
-				if (sql.toLowerCase().contains("select ")) {
-					Object[][] selectedData = db.executeQuery(sql);
-					// el mfrod a3ml set ll resultSet hna
-					resultSet = new OurResultSet(Table.getInstance(), new OurResultSetMetaData(Table.getInstance()), s);
-					return selectedData != null && selectedData.length != 0;
-				} else if (sql.toLowerCase().contains("create ") || sql.toLowerCase().contains("drop ")) {
-					if (sql.toLowerCase().contains("database ")) {
-						// mesh 3rf hgyb el path mnen !!
-						int index = sql.toLowerCase().lastIndexOf("database ");
-						sql = sql.substring(0, index + 9) + path + System.getProperty("file.separator")
-								+ sql.substring(index + 9);
-					}
-					updateCount = -1;
-					return db.executeStructureQuery(sql);
-				} else {
-					updateCount = db.executeUpdateQuery(sql);
-					return true;
+		public Boolean call() throws SQLException {
+
+			if (sql.toLowerCase().contains("select ")) {
+				Object[][] selectedData = db.executeQuery(sql);
+				resultSet = new OurResultSet(Table.getInstance(), new OurResultSetMetaData(Table.getInstance()), s);
+				updateCount = -1;
+				return selectedData != null && selectedData.length != 0;
+			} else if (sql.toLowerCase().contains("create ") || sql.toLowerCase().contains("drop ")) {
+				if (sql.toLowerCase().contains("database ")) {
+					// mesh 3rf hgyb el path mnen !!
+					int index = sql.toLowerCase().lastIndexOf("database ");
+					sql = sql.substring(0, index + 9) + path + System.getProperty("file.separator")
+							+ sql.substring(index + 9);
 				}
-
-			} catch (Exception e) {
-
-				throw new SQLException(e);
+				updateCount = -1;
+				return db.executeStructureQuery(sql);
+			} else {
+				updateCount = db.executeUpdateQuery(sql);
+				return true;
 			}
 		}
 	}

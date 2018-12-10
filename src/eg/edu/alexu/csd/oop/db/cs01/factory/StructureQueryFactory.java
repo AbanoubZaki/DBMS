@@ -21,8 +21,8 @@ public class StructureQueryFactory extends OurQueryFactory {
 
 	private StructureQueryFactory() {
 		// Creating regexes for queries.
-		final String createDataBasePattern = "(?i)\\bcreate\\b (?i)\\bdatabase\\b ([\\w\\"+System.getProperty("file.separator")+"]+) ?;? ?";
-		final String drobDataBasePattern = "(?i)\\bdrop\\b (?i)\\bdatabase\\b ([\\w\\"+System.getProperty("file.separator")+"]+) ?;? ?";
+		final String createDataBasePattern = "(?i)\\bcreate\\b (?i)\\bdatabase\\b ([\\w\\"+System.getProperty("file.separator")+":-]+) ?;? ?";
+		final String drobDataBasePattern = "(?i)\\bdrop\\b (?i)\\bdatabase\\b ([\\w\\"+System.getProperty("file.separator")+":-]+) ?;? ?";
 		final String createTablePattern = "(?i)\\bcreate\\b (?i)\\btable\\b (\\w+) ?\\( ?(( ?\\w+ (int|varchar) ?,?)+) ?\\) ?;? ?";
 		final String drobTablePattern = "(?i)\\bdrop\\b (?i)\\btable\\b (\\w+) ?;? ?";
 		// Adding regex-es to the ArrayList.

@@ -533,7 +533,8 @@ public class OurResultSet implements ResultSet {
 		try {
 			String columnName = myTable.getSelectedColumns().get(columnIndex - 1);
 			if (myTable.getColumnTypes().get(columnName).equals("int")) {
-				return Integer.parseInt(currentRow.getCellByColumn(columnName));
+				if(currentRow.getCellByColumn(columnName)!=null)
+					return Integer.parseInt(currentRow.getCellByColumn(columnName));
 			}
 			return currentRow.getCellByColumn(columnName);
 		} catch (Exception e) {
