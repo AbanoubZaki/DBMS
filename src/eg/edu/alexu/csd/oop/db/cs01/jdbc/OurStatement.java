@@ -40,8 +40,10 @@ public class OurStatement implements Statement {
 	}
 
 	private void exceptionIfColsed() throws SQLException {
-		if (isClosed)
-			throw new SQLException("This statement is already closed");
+		if (isClosed) {
+			OurLogger.warn(this.getClass(), "This statement is already closed");
+			throw new SQLException("This statement is already closed");	
+		}
 	}
 
 	@Override
@@ -323,7 +325,6 @@ public class OurStatement implements Statement {
 			try {
 				if (sql.toLowerCase().contains("select ")) {
 					Object[][] selectedData = db.executeQuery(sql);
-					System.out.println(Table.getInstance().getSelectedColumns());
 					// el mfrod a3ml set ll resultSet hna
 					resultSet = new OurResultSet(Table.getInstance(), new OurResultSetMetaData(Table.getInstance()), s);
 					return selectedData != null && selectedData.length != 0;
@@ -331,7 +332,6 @@ public class OurStatement implements Statement {
 					if (sql.toLowerCase().contains("database ")) {
 						// mesh 3rf hgyb el path mnen !!
 						int index = sql.toLowerCase().lastIndexOf("database ");
-						System.out.println(index);
 						sql = sql.substring(0, index + 9) + path + System.getProperty("file.separator")
 								+ sql.substring(index + 9);
 					}

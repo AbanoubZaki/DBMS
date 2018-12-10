@@ -31,6 +31,7 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import eg.edu.alexu.csd.oop.db.cs01.jdbc.OurLogger;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Cell;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Row;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
@@ -81,6 +82,7 @@ public class FileManager {
 
 	public boolean createTable(Table table) {
 		if (table.getDatabaseName() == null) {
+			OurLogger.error(this.getClass(), "Database is unknown.");
 			System.out.println("Database is unknown.");
 			return false;
 		}
@@ -91,6 +93,7 @@ public class FileManager {
 		File tableFile = new File(pathTable + ".Xml");
 		File DTDFile = new File(pathTable + ".dtd");
 		if (tableFile.exists() && DTDFile.exists()) {
+			OurLogger.error(this.getClass(), "Failed to create table, Table already exists.");
 			System.out.println("Failed to create table, Table already exists.");
 			return false;
 		}
@@ -128,6 +131,7 @@ public class FileManager {
 			createDTD(table);
 
 		} catch (Exception e) {
+			OurLogger.error(this.getClass(), "Error happened bs msh ha2olak 3aleh.");
 			System.out.println("Error happened bs msh ha2olak 3aleh.");
 			e.printStackTrace();
 		}
@@ -143,6 +147,7 @@ public class FileManager {
 	 */
 	public boolean dropTable(Table table) {
 		if (table.getDatabaseName() == null) {
+			OurLogger.error(this.getClass(), "Database is unknown.");
 			System.out.println("Database is unknown.");
 			return false;
 		}
@@ -189,6 +194,7 @@ public class FileManager {
 
 	public boolean readTable(Table table) {
 		if (table.getDatabaseName() == null) {
+			OurLogger.error(this.getClass(), "Database is unknown.");
 			System.out.println("Database is unknown.");
 			return false;
 		}
@@ -223,7 +229,8 @@ public class FileManager {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("error");
+			OurLogger.error(this.getClass(), "error bs msh han2olak 3aleh");
+			System.out.println("error bs msh han2olak 3aleh");
 		}
 		return true;
 
@@ -231,6 +238,7 @@ public class FileManager {
 
 	public boolean writeTable(Table table) {
 		if (table.getDatabaseName() == null) {
+			OurLogger.error(this.getClass(), "Database is unknown.");
 			System.out.println("Database is unknown.");
 			return false;
 		}
@@ -273,6 +281,7 @@ public class FileManager {
 			tr.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
 			tr.transform(new DOMSource(dom), new StreamResult(tableFile));
 		} catch (Exception e) {
+			OurLogger.error(this.getClass(), "Error happened bs msh ha2olak 3aleh.");
 			System.out.println("Error happened bs msh ha2olak 3aleh.");
 			e.printStackTrace();
 		}
@@ -329,9 +338,9 @@ public class FileManager {
 		try {
 			lines = Files.readAllLines(Paths.get(tableFile.getAbsolutePath()), StandardCharsets.UTF_8);
 		} catch (IOException e) {
-			
+
 		}
-		
+
 		ArrayList<String> cols = new ArrayList<String>();
 		for (int i = 3; i < lines.size(); i++) {
 			String s = lines.get(i);

@@ -63,6 +63,7 @@ public class ConnectionManager {
 			c = connectionsUsed.get(connectionsUsed.size() - 1);
 			return c;
 		} else {
+			OurLogger.warn(ConnectionManager.class, "Access denied, Maximum number of connections has been reached.");
 			throw new SQLException("Access denied, Maximum number of connections has been reached.");
 		}
 
@@ -86,19 +87,23 @@ public class ConnectionManager {
 		 */
 		@Override
 		public void close() throws SQLException {
-			for (int i = 0; i < connectionsUsed.size(); i++) {
-				if (connectionsUsed.get(i).equals(this)) {
-					for (Statement s : statements) {
-						s.close();
+			try {
+				for (int i = 0; i < connectionsUsed.size(); i++) {
+					if (connectionsUsed.get(i).equals(this)) {
+						for (Statement s : statements) {
+							s.close();
+						}
+						this.statements.clear();
+						connectionPool.add(this);
+						connectionsUsed.remove(i);
+						return;
 					}
-					this.statements.clear();
-					connectionPool.add(this);
-					connectionsUsed.remove(i);
-					return;
 				}
+			} catch (Exception e) {
+				// if the compiler reached here then the connection is already closed.
+				OurLogger.warn(this.getClass(), "Connection is already closed");
+				throw new SQLException("Connection is already closed");
 			}
-			// if the compiler reached here then the connection is already closed.
-			throw new SQLException("Connection is already closed");
 		}
 
 		@Override

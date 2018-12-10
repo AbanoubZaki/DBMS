@@ -3,6 +3,8 @@ package eg.edu.alexu.csd.oop.db.cs01.condition;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
+import eg.edu.alexu.csd.oop.db.cs01.jdbc.OurLogger;
+
 public class JavaScriptEngine {
 	
 	private static JavaScriptEngine instance;
@@ -22,6 +24,7 @@ public class JavaScriptEngine {
 		try {
 			return (boolean) sm.eval(condition);
 		} catch (Exception e) {
+			OurLogger.error(this.getClass(), "Error in script");
 			System.out.println("Error in script");
 		}
 		return false;

@@ -6,6 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import eg.edu.alexu.csd.oop.db.cs01.OurSql;
+import eg.edu.alexu.csd.oop.db.cs01.jdbc.OurLogger;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
 import eg.edu.alexu.csd.oop.db.cs01.queries.CreateDatabase;
 import eg.edu.alexu.csd.oop.db.cs01.queries.CreateTable;
@@ -77,6 +78,7 @@ public class StructureQueryFactory extends OurQueryFactory {
 			return drobDataBaseQuery;
 		} else if (theMatchers.get(2).find()) {// if the query match create table.
 			if (OurSql.getInstance().getCurrentDataBase() == null) {
+				OurLogger.error(this.getClass(), "There is no database selected");
 				throw new SQLException("There is no database selected");
 			}
 			String[] columns;
@@ -103,6 +105,7 @@ public class StructureQueryFactory extends OurQueryFactory {
 			return createTableQuery;
 		} else if (theMatchers.get(3).find()) {// if the query match drop table.
 			if (OurSql.getInstance().getCurrentDataBase() == null) {
+				OurLogger.error(this.getClass(), "There is no database selected");
 				throw new SQLException("There is no database selected");
 			}
 			// group(1) is the name of the table.

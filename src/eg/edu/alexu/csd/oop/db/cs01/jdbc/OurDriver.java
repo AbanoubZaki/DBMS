@@ -34,6 +34,7 @@ public class OurDriver implements Driver {
 		if (url.equals("jdbc:xmldb://localhost")) {
 			return true;
 		} else if (url.equals("url2") || url.equals("url3")) {
+			OurLogger.warn(this.getClass(), "The database files type is not supported.");
 			throw new SQLException("The database files type is not supported.");
 		}
 		return false;
@@ -49,6 +50,7 @@ public class OurDriver implements Driver {
 			return ConnectionManager.getConnection(path); // pool
 		} else {
 			// then URL is not supported and is not a valid one.
+			OurLogger.error(this.getClass(), "Wrong URL has been entered.");
 			throw new SQLException("Wrong URL has been entered.");
 		}	
 	}

@@ -485,10 +485,12 @@ public class OurResultSet implements ResultSet {
 		try {
 			myResultSetMetaData = new OurResultSetMetaData(myTable);
 			if (isClosed == true) {
+				OurLogger.warn(this.getClass(), "MetaData is closed");
 				throw new SQLException("MetaData is closed");
 			}
 			return myResultSetMetaData;
 		} catch (Exception e) {
+			OurLogger.error(this.getClass(), "There is no selected table");
 			throw new SQLException("There is no selected table");
 		}
 

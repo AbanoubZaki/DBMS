@@ -2,6 +2,7 @@ package eg.edu.alexu.csd.oop.db.cs01.condition;
 
 import java.sql.SQLException;
 
+import eg.edu.alexu.csd.oop.db.cs01.jdbc.OurLogger;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Row;
 
 public class RelationalSolver {
@@ -23,6 +24,7 @@ public class RelationalSolver {
 		if (condition.getLeftAgrument() == null || condition.getRightAgrument() == null) {
 			if (condition.getOperation() == null)
 				return true;
+			OurLogger.error(this.getClass(), "incomplete condition");
 			throw new SQLException("incomplete condition");
 		}
 		if (condition.getLeftAgrument().isVariable() && condition.getRightAgrument().isVariable())

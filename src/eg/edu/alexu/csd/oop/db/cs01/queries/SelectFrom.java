@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import eg.edu.alexu.csd.oop.db.cs01.condition.LogicalCondition;
 import eg.edu.alexu.csd.oop.db.cs01.condition.LogicalSolver;
+import eg.edu.alexu.csd.oop.db.cs01.jdbc.OurLogger;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Cell;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Row;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
@@ -50,9 +51,11 @@ public class SelectFrom extends OurQuery {
 	@Override
 	public boolean execute() throws SQLException {
 		if (Table.getInstance() == null || Table.getInstance().getColumnNamesAsGiven().size() == 0) {
+			OurLogger.error(this.getClass(), "Table not found.");
 			throw new SQLException("Table not found.");
 		}
 		if (Table.getInstance().getData() == null || Table.getInstance().getData().length == 0) {
+			OurLogger.warn(this.getClass(), "Table is empty.");
 			System.out.println("Table is empty.");
 		}
 		if (columns == null && getCondition().getStringCondition() == null) {
@@ -69,6 +72,7 @@ public class SelectFrom extends OurQuery {
 			 */
 			for (String s : columns) {
 				if (!Table.getInstance().getColumnNamesToLowerCase().contains(s.toLowerCase())) {
+					OurLogger.error(this.getClass(), "Column \"" + s + "\" not found.");
 					throw new SQLException("Column \"" + s + "\" not found.");
 				}
 			}

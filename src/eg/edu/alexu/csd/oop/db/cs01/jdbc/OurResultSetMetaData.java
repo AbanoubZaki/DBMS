@@ -47,6 +47,7 @@ public class OurResultSetMetaData implements ResultSetMetaData {
 		try {
 			return myTable.getSelectedColumns().size();
 		} catch (Exception e) {
+			OurLogger.error(this.getClass(), "There is no table selected.");
 			throw new SQLException("There is no table selected.");
 		}
 
@@ -69,6 +70,7 @@ public class OurResultSetMetaData implements ResultSetMetaData {
 		try {
 			return getColumnName(column);
 		} catch (Exception e) {
+			OurLogger.error(this.getClass(), "There is no table selected.");
 			throw new SQLException("There is no table selected.");
 		}
 
@@ -82,10 +84,12 @@ public class OurResultSetMetaData implements ResultSetMetaData {
 		// TODO Auto-generated method stub
 		try {
 			if (column <= 0 || column > myTable.getSelectedColumns().size()) {
+				OurLogger.error(this.getClass(), "Entered index is out of range");
 				throw new SQLException("Entered index is out of range");
 			}
 			return myTable.getSelectedColumns().get(column - 1);
 		} catch (Exception e) {
+			OurLogger.error(this.getClass(), "There is no table selected.");
 			throw new SQLException("There is no table selected.");
 		}
 
@@ -107,14 +111,16 @@ public class OurResultSetMetaData implements ResultSetMetaData {
 				return java.sql.Types.INTEGER;
 			} else if (myTable.getColumnTypes().get(columnName) == "varchar") {
 				return java.sql.Types.VARCHAR;
-//			} else if (myTable.getColumnTypes().get(columnName) == "float") {
-//				return java.sql.Types.FLOAT;
-//			} else if (myTable.getColumnTypes().get(columnName) == "date") {
-//				return java.sql.Types.DATE;
+				// } else if (myTable.getColumnTypes().get(columnName) == "float") {
+				// return java.sql.Types.FLOAT;
+				// } else if (myTable.getColumnTypes().get(columnName) == "date") {
+				// return java.sql.Types.DATE;
 			} else {
-				throw new SQLException("Not a supported type.");
+				OurLogger.error(this.getClass(), "DataType is not supported.");
+				throw new SQLException("DataType is not supported.");
 			}
 		} catch (Exception e) {
+			OurLogger.error(this.getClass(), "There is no table selected.");
 			throw new SQLException("There is no selected table");
 		}
 	}
@@ -148,6 +154,7 @@ public class OurResultSetMetaData implements ResultSetMetaData {
 		try {
 			return myTable.getTableName();
 		} catch (Exception e) {
+			OurLogger.error(this.getClass(), "There is no table selected.");
 			throw new SQLException("There is no selected table.");
 		}
 	}

@@ -6,6 +6,7 @@ import eg.edu.alexu.csd.oop.db.Database;
 import eg.edu.alexu.csd.oop.db.cs01.factory.SelectQueryFactory;
 import eg.edu.alexu.csd.oop.db.cs01.factory.StructureQueryFactory;
 import eg.edu.alexu.csd.oop.db.cs01.factory.UpdateQueryFactory;
+import eg.edu.alexu.csd.oop.db.cs01.jdbc.OurLogger;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
 import eg.edu.alexu.csd.oop.db.cs01.queries.IQuery;
 
@@ -53,6 +54,7 @@ public class OurSql implements Database {
 		IQuery objectQuery = StructureQueryFactory.getInstance().parse(query);
 //		currentDataBase = StructureQueryFactory.getInstance().getTheMainDataBase();
 		if (objectQuery == null) {
+			OurLogger.error(this.getClass(), "Structure Query Failed , syntax error.");
 			throw new SQLException("Structure Query Failed , syntax error.");
 		}
 		return objectQuery.execute();
@@ -64,6 +66,7 @@ public class OurSql implements Database {
 //		IQuery selectQuery = QueryFactory.getInstance().parseQuery(query);
 		IQuery selectQuery = SelectQueryFactory.getInstance().parse(query);
 		if (selectQuery == null) {
+			OurLogger.error(this.getClass(), "Selection Query Failed , syntax error.");
 			throw new SQLException("Selection Query Failed , syntax error.");
 		}
 		selectQuery.execute();
@@ -75,6 +78,7 @@ public class OurSql implements Database {
 //		IQuery objectQuery = QueryFactory.getInstance().parseQuery(query);
 		IQuery objectQuery = UpdateQueryFactory.getInstance().parse(query);
 		if (objectQuery == null) {
+			OurLogger.error(this.getClass(), "Updating Query  Failed , syntax error.");
 			throw new SQLException("Updating Query  Failed , syntax error.");
 		}
 		objectQuery.execute();

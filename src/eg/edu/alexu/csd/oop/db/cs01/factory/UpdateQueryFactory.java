@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 import eg.edu.alexu.csd.oop.db.cs01.OurSql;
 import eg.edu.alexu.csd.oop.db.cs01.condition.LogicalCondition;
+import eg.edu.alexu.csd.oop.db.cs01.jdbc.OurLogger;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
 import eg.edu.alexu.csd.oop.db.cs01.queries.DeleteFrom;
 import eg.edu.alexu.csd.oop.db.cs01.queries.IQuery;
@@ -68,46 +69,50 @@ public class UpdateQueryFactory extends OurQueryFactory {
 		if (theMatchers.get(0).find()) {// if the query match insert Into Table Columns
 			// And Values.
 			if (OurSql.getInstance().getCurrentDataBase() == null) {
+				OurLogger.error(this.getClass(), "There is no database selected");
 				throw new SQLException("There is no database selected");
 			}
 			String[] columnsArray;
 			String[] valuesArray;
-// group(3) is column names string.
+			// group(3) is column names string.
 			columnsArray = theMatchers.get(0).group(2).split(" ?, ?");
-// group(5) is values of each column string.
+			// group(5) is values of each column string.
 			valuesArray = theMatchers.get(0).group(3).split(" ?, ?");
 			if (columnsArray.length != valuesArray.length) {
-				throw new SQLException("could not prepare statement.");
+				OurLogger.error(this.getClass(), "Could not prepare statement.");
+				throw new SQLException("Could not prepare statement.");
 			}
-// converting array to ArrayList.
+			// converting array to ArrayList.
 			ArrayList<String> columnNames = new ArrayList<String>(Arrays.asList(columnsArray));
-// converting array to ArrayList.
+			// converting array to ArrayList.
 			ArrayList<String> values = new ArrayList<String>(Arrays.asList(valuesArray));
-// group(1) is the name of the table.
-// Table.getInstance(theMatchers.get(0).group(1));
+			// group(1) is the name of the table.
+			// Table.getInstance(theMatchers.get(0).group(1));
 			Table.getInstance(theMatchers.get(0).group(1), OurSql.getInstance().getCurrentDataBase());
 			IQuery insertIntoTableColumnsAndValuesQuery = new InsertInto(columnNames, values);
 			return insertIntoTableColumnsAndValuesQuery;
 		} else if (theMatchers.get(1).find()) {// if the query match insert Into Table Values Only.
 			if (OurSql.getInstance().getCurrentDataBase() == null) {
+				OurLogger.error(this.getClass(), "There is no database selected");
 				throw new SQLException("There is no database selected");
 			}
 			String[] valuesArray;
-// group(2) is a string contains all values for the columns.
+			// group(2) is a string contains all values for the columns.
 			valuesArray = theMatchers.get(1).group(2).split(" ?, ?");
-// converting array to ArrayList.
+			// converting array to ArrayList.
 			ArrayList<String> values = new ArrayList<String>(Arrays.asList(valuesArray));
-// group(1) is the name of the table.
-// Table.getInstance(theMatchers.get(1).group(1));
+			// group(1) is the name of the table.
+			// Table.getInstance(theMatchers.get(1).group(1));
 			Table.getInstance(theMatchers.get(1).group(1), OurSql.getInstance().getCurrentDataBase());
 			IQuery insertIntoTableValuesOnlyQuery = new InsertInto(values);
 			return insertIntoTableValuesOnlyQuery;
 		} else if (theMatchers.get(2).find()) {// update tabel name set c1 = v1, ... where
 			// condition.
 			if (OurSql.getInstance().getCurrentDataBase() == null) {
+				OurLogger.error(this.getClass(), "There is no database selected");
 				throw new SQLException("There is no database selected");
 			}
-//theQuery = theQuery.toLowerCase().replace("where", ",where");
+			// theQuery = theQuery.toLowerCase().replace("where", ",where");
 			if (theQuery.toLowerCase().contains("where")) {
 				String confirmingPatternString = "((?i)\\bUPDATE\\b\\s+)(\\w+)\\s+((?i)\\bSET\\b)\\s+([\\w\\s=,'\"]+)\\s+(((?i)\\bWHERE\\b)(.+))";
 				Pattern confirmingPattern;
@@ -119,13 +124,13 @@ public class UpdateQueryFactory extends OurQueryFactory {
 					String[] sets;
 					ArrayList<String> columnNames = new ArrayList<>();
 					ArrayList<String> values = new ArrayList<>();
-// pattern to split column name from the new value.
+					// pattern to split column name from the new value.
 					String setsPattern = " ?(\\w+) ?= ?(['\"]?([\\w\\s]+)['\"]?)";
-// group(4) is the all of the sets.
+					// group(4) is the all of the sets.
 					sets = confirmingatcher.group(4).split(" ?, ?");
-// compiling sets pattern
+					// compiling sets pattern
 					Pattern p = Pattern.compile(setsPattern);
-// filling ArrayLists columnNames & values.
+					// filling ArrayLists columnNames & values.
 					for (int i = 0; i < sets.length; i++) {
 						Matcher setsMatcher = p.matcher(sets[i]);
 						if (setsMatcher.find()) {
@@ -133,10 +138,10 @@ public class UpdateQueryFactory extends OurQueryFactory {
 							values.add(setsMatcher.group(2));
 						}
 					}
-// group(1) is the table name.
-// Table.getInstance(theMatchers.get(2).group(1));
+					// group(1) is the table name.
+					// Table.getInstance(theMatchers.get(2).group(1));
 					Table.getInstance(confirmingatcher.group(2), OurSql.getInstance().getCurrentDataBase());
-// group(8) is the condition it may equals null.
+					// group(8) is the condition it may equals null.
 					LogicalCondition updateTableSetColumnCondition = new LogicalCondition(confirmingatcher.group(7));
 					IQuery updateTableSetColumnQuery = new UpdateSet(columnNames, values,
 							updateTableSetColumnCondition);
@@ -146,13 +151,13 @@ public class UpdateQueryFactory extends OurQueryFactory {
 				String[] sets;
 				ArrayList<String> columnNames = new ArrayList<>();
 				ArrayList<String> values = new ArrayList<>();
-// pattern to split column name from the new value.
+				// pattern to split column name from the new value.
 				String setsPattern = " ?(\\w+) ?= ?(['\"]?([\\w\\s]+)['\"]?)";
-// group(2) is the all of the sets.
+				// group(2) is the all of the sets.
 				sets = theMatchers.get(2).group(2).split(" ?, ?");
-// compiling sets pattern
+				// compiling sets pattern
 				Pattern p = Pattern.compile(setsPattern);
-// filling ArrayLists columnNames & values.
+				// filling ArrayLists columnNames & values.
 				for (int i = 0; i < sets.length; i++) {
 					Matcher setsMatcher = p.matcher(sets[i]);
 					if (setsMatcher.find()) {
@@ -160,10 +165,10 @@ public class UpdateQueryFactory extends OurQueryFactory {
 						values.add(setsMatcher.group(2));
 					}
 				}
-// group(1) is the table name.
-// Table.getInstance(theMatchers.get(2).group(1));
+				// group(1) is the table name.
+				// Table.getInstance(theMatchers.get(2).group(1));
 				Table.getInstance(theMatchers.get(2).group(1), OurSql.getInstance().getCurrentDataBase());
-// group(8) is the condition it may equals null.
+				// group(8) is the condition it may equals null.
 				LogicalCondition updateTableSetColumnCondition = new LogicalCondition(theMatchers.get(2).group(9));
 				IQuery updateTableSetColumnQuery = new UpdateSet(columnNames, values, updateTableSetColumnCondition);
 				return updateTableSetColumnQuery;
@@ -171,12 +176,13 @@ public class UpdateQueryFactory extends OurQueryFactory {
 
 		} else if (theMatchers.get(3).find()) {// DELETE FROM table_name WHERE condition.
 			if (OurSql.getInstance().getCurrentDataBase() == null) {
+				OurLogger.error(this.getClass(), "There is no database selected");
 				throw new SQLException("There is no database selected");
 			}
-// group(1) is the table name.
-// Table.getInstance(theMatchers.get(3).group(1));
+			// group(1) is the table name.
+			// Table.getInstance(theMatchers.get(3).group(1));
 			Table.getInstance(theMatchers.get(3).group(1), OurSql.getInstance().getCurrentDataBase());
-// group(4) is the condition it may equals null.
+			// group(4) is the condition it may equals null.
 			LogicalCondition deleteFromTableCondition = new LogicalCondition(theMatchers.get(3).group(4));
 			IQuery deleteFromTableQuery = new DeleteFrom(deleteFromTableCondition);
 			return deleteFromTableQuery;

@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 import eg.edu.alexu.csd.oop.db.cs01.OurSql;
 import eg.edu.alexu.csd.oop.db.cs01.condition.LogicalCondition;
+import eg.edu.alexu.csd.oop.db.cs01.jdbc.OurLogger;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
 import eg.edu.alexu.csd.oop.db.cs01.queries.IQuery;
 import eg.edu.alexu.csd.oop.db.cs01.queries.SelectFrom;
@@ -61,6 +62,7 @@ public class SelectQueryFactory extends OurQueryFactory {
 		// Creating the right query.
 		if (theMatchers.get(0).find()) {// select * from tabel_name where condition.
 			if (OurSql.getInstance().getCurrentDataBase() == null) {
+				OurLogger.error(this.getClass(), "There is no database selected");
 				throw new SQLException("There is no database selected");
 			}
 			// group(1) is the name of the table.
@@ -73,6 +75,7 @@ public class SelectQueryFactory extends OurQueryFactory {
 		} else if (theMatchers.get(1).find()) {// select column from tabel_name where
 												// condition.
 			if (OurSql.getInstance().getCurrentDataBase() == null) {
+				OurLogger.error(this.getClass(), "There is no database selected");
 				throw new SQLException("There is no database selected");
 			}
 			// group(2) is the table name.

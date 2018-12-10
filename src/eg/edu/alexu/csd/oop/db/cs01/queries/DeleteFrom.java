@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import eg.edu.alexu.csd.oop.db.cs01.condition.LogicalCondition;
 import eg.edu.alexu.csd.oop.db.cs01.condition.LogicalSolver;
+import eg.edu.alexu.csd.oop.db.cs01.jdbc.OurLogger;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Row;
 import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
 
@@ -19,6 +20,7 @@ public class DeleteFrom extends OurQuery {
 	@Override
 	public boolean execute() throws SQLException {
 		if (Table.getInstance() == null || Table.getInstance().getColumnNamesAsGiven().size() == 0) {
+			OurLogger.error(this.getClass(), "Table not found.");
 			throw new SQLException("Table not found.");
 		}
 		/**
@@ -31,6 +33,7 @@ public class DeleteFrom extends OurQuery {
 		File tableFile = new File(pathTable+".Xml");
 		File DTDFile = new File(pathTable+".dtd");
 		if(!tableFile.exists() || !DTDFile.exists()) {
+			OurLogger.error(this.getClass(), "Table not found.");
 			throw new SQLException("Table not found.");
 		}
 		
