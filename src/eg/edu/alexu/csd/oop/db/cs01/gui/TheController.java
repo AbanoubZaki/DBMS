@@ -45,12 +45,13 @@ public class TheController implements Initializable {
 		errorLable.setText("");
 		if (entreQuery.getText().equals("")) {
 			errorLable.setTextFill(Color.RED);
-			errorLable.setText("Please entre a query.");
+			errorLable.setText("Please enter a query.");
+			entreQuery.setText("");
 		} else {
 			try {
 				if (!pathDone) {
 					OurJDBC.getInstance().setPath(entreQuery.getText());
-					entreQuery.setPromptText("Enter URL");
+					entreQuery.setPromptText("Enter a URL");
 					entreQuery.setText("");
 					pathDone = true;
 					return;
@@ -61,11 +62,13 @@ public class TheController implements Initializable {
 					entreQuery.setText("");
 				} else {
 					errorLable.setText(OurJDBC.getInstance().run(entreQuery.getText()));
+					entreQuery.setText("");
 					buildTable(OurJDBC.getInstance().getResultSet());
 				}
 
 			} catch (SQLException e) {
 				errorLable.setTextFill(Color.RED);
+				entreQuery.setText("");
 				errorLable.setText(e.getMessage());
 			}
 
@@ -114,8 +117,7 @@ public class TheController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
-		entreQuery.setPromptText("Enter The Path Of Our Database");
+		entreQuery.setPromptText("Enter the path of your workspace.");
 		pathDone = false;
 	}
 

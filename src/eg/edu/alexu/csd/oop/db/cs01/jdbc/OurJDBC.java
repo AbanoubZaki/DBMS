@@ -29,7 +29,8 @@ public class OurJDBC {
 			Properties info = new Properties();
 			info.put("path", new File(path).getAbsoluteFile());
 			connection = OurDriver.getInstance().connect(commnd, info);
-			return "connection is created";
+			OurLogger.info(this.getClass(), "Connection is created.");
+			return "Connection is created.";
 		} else {
 			Statement statment;
 			try {
@@ -42,9 +43,11 @@ public class OurJDBC {
 				resultSet = statment.getResultSet();
 				if (statment.getUpdateCount() == -1) {
 					if (!commnd.toLowerCase().contains("select ")) {
+						OurLogger.info(this.getClass(), "You have made changes to the databases.");
 						return "You have made changes to the databases.";
 					}
 				} else {
+					OurLogger.info(this.getClass(), "You have made changes to " + statment.getUpdateCount() + " rows.");
 					return "You have made changes to " + statment.getUpdateCount() + " rows.";
 				}
 			}

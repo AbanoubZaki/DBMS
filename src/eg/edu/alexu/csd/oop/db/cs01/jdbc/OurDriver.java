@@ -33,9 +33,9 @@ public class OurDriver implements Driver {
 	public boolean acceptsURL(String url) throws SQLException {
 		if (url.equals("jdbc:xmldb://localhost")) {
 			return true;
-		} else if (url.equals("url2") || url.equals("url3")) {
-			OurLogger.warn(this.getClass(), "The database files type is not supported.");
-			throw new SQLException("The database files type is not supported.");
+		} else if (url.equals("jdbc:jsondb://localhost") || url.equals("jdbc:txtdb://localhost")) {
+			OurLogger.warn(this.getClass(), "This URL is not supported.");
+			throw new SQLException("This URL is not supported.");
 		}
 		return false;
 	}
