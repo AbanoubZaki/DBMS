@@ -48,21 +48,19 @@ public class TheController implements Initializable {
 		if (entreQuery.getText().equals("")) {
 			errorLable.setTextFill(Color.RED);
 			errorLable.setText("Please enter a query.");
-			entreQuery.setText("");
 		} else {
 			try {
 				if (!pathDone) {
 					if (new File(entreQuery.getText()).getAbsoluteFile().isDirectory()) {
 						OurJDBC.getInstance().setPath(entreQuery.getText());
 						entreQuery.setPromptText("Enter a URL");
-						entreQuery.setText("");
 						pathDone = true;
+						entreQuery.setText("");
 						return;
 					}
 					OurLogger.info(this.getClass(), "Path is invalid.");
 					errorLable.setTextFill(Color.RED);
 					errorLable.setText("Path is invalid.");
-					entreQuery.setText("");
 					return;
 				} else if (entreQuery.getText().toLowerCase().equals("close")) {
 					pathDone = false;
@@ -78,17 +76,14 @@ public class TheController implements Initializable {
 					if (entreQuery.getText().contains("jdbc") && OurDriver.getInstance().acceptsURL(entreQuery.getText())) {
 						entreQuery.setPromptText("Enter your Query");
 						errorLable.setText(OurJDBC.getInstance().run(entreQuery.getText()));
-						entreQuery.setText("");
 					} else {
 						errorLable.setTextFill(Color.CADETBLUE);
 						errorLable.setText(OurJDBC.getInstance().run(entreQuery.getText()));
-						entreQuery.setText("");
 						buildTable(OurJDBC.getInstance().getResultSet());
 					}
 				}
 			} catch (SQLException e) {
 				errorLable.setTextFill(Color.RED);
-				entreQuery.setText("");
 				errorLable.setText(e.getMessage());
 			}
 
@@ -97,11 +92,11 @@ public class TheController implements Initializable {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	void buildTable(ResultSet resultSet) throws SQLException {
+		fillTable.getItems().clear();
+		fillTable.getColumns().clear();
 		if (resultSet == null) {
 			return;
 		}
-		fillTable.getItems().clear();
-		fillTable.getColumns().clear();
 		ObservableList<Object> data = FXCollections.observableArrayList();
 		for (int i = 0; i < resultSet.getMetaData().getColumnCount(); i++) {
 			// We are using non property style for making dynamic table

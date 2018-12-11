@@ -293,3 +293,47 @@
 [INFO ] 2018-12-11 20:42:43.825 OurJDBC - Connection is created.
 [INFO ] 2018-12-11 20:42:46.838 TheController - Connection is closed.
 [INFO ] 2018-12-11 20:42:51.649 OurJDBC - Connection is created.
+[INFO ] 2018-12-11 20:48:18.292 OurJDBC - Connection is created.
+[INFO ] 2018-12-11 20:48:28.333 OurJDBC - You have made changes to the databases.
+[INFO ] 2018-12-11 20:48:56.386 OurJDBC - Selection is made successfully.
+[INFO ] 2018-12-11 20:51:46.706 OurJDBC - You have made changes to 1 rows.
+[INFO ] 2018-12-11 20:52:15.713 OurJDBC - Selection is made successfully.
+[INFO ] 2018-12-11 20:54:25.873 OurJDBC - You have made changes to 6 rows.
+[WARN ] 2018-12-11 20:54:54.628 SelectFrom - Table is empty.
+[WARN ] 2018-12-11 20:54:57.165 SelectFrom - Table is empty.
+[WARN ] 2018-12-11 20:55:01.776 SelectFrom - Table is empty.
+[WARN ] 2018-12-11 20:55:02.264 SelectFrom - Table is empty.
+[WARN ] 2018-12-11 20:55:02.630 SelectFrom - Table is empty.
+[WARN ] 2018-12-11 20:55:03.051 SelectFrom - Table is empty.
+[WARN ] 2018-12-11 20:55:03.498 SelectFrom - Table is empty.
+[WARN ] 2018-12-11 20:55:03.980 SelectFrom - Table is empty.
+[WARN ] 2018-12-11 20:55:04.190 SelectFrom - Table is empty.
+[WARN ] 2018-12-11 20:55:04.373 SelectFrom - Table is empty.
+[WARN ] 2018-12-11 20:55:05.030 SelectFrom - Table is empty.
+[WARN ] 2018-12-11 20:55:05.234 SelectFrom - Table is empty.
+[WARN ] 2018-12-11 20:55:05.370 SelectFrom - Table is empty.
+[WARN ] 2018-12-11 20:55:05.513 SelectFrom - Table is empty.
+[WARN ] 2018-12-11 20:55:05.640 SelectFrom - Table is empty.
+[WARN ] 2018-12-11 20:55:05.811 SelectFrom - Table is empty.
+[WARN ] 2018-12-11 20:55:05.953 SelectFrom - Table is empty.
+[INFO ] 2018-12-11 20:56:26.052 OurJDBC - Connection is created.
+[ERROR] 2018-12-11 20:56:33.395 SelectQueryFactory - There is no database selected
+[INFO ] 2018-12-11 20:56:40.566 OurJDBC - You have made changes to the databases.
+[INFO ] 2018-12-11 20:56:44.933 OurJDBC - You have made changes to the databases.
+[INFO ] 2018-12-11 20:56:51.901 OurJDBC - Selection is made successfully.
+[INFO ] 2018-12-11 20:57:28.951 OurJDBC - You have made changes to 1 rows.
+[INFO ] 2018-12-11 20:57:38.626 OurJDBC - Selection is made successfully.
+[INFO ] 2018-12-11 20:57:52.576 OurJDBC - You have made changes to 6 rows.
+[WARN ] 2018-12-11 20:58:22.696 SelectFrom - Table is empty.
+[WARN ] 2018-12-11 20:58:25.159 SelectFrom - Table is empty.
+[WARN ] 2018-12-11 20:58:35.100 SelectFrom - Table is empty.
+[WARN ] 2018-12-11 20:58:35.249 SelectFrom - Table is empty.
+[WARN ] 2018-12-11 20:58:35.406 SelectFrom - Table is empty.
+[WARN ] 2018-12-11 20:58:35.620 SelectFrom - Table is empty.
+[WARN ] 2018-12-11 20:58:36.089 SelectFrom - Table is empty.
+[WARN ] 2018-12-11 20:58:36.469 SelectFrom - Table is empty.
+[WARN ] 2018-12-11 20:58:36.794 SelectFrom - Table is empty.
+[WARN ] 2018-12-11 20:58:37.650 SelectFrom - Table is empty.
+[INFO ] 2018-12-11 20:58:57.323 OurJDBC - You have made changes to 1 rows.
+[INFO ] 2018-12-11 20:59:04.988 OurJDBC - Selection is made successfully.
+[INFO ] 2018-12-11 20:59:45.574 TheController - Connection is closed.
