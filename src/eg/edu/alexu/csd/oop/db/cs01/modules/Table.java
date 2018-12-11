@@ -274,7 +274,6 @@ public class Table {
 			if(table!=null&&!table.getColumnTypes().isEmpty()&&!table.getRows().isEmpty()) {
 				FileManager.getInstance().writeTable(table);
 				System.out.println("Done ;)");
-				OurLogger.info(this.getClass(), "Buffered data is saved.");
 			}
 		}
 	}

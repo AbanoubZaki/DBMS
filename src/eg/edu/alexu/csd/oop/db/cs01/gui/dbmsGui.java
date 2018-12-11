@@ -1,5 +1,7 @@
 package eg.edu.alexu.csd.oop.db.cs01.gui;
 
+import eg.edu.alexu.csd.oop.db.cs01.jdbc.OurLogger;
+import eg.edu.alexu.csd.oop.db.cs01.modules.Table;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,6 +16,9 @@ public class dbmsGui extends Application {
 		Scene scene = new Scene(root);
 		primaryStage.setTitle("Manage Your Data Bases :D");
 		primaryStage.setScene(scene);
+		primaryStage.setOnCloseRequest(event ->{
+			OurLogger.info(Table.class, "Buffered data is saved.");
+		});
 		primaryStage.show();
 	}
 	
