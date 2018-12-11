@@ -18,6 +18,9 @@ public class dbmsGui extends Application {
 	}
 	
 	public static void main(String[] args) {
+		
+//        PropertyConfigurator.configure("log4j.properties");
+
 		launch(args);
 	}
 }

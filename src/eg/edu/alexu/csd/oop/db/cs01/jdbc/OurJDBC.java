@@ -46,6 +46,9 @@ public class OurJDBC {
 					if (!commnd.toLowerCase().contains("select ")) {
 						OurLogger.info(this.getClass(), "You have made changes to the databases.");
 						return "You have made changes to the databases.";
+					} else {
+						OurLogger.info(this.getClass(), "Selection is made successfully.");
+						return "Selection is made successfully.";
 					}
 				} else {
 					OurLogger.info(this.getClass(), "You have made changes to " + statment.getUpdateCount() + " rows.");

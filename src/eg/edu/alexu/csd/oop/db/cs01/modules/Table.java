@@ -6,6 +6,7 @@ import java.util.Map;
 
 import eg.edu.alexu.csd.oop.db.cs01.dataChecker;
 import eg.edu.alexu.csd.oop.db.cs01.fileManager.FileManager;
+import eg.edu.alexu.csd.oop.db.cs01.jdbc.OurLogger;
 
 public class Table {
 
@@ -273,6 +274,7 @@ public class Table {
 			if(table!=null&&!table.getColumnTypes().isEmpty()&&!table.getRows().isEmpty()) {
 				FileManager.getInstance().writeTable(table);
 				System.out.println("Done ;)");
+				OurLogger.info(this.getClass(), "Buffered data is saved.");
 			}
 		}
 	}

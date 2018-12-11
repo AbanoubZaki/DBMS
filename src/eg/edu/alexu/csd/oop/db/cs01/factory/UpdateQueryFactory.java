@@ -188,7 +188,7 @@ public class UpdateQueryFactory extends OurQueryFactory {
 			return deleteFromTableQuery;
 		}
 		setTheMainDataBase("");
-		OurSql.getInstance().setCurrentDataBase("");
+//		OurSql.getInstance().setCurrentDataBase("");
 		return null;
 	}
 

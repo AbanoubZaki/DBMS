@@ -90,7 +90,7 @@ public class SelectQueryFactory extends OurQueryFactory {
 			return selectColumnFromTableQuery;
 		}
 		setTheMainDataBase("");
-		OurSql.getInstance().setCurrentDataBase("");
+//		OurSql.getInstance().setCurrentDataBase("");
 		return null;
 	}
 

@@ -1,0 +1,284 @@
+[INFO ] 2018-12-11 18:29:33.143 mainJDBC - ok
+[ERROR] 2018-12-11 18:30:08.008 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:30:08.027 InsertInto - Table not found.
+[ERROR] 2018-12-11 18:30:08.510 UpdateSet - Table not found.
+[ERROR] 2018-12-11 18:30:08.737 UpdateSet - Table not found.
+[ERROR] 2018-12-11 18:30:08.770 FileManager - Failed to create table, Table already exists.
+[ERROR] 2018-12-11 18:30:08.783 OurSql - Structure Query Failed , syntax error.
+[ERROR] 2018-12-11 18:30:08.911 InsertInto - Column names not found.
+[ERROR] 2018-12-11 18:32:14.645 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:32:14.663 InsertInto - Table not found.
+[ERROR] 2018-12-11 18:32:15.090 UpdateSet - Table not found.
+[ERROR] 2018-12-11 18:32:15.295 UpdateSet - Table not found.
+[ERROR] 2018-12-11 18:32:15.331 FileManager - Failed to create table, Table already exists.
+[ERROR] 2018-12-11 18:32:15.345 OurSql - Structure Query Failed , syntax error.
+[ERROR] 2018-12-11 18:32:15.475 InsertInto - Column names not found.
+[INFO ] 2018-12-11 18:33:45.282 OurJDBC - Connection is created.
+[INFO ] 2018-12-11 18:34:12.788 OurJDBC - You have made changes to the databases.
+[INFO ] 2018-12-11 18:35:08.202 TheController - Connection is closed.
+[WARN ] 2018-12-11 18:35:24.974 OurDriver - This URL is not supported.
+[WARN ] 2018-12-11 18:41:33.549 OurDriver - This URL is not supported.
+[INFO ] 2018-12-11 18:42:02.215 OurJDBC - Connection is created.
+[INFO ] 2018-12-11 18:42:11.941 OurJDBC - You have made changes to the databases.
+[ERROR] 2018-12-11 18:43:07.494 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:43:20.780 SelectFrom - Table not found.
+[ERROR] 2018-12-11 18:45:32.407 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:45:32.413 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:45:32.422 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:45:32.433 UpdateSet - Datatype mismatch happened.
+[ERROR] 2018-12-11 18:45:32.451 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:45:32.459 InsertInto - Datatype mismatch happened.
+[ERROR] 2018-12-11 18:45:32.468 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:45:32.882 UpdateSet - Table not found.
+[ERROR] 2018-12-11 18:45:32.894 StructureQueryFactory - There is no database selected
+[ERROR] 2018-12-11 18:45:33.011 UpdateSet - Table not found.
+[ERROR] 2018-12-11 18:45:33.045 FileManager - Failed to create table, Table already exists.
+[ERROR] 2018-12-11 18:45:33.056 OurSql - Structure Query Failed , syntax error.
+[ERROR] 2018-12-11 18:45:33.210 InsertInto - Column names not found.
+[ERROR] 2018-12-11 18:45:33.327 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:45:33.335 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:45:33.344 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:45:33.370 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:45:33.384 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:45:33.386 InsertInto - Table not found.
+[ERROR] 2018-12-11 18:45:33.445 UpdateSet - Table not found.
+[ERROR] 2018-12-11 18:45:33.601 UpdateSet - Table not found.
+[ERROR] 2018-12-11 18:45:33.633 FileManager - Failed to create table, Table already exists.
+[ERROR] 2018-12-11 18:45:33.640 OurSql - Structure Query Failed , syntax error.
+[ERROR] 2018-12-11 18:45:33.777 InsertInto - Column names not found.
+[ERROR] 2018-12-11 18:46:17.976 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:46:17.984 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:46:17.993 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:46:18.003 UpdateSet - Datatype mismatch happened.
+[ERROR] 2018-12-11 18:46:18.020 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:46:18.028 InsertInto - Datatype mismatch happened.
+[ERROR] 2018-12-11 18:46:18.036 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:46:18.563 UpdateSet - Table not found.
+[ERROR] 2018-12-11 18:46:18.573 StructureQueryFactory - There is no database selected
+[ERROR] 2018-12-11 18:46:18.760 UpdateSet - Table not found.
+[ERROR] 2018-12-11 18:46:18.790 FileManager - Failed to create table, Table already exists.
+[ERROR] 2018-12-11 18:46:18.803 OurSql - Structure Query Failed , syntax error.
+[ERROR] 2018-12-11 18:46:18.973 InsertInto - Column names not found.
+[ERROR] 2018-12-11 18:46:19.019 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:46:19.024 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:46:19.030 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:46:19.047 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:46:19.054 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:46:19.055 InsertInto - Table not found.
+[ERROR] 2018-12-11 18:46:19.112 UpdateSet - Table not found.
+[ERROR] 2018-12-11 18:46:19.279 UpdateSet - Table not found.
+[ERROR] 2018-12-11 18:46:19.310 FileManager - Failed to create table, Table already exists.
+[ERROR] 2018-12-11 18:46:19.318 OurSql - Structure Query Failed , syntax error.
+[ERROR] 2018-12-11 18:46:19.446 InsertInto - Column names not found.
+[ERROR] 2018-12-11 18:47:24.171 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:47:24.177 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:47:24.187 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:47:24.198 UpdateSet - Datatype mismatch happened.
+[ERROR] 2018-12-11 18:47:24.217 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:47:24.226 InsertInto - Datatype mismatch happened.
+[ERROR] 2018-12-11 18:47:24.235 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:47:24.651 UpdateSet - Table not found.
+[ERROR] 2018-12-11 18:47:24.663 StructureQueryFactory - There is no database selected
+[ERROR] 2018-12-11 18:47:24.772 UpdateSet - Table not found.
+[ERROR] 2018-12-11 18:47:24.803 FileManager - Failed to create table, Table already exists.
+[ERROR] 2018-12-11 18:47:24.816 OurSql - Structure Query Failed , syntax error.
+[ERROR] 2018-12-11 18:47:25.080 InsertInto - Column names not found.
+[ERROR] 2018-12-11 18:47:25.121 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:47:25.126 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:47:25.131 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:47:25.146 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:47:25.151 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:47:25.152 InsertInto - Table not found.
+[ERROR] 2018-12-11 18:47:25.201 UpdateSet - Table not found.
+[ERROR] 2018-12-11 18:47:25.364 UpdateSet - Table not found.
+[ERROR] 2018-12-11 18:47:25.396 FileManager - Failed to create table, Table already exists.
+[ERROR] 2018-12-11 18:47:25.403 OurSql - Structure Query Failed , syntax error.
+[ERROR] 2018-12-11 18:47:25.535 InsertInto - Column names not found.
+[ERROR] 2018-12-11 18:49:06.975 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:49:06.980 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:49:06.987 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:49:06.997 UpdateSet - Datatype mismatch happened.
+[ERROR] 2018-12-11 18:49:07.017 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:49:07.027 InsertInto - Datatype mismatch happened.
+[ERROR] 2018-12-11 18:49:07.035 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:49:07.465 UpdateSet - Table not found.
+[ERROR] 2018-12-11 18:49:07.475 StructureQueryFactory - There is no database selected
+[ERROR] 2018-12-11 18:49:07.580 UpdateSet - Table not found.
+[ERROR] 2018-12-11 18:49:07.613 FileManager - Failed to create table, Table already exists.
+[ERROR] 2018-12-11 18:49:07.625 OurSql - Structure Query Failed , syntax error.
+[ERROR] 2018-12-11 18:49:07.747 InsertInto - Column names not found.
+[ERROR] 2018-12-11 18:49:07.789 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:49:07.793 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:49:07.799 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:49:07.814 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:49:07.819 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:49:07.820 InsertInto - Table not found.
+[ERROR] 2018-12-11 18:49:07.880 UpdateSet - Table not found.
+[ERROR] 2018-12-11 18:49:08.035 UpdateSet - Table not found.
+[ERROR] 2018-12-11 18:49:08.066 FileManager - Failed to create table, Table already exists.
+[ERROR] 2018-12-11 18:49:08.073 OurSql - Structure Query Failed , syntax error.
+[ERROR] 2018-12-11 18:49:08.201 InsertInto - Column names not found.
+[ERROR] 2018-12-11 18:49:48.382 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:49:48.390 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:49:48.399 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:49:48.408 UpdateSet - Datatype mismatch happened.
+[ERROR] 2018-12-11 18:49:48.428 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:49:48.438 InsertInto - Datatype mismatch happened.
+[ERROR] 2018-12-11 18:49:48.446 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:49:48.891 UpdateSet - Table not found.
+[ERROR] 2018-12-11 18:49:48.907 StructureQueryFactory - There is no database selected
+[ERROR] 2018-12-11 18:49:49.070 UpdateSet - Table not found.
+[ERROR] 2018-12-11 18:49:49.100 FileManager - Failed to create table, Table already exists.
+[ERROR] 2018-12-11 18:49:49.121 OurSql - Structure Query Failed , syntax error.
+[ERROR] 2018-12-11 18:49:49.280 InsertInto - Column names not found.
+[ERROR] 2018-12-11 18:49:49.324 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:49:49.329 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:49:49.334 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:49:49.366 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:49:49.373 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:49:49.375 InsertInto - Table not found.
+[ERROR] 2018-12-11 18:49:49.460 UpdateSet - Table not found.
+[ERROR] 2018-12-11 18:49:49.606 UpdateSet - Table not found.
+[ERROR] 2018-12-11 18:49:49.642 FileManager - Failed to create table, Table already exists.
+[ERROR] 2018-12-11 18:49:49.650 OurSql - Structure Query Failed , syntax error.
+[ERROR] 2018-12-11 18:49:49.776 InsertInto - Column names not found.
+[ERROR] 2018-12-11 18:50:29.740 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:50:29.747 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:50:29.756 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:50:29.766 UpdateSet - Datatype mismatch happened.
+[ERROR] 2018-12-11 18:50:29.785 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:50:29.792 InsertInto - Datatype mismatch happened.
+[ERROR] 2018-12-11 18:50:29.801 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:50:30.216 UpdateSet - Table not found.
+[ERROR] 2018-12-11 18:50:30.228 StructureQueryFactory - There is no database selected
+[ERROR] 2018-12-11 18:50:30.344 UpdateSet - Table not found.
+[ERROR] 2018-12-11 18:50:30.374 FileManager - Failed to create table, Table already exists.
+[ERROR] 2018-12-11 18:50:30.387 OurSql - Structure Query Failed , syntax error.
+[ERROR] 2018-12-11 18:50:30.512 InsertInto - Column names not found.
+[ERROR] 2018-12-11 18:50:30.554 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:50:30.558 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:50:30.564 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:50:30.579 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:50:30.585 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:50:30.586 InsertInto - Table not found.
+[ERROR] 2018-12-11 18:50:30.634 UpdateSet - Table not found.
+[ERROR] 2018-12-11 18:50:30.806 UpdateSet - Table not found.
+[ERROR] 2018-12-11 18:50:30.848 FileManager - Failed to create table, Table already exists.
+[ERROR] 2018-12-11 18:50:30.856 OurSql - Structure Query Failed , syntax error.
+[ERROR] 2018-12-11 18:50:31.003 InsertInto - Column names not found.
+[INFO ] 2018-12-11 18:51:21.604 OurJDBC - Connection is created.
+[INFO ] 2018-12-11 18:51:35.374 OurJDBC - You have made changes to the databases.
+[ERROR] 2018-12-11 18:51:50.887 OurSql - Structure Query Failed , syntax error.
+[ERROR] 2018-12-11 18:51:58.794 SelectFrom - Table not found.
+[INFO ] 2018-12-11 18:52:12.203 OurJDBC - You have made changes to the databases.
+[ERROR] 2018-12-11 18:52:21.466 SelectFrom - Table not found.
+[INFO ] 2018-12-11 18:52:30.347 OurJDBC - You have made changes to the databases.
+[ERROR] 2018-12-11 18:52:43.865 OurSql - Selection Query Failed , syntax error.
+[ERROR] 2018-12-11 18:56:24.798 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:56:24.804 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:56:24.812 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:56:24.821 UpdateSet - Datatype mismatch happened.
+[ERROR] 2018-12-11 18:56:24.840 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:56:24.848 InsertInto - Datatype mismatch happened.
+[ERROR] 2018-12-11 18:56:24.858 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:56:25.259 UpdateSet - Table not found.
+[ERROR] 2018-12-11 18:56:25.273 StructureQueryFactory - There is no database selected
+[ERROR] 2018-12-11 18:56:25.384 UpdateSet - Table not found.
+[ERROR] 2018-12-11 18:56:25.428 FileManager - Failed to create table, Table already exists.
+[ERROR] 2018-12-11 18:56:25.446 OurSql - Structure Query Failed , syntax error.
+[ERROR] 2018-12-11 18:56:25.548 InsertInto - Column names not found.
+[ERROR] 2018-12-11 18:56:25.588 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:56:25.593 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:56:25.598 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:56:25.613 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:56:25.618 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 18:56:25.620 InsertInto - Table not found.
+[ERROR] 2018-12-11 18:56:25.675 UpdateSet - Table not found.
+[ERROR] 2018-12-11 18:56:25.815 UpdateSet - Table not found.
+[ERROR] 2018-12-11 18:56:25.846 FileManager - Failed to create table, Table already exists.
+[ERROR] 2018-12-11 18:56:25.854 OurSql - Structure Query Failed , syntax error.
+[ERROR] 2018-12-11 18:56:25.989 InsertInto - Column names not found.
+[ERROR] 2018-12-11 19:05:34.271 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 19:05:34.288 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 19:05:34.297 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 19:05:34.308 UpdateSet - Datatype mismatch happened.
+[ERROR] 2018-12-11 19:05:34.326 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 19:05:34.335 InsertInto - Datatype mismatch happened.
+[ERROR] 2018-12-11 19:05:34.345 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 19:05:34.792 UpdateSet - Table not found.
+[ERROR] 2018-12-11 19:05:34.806 StructureQueryFactory - There is no database selected
+[ERROR] 2018-12-11 19:05:34.921 UpdateSet - Table not found.
+[ERROR] 2018-12-11 19:05:34.957 FileManager - Failed to create table, Table already exists.
+[ERROR] 2018-12-11 19:05:34.971 OurSql - Structure Query Failed , syntax error.
+[ERROR] 2018-12-11 19:05:35.100 InsertInto - Column names not found.
+[ERROR] 2018-12-11 19:05:35.152 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 19:05:35.158 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 19:05:35.164 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 19:05:35.191 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 19:05:35.200 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 19:05:35.201 InsertInto - Table not found.
+[ERROR] 2018-12-11 19:05:35.256 UpdateSet - Table not found.
+[ERROR] 2018-12-11 19:05:35.428 UpdateSet - Table not found.
+[ERROR] 2018-12-11 19:05:35.469 FileManager - Failed to create table, Table already exists.
+[ERROR] 2018-12-11 19:05:35.477 OurSql - Structure Query Failed , syntax error.
+[ERROR] 2018-12-11 19:05:35.610 InsertInto - Column names not found.
+[ERROR] 2018-12-11 19:07:38.458 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 19:07:38.472 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 19:07:38.481 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 19:07:38.494 UpdateSet - Datatype mismatch happened.
+[ERROR] 2018-12-11 19:07:38.518 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 19:07:38.527 InsertInto - Datatype mismatch happened.
+[ERROR] 2018-12-11 19:07:38.534 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 19:07:38.935 UpdateSet - Table not found.
+[ERROR] 2018-12-11 19:07:38.947 StructureQueryFactory - There is no database selected
+[ERROR] 2018-12-11 19:07:39.057 UpdateSet - Table not found.
+[ERROR] 2018-12-11 19:07:39.087 FileManager - Failed to create table, Table already exists.
+[ERROR] 2018-12-11 19:07:39.098 OurSql - Structure Query Failed , syntax error.
+[ERROR] 2018-12-11 19:07:39.266 InsertInto - Column names not found.
+[ERROR] 2018-12-11 19:07:39.310 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 19:07:39.315 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 19:07:39.321 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 19:07:39.335 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 19:07:39.341 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 19:07:39.342 InsertInto - Table not found.
+[ERROR] 2018-12-11 19:07:39.401 UpdateSet - Table not found.
+[ERROR] 2018-12-11 19:07:39.539 UpdateSet - Table not found.
+[ERROR] 2018-12-11 19:07:39.571 FileManager - Failed to create table, Table already exists.
+[ERROR] 2018-12-11 19:07:39.577 OurSql - Structure Query Failed , syntax error.
+[ERROR] 2018-12-11 19:07:39.706 InsertInto - Column names not found.
+[ERROR] 2018-12-11 19:09:23.839 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 19:09:23.843 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 19:09:23.853 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 19:09:23.864 UpdateSet - Datatype mismatch happened.
+[ERROR] 2018-12-11 19:09:23.883 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 19:09:23.892 InsertInto - Datatype mismatch happened.
+[ERROR] 2018-12-11 19:09:23.900 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 19:09:24.317 UpdateSet - Table not found.
+[ERROR] 2018-12-11 19:09:24.329 StructureQueryFactory - There is no database selected
+[ERROR] 2018-12-11 19:09:24.439 UpdateSet - Table not found.
+[ERROR] 2018-12-11 19:09:24.484 FileManager - Failed to create table, Table already exists.
+[ERROR] 2018-12-11 19:09:24.494 OurSql - Structure Query Failed , syntax error.
+[ERROR] 2018-12-11 19:09:24.609 InsertInto - Column names not found.
+[ERROR] 2018-12-11 19:09:24.648 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 19:09:24.654 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 19:09:24.659 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 19:09:24.674 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 19:09:24.679 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 19:09:24.681 InsertInto - Table not found.
+[ERROR] 2018-12-11 19:09:24.737 UpdateSet - Table not found.
+[ERROR] 2018-12-11 19:09:24.893 UpdateSet - Table not found.
+[ERROR] 2018-12-11 19:09:24.925 FileManager - Failed to create table, Table already exists.
+[ERROR] 2018-12-11 19:09:24.934 OurSql - Structure Query Failed , syntax error.
+[ERROR] 2018-12-11 19:09:25.083 InsertInto - Column names not found.
+[ERROR] 2018-12-11 19:10:24.546 OurDriver - Wrong URL has been entered.
+[INFO ] 2018-12-11 19:10:29.172 OurJDBC - Connection is created.
+[INFO ] 2018-12-11 19:10:35.128 OurJDBC - You have made changes to the databases.
+[INFO ] 2018-12-11 19:16:13.307 TheController - Path is invalid.
+[ERROR] 2018-12-11 19:16:19.686 OurDriver - Wrong URL has been entered.
+[ERROR] 2018-12-11 19:16:34.581 OurDriver - Wrong URL has been entered.
+[WARN ] 2018-12-11 19:17:07.894 OurDriver - This URL is not supported.
+[WARN ] 2018-12-11 19:17:28.215 OurDriver - This URL is not supported.
+[INFO ] 2018-12-11 19:17:35.188 OurJDBC - Connection is created.
+[ERROR] 2018-12-11 19:17:50.286 OurSql - Structure Query Failed , syntax error.
+[INFO ] 2018-12-11 19:17:58.927 OurJDBC - You have made changes to the databases.
+[INFO ] 2018-12-11 19:18:05.069 OurJDBC - Selection is made successfully.
