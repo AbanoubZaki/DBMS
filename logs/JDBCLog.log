@@ -393,3 +393,48 @@
 [ERROR] 2018-12-11 22:29:52.415 FileManager - Failed to create table, Table already exists.
 [ERROR] 2018-12-11 22:29:52.431 OurSql - Structure Query Failed , syntax error.
 [ERROR] 2018-12-11 22:29:52.634 InsertInto - Column names not found.
+[ERROR] 2018-12-11 22:39:25.349 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 22:39:25.364 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 22:39:25.364 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 22:39:25.380 UpdateSet - Datatype mismatch happened.
+[ERROR] 2018-12-11 22:39:25.396 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 22:39:25.411 InsertInto - Datatype mismatch happened.
+[ERROR] 2018-12-11 22:39:25.427 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 22:39:25.895 UpdateSet - Table not found.
+[ERROR] 2018-12-11 22:39:25.911 StructureQueryFactory - There is no database selected
+[ERROR] 2018-12-11 22:39:26.052 UpdateSet - Table not found.
+[ERROR] 2018-12-11 22:39:26.098 FileManager - Failed to create table, Table already exists.
+[ERROR] 2018-12-11 22:39:26.102 OurSql - Structure Query Failed , syntax error.
+[ERROR] 2018-12-11 22:39:26.227 InsertInto - Column names not found.
+[ERROR] 2018-12-11 22:39:26.274 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 22:39:26.289 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 22:39:26.289 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 22:39:26.305 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 22:39:26.305 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 22:39:26.305 InsertInto - Table not found.
+[ERROR] 2018-12-11 22:39:26.368 UpdateSet - Table not found.
+[ERROR] 2018-12-11 22:39:26.524 UpdateSet - Table not found.
+[ERROR] 2018-12-11 22:39:26.571 FileManager - Failed to create table, Table already exists.
+[ERROR] 2018-12-11 22:39:26.571 OurSql - Structure Query Failed , syntax error.
+[ERROR] 2018-12-11 22:39:26.774 InsertInto - Column names not found.
+[INFO ] 2018-12-11 22:40:13.898 OurJDBC - Connection is created.
+[INFO ] 2018-12-11 22:40:20.891 OurJDBC - You have made changes to the databases.
+[ERROR] 2018-12-11 22:40:29.268 OurSql - Selection Query Failed , syntax error.
+[INFO ] 2018-12-11 22:40:32.256 OurJDBC - Selection is made successfully.
+[INFO ] 2018-12-11 22:40:42.790 OurJDBC - You have made changes to 1 rows.
+[INFO ] 2018-12-11 22:57:13.943 OurJDBC - Connection is created.
+[INFO ] 2018-12-11 22:57:33.103 OurJDBC - You have made changes to the databases.
+[INFO ] 2018-12-11 22:57:38.799 OurJDBC - Selection is made successfully.
+[INFO ] 2018-12-11 22:57:44.607 OurJDBC - You have made changes to 1 rows.
+[INFO ] 2018-12-11 22:57:46.869 Table - Buffered data is saved.
+[INFO ] 2018-12-11 23:00:25.648 Table - Buffered data is saved.
+[INFO ] 2018-12-11 23:02:43.417 Table - Buffered data is saved.
+[INFO ] 2018-12-11 23:03:24.387 OurJDBC - Connection is created.
+[INFO ] 2018-12-11 23:03:35.973 OurJDBC - You have made changes to the databases.
+[INFO ] 2018-12-11 23:03:43.615 OurJDBC - Selection is made successfully.
+[INFO ] 2018-12-11 23:03:49.422 OurJDBC - You have made changes to 1 rows.
+[INFO ] 2018-12-11 23:03:51.199 Table - Buffered data is saved.
+[INFO ] 2018-12-11 23:05:38.582 OurJDBC - Connection is created.
+[INFO ] 2018-12-11 23:05:45.630 OurJDBC - You have made changes to the databases.
+[INFO ] 2018-12-11 23:05:54.905 OurJDBC - You have made changes to 1 rows.
+[INFO ] 2018-12-11 23:05:57.444 Table - Buffered data is saved.
