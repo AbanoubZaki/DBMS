@@ -337,3 +337,59 @@
 [INFO ] 2018-12-11 20:58:57.323 OurJDBC - You have made changes to 1 rows.
 [INFO ] 2018-12-11 20:59:04.988 OurJDBC - Selection is made successfully.
 [INFO ] 2018-12-11 20:59:45.574 TheController - Connection is closed.
+[ERROR] 2018-12-11 22:28:14.549 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 22:28:14.549 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 22:28:14.565 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 22:28:14.580 UpdateSet - Datatype mismatch happened.
+[ERROR] 2018-12-11 22:28:14.596 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 22:28:14.611 InsertInto - Datatype mismatch happened.
+[ERROR] 2018-12-11 22:28:14.611 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 22:28:15.049 UpdateSet - Table not found.
+[ERROR] 2018-12-11 22:28:15.064 StructureQueryFactory - There is no database selected
+[ERROR] 2018-12-11 22:28:15.205 UpdateSet - Table not found.
+[ERROR] 2018-12-11 22:28:15.252 FileManager - Failed to create table, Table already exists.
+[ERROR] 2018-12-11 22:28:15.260 OurSql - Structure Query Failed , syntax error.
+[ERROR] 2018-12-11 22:28:15.650 InsertInto - Column names not found.
+[ERROR] 2018-12-11 22:28:15.697 OurDriver - Wrong URL has been entered.
+[ERROR] 2018-12-11 22:28:15.713 OurDriver - Wrong URL has been entered.
+[ERROR] 2018-12-11 22:28:15.713 OurDriver - Wrong URL has been entered.
+[ERROR] 2018-12-11 22:28:15.728 OurDriver - Wrong URL has been entered.
+[ERROR] 2018-12-11 22:28:15.744 OurDriver - Wrong URL has been entered.
+[ERROR] 2018-12-11 22:28:15.744 OurDriver - Wrong URL has been entered.
+[ERROR] 2018-12-11 22:28:15.760 OurDriver - Wrong URL has been entered.
+[ERROR] 2018-12-11 22:28:15.760 OurDriver - Wrong URL has been entered.
+[ERROR] 2018-12-11 22:28:15.775 OurDriver - Wrong URL has been entered.
+[ERROR] 2018-12-11 22:28:15.791 OurDriver - Wrong URL has been entered.
+[ERROR] 2018-12-11 22:28:15.791 OurDriver - Wrong URL has been entered.
+[ERROR] 2018-12-11 22:28:15.806 OurDriver - Wrong URL has been entered.
+[ERROR] 2018-12-11 22:28:15.822 OurDriver - Wrong URL has been entered.
+[ERROR] 2018-12-11 22:28:15.822 OurDriver - Wrong URL has been entered.
+[ERROR] 2018-12-11 22:28:15.838 OurDriver - Wrong URL has been entered.
+[ERROR] 2018-12-11 22:28:15.853 OurDriver - Wrong URL has been entered.
+[ERROR] 2018-12-11 22:28:15.853 OurDriver - Wrong URL has been entered.
+[ERROR] 2018-12-11 22:28:15.869 OurDriver - Wrong URL has been entered.
+[ERROR] 2018-12-11 22:28:15.884 OurDriver - Wrong URL has been entered.
+[ERROR] 2018-12-11 22:29:50.868 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 22:29:50.868 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 22:29:50.883 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 22:29:50.899 UpdateSet - Datatype mismatch happened.
+[ERROR] 2018-12-11 22:29:50.915 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 22:29:50.930 InsertInto - Datatype mismatch happened.
+[ERROR] 2018-12-11 22:29:50.930 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 22:29:51.383 UpdateSet - Table not found.
+[ERROR] 2018-12-11 22:29:51.399 StructureQueryFactory - There is no database selected
+[ERROR] 2018-12-11 22:29:51.586 UpdateSet - Table not found.
+[ERROR] 2018-12-11 22:29:51.617 FileManager - Failed to create table, Table already exists.
+[ERROR] 2018-12-11 22:29:51.634 OurSql - Structure Query Failed , syntax error.
+[ERROR] 2018-12-11 22:29:51.962 InsertInto - Column names not found.
+[ERROR] 2018-12-11 22:29:52.103 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 22:29:52.103 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 22:29:52.119 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 22:29:52.134 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 22:29:52.150 OurSql - Updating Query  Failed , syntax error.
+[ERROR] 2018-12-11 22:29:52.150 InsertInto - Table not found.
+[ERROR] 2018-12-11 22:29:52.212 UpdateSet - Table not found.
+[ERROR] 2018-12-11 22:29:52.353 UpdateSet - Table not found.
+[ERROR] 2018-12-11 22:29:52.415 FileManager - Failed to create table, Table already exists.
+[ERROR] 2018-12-11 22:29:52.431 OurSql - Structure Query Failed , syntax error.
+[ERROR] 2018-12-11 22:29:52.634 InsertInto - Column names not found.

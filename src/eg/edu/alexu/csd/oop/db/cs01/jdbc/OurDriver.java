@@ -31,9 +31,9 @@ public class OurDriver implements Driver {
 	 */
 	@Override
 	public boolean acceptsURL(String url) throws SQLException {
-		if (url.equals("jdbc:xmldb:/localhost")) {
+		if (url.equals("jdbc:xmldb://localhost")) {
 			return true;
-		} else if (url.equals("jdbc:jsondb:/localhost") || url.equals("jdbc:txtdb:/localhost")) {
+		} else if (url.equals("jdbc:jsondb://localhost") || url.equals("jdbc:txtdb://localhost")) {
 			OurLogger.warn(this.getClass(), "This URL is not supported.");
 			throw new SQLException("This URL is not supported.");
 		}
