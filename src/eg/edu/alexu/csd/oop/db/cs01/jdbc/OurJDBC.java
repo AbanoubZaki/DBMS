@@ -13,8 +13,7 @@ public class OurJDBC {
 	private Connection connection;
 	private ResultSet resultSet;
 	private String path;
-	boolean isThereConnection;
-
+	
 	private OurJDBC() {
 	}
 
