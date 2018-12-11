@@ -282,3 +282,14 @@
 [ERROR] 2018-12-11 19:17:50.286 OurSql - Structure Query Failed , syntax error.
 [INFO ] 2018-12-11 19:17:58.927 OurJDBC - You have made changes to the databases.
 [INFO ] 2018-12-11 19:18:05.069 OurJDBC - Selection is made successfully.
+[INFO ] 2018-12-11 20:38:51.982 OurJDBC - Connection is created.
+[ERROR] 2018-12-11 20:39:00.205 OurSql - Updating Query  Failed , syntax error.
+[INFO ] 2018-12-11 20:39:07.480 TheController - Connection is closed.
+[ERROR] 2018-12-11 20:40:43.939 OurSql - Updating Query  Failed , syntax error.
+[INFO ] 2018-12-11 20:40:50.647 TheController - Connection is closed.
+[ERROR] 2018-12-11 20:41:06.743 OurSql - Updating Query  Failed , syntax error.
+[INFO ] 2018-12-11 20:41:16.690 TheController - Connection is closed.
+[ERROR] 2018-12-11 20:41:28.804 OurSql - Updating Query  Failed , syntax error.
+[INFO ] 2018-12-11 20:42:43.825 OurJDBC - Connection is created.
+[INFO ] 2018-12-11 20:42:46.838 TheController - Connection is closed.
+[INFO ] 2018-12-11 20:42:51.649 OurJDBC - Connection is created.
