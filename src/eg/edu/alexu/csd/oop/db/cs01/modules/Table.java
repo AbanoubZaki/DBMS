@@ -270,7 +270,7 @@ public class Table {
 
 		@Override
 		public void run(){
-			if(table!=null&&!table.getColumnTypes().isEmpty()&&!table.getRows().isEmpty()) {
+			if(table!=null&&!table.getColumnTypes().isEmpty()) {
 				FileManager.getInstance().writeTable(table);
 				System.out.println("Done ;)");
 			}
