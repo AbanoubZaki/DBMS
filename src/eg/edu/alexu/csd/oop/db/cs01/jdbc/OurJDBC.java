@@ -13,6 +13,7 @@ public class OurJDBC {
 	private Connection connection;
 	private ResultSet resultSet;
 	private String path;
+	boolean isThereConnection;
 
 	private OurJDBC() {
 	}
@@ -25,10 +26,11 @@ public class OurJDBC {
 	}
 
 	public String run(final String commnd) throws SQLException {
-		if (commnd.contains("jdbc") && commnd.contains("localhost")) {
+		if (commnd.contains("jdbc") && commnd.contains("localhost") && !isThereConnection) {
 			Properties info = new Properties();
 			info.put("path", new File(path).getAbsoluteFile());
 			connection = OurDriver.getInstance().connect(commnd, info);
+			isThereConnection = true;
 			OurLogger.info(this.getClass(), "Connection is created.");
 			return "Connection is created.";
 		} else {
@@ -36,7 +38,6 @@ public class OurJDBC {
 			try {
 				statment = connection.createStatement();
 			} catch (Exception e) {
-				// TODO: handle exception
 				throw new SQLException("");
 			}
 			if (statment.execute(commnd)) {

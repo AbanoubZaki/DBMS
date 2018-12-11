@@ -37,7 +37,9 @@ public class OurDriver implements Driver {
 			OurLogger.warn(this.getClass(), "This URL is not supported.");
 			throw new SQLException("This URL is not supported.");
 		}
-		return false;
+		// then URL is not supported and is not a valid one.
+		OurLogger.error(this.getClass(), "Wrong URL has been entered.");
+		throw new SQLException("Wrong URL has been entered.");
 	}
 
 	@Override
@@ -48,11 +50,10 @@ public class OurDriver implements Driver {
 			// give the user a connection to his database which is in the given path.
 			String path = dir.getAbsolutePath();
 			return ConnectionManager.getConnection(path); // pool
-		} else {
-			// then URL is not supported and is not a valid one.
-			OurLogger.error(this.getClass(), "Wrong URL has been entered.");
-			throw new SQLException("Wrong URL has been entered.");
-		}	
+		}
+		// then URL is not supported and is not a valid one.
+		OurLogger.error(this.getClass(), "Wrong URL has been entered.");
+		throw new SQLException("Wrong URL has been entered.");
 	}
 
 	@Override

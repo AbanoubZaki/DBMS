@@ -1,5 +1,6 @@
 package eg.edu.alexu.csd.oop.db.cs01.gui;
 
+import java.io.File;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,6 +8,7 @@ import java.util.ResourceBundle;
 
 import eg.edu.alexu.csd.oop.db.cs01.jdbc.OurDriver;
 import eg.edu.alexu.csd.oop.db.cs01.jdbc.OurJDBC;
+import eg.edu.alexu.csd.oop.db.cs01.jdbc.OurLogger;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -50,22 +52,40 @@ public class TheController implements Initializable {
 		} else {
 			try {
 				if (!pathDone) {
-					OurJDBC.getInstance().setPath(entreQuery.getText());
-					entreQuery.setPromptText("Enter a URL");
+					if (new File(entreQuery.getText()).getAbsoluteFile().isDirectory()) {
+						OurJDBC.getInstance().setPath(entreQuery.getText());
+						entreQuery.setPromptText("Enter a URL");
+						entreQuery.setText("");
+						pathDone = true;
+						return;
+					}
+					OurLogger.info(this.getClass(), "Path is invalid.");
+					errorLable.setTextFill(Color.RED);
+					errorLable.setText("Path is invalid.");
 					entreQuery.setText("");
-					pathDone = true;
 					return;
-				}
-				if (OurDriver.getInstance().acceptsURL(entreQuery.getText())) {
-					entreQuery.setPromptText("Enter your Query");
-					errorLable.setText(OurJDBC.getInstance().run(entreQuery.getText()));
+				} else if (entreQuery.getText().toLowerCase().equals("close")) {
+					pathDone = false;
+					errorLable.setTextFill(Color.BLUEVIOLET);
+					errorLable.setText("Connection is closed.");
 					entreQuery.setText("");
+					OurJDBC.getInstance().setPath("");
+					entreQuery.setPromptText("Enter the path of your workspace.");
+					fillTable.getItems().clear();
+					fillTable.getColumns().clear(); 
+					OurLogger.info(this.getClass(), "Connection is closed.");
 				} else {
-					errorLable.setText(OurJDBC.getInstance().run(entreQuery.getText()));
-					entreQuery.setText("");
-					buildTable(OurJDBC.getInstance().getResultSet());
+					if (entreQuery.getText().contains("jdbc") && OurDriver.getInstance().acceptsURL(entreQuery.getText())) {
+						entreQuery.setPromptText("Enter your Query");
+						errorLable.setText(OurJDBC.getInstance().run(entreQuery.getText()));
+						entreQuery.setText("");
+					} else {
+						errorLable.setTextFill(Color.CADETBLUE);
+						errorLable.setText(OurJDBC.getInstance().run(entreQuery.getText()));
+						entreQuery.setText("");
+						buildTable(OurJDBC.getInstance().getResultSet());
+					}
 				}
-
 			} catch (SQLException e) {
 				errorLable.setTextFill(Color.RED);
 				entreQuery.setText("");
