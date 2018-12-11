@@ -405,17 +405,17 @@ public class ConnectionManager {
 
 		@Override
 		public void setSchema(String schema) throws SQLException {
-
+			throw new UnsupportedOperationException();
 		}
 
 		@Override
 		public void setTransactionIsolation(int level) throws SQLException {
-
+			throw new UnsupportedOperationException();
 		}
 
 		@Override
 		public void setTypeMap(Map<String, Class<?>> map) throws SQLException {
-
+			throw new UnsupportedOperationException();
 		}
 
 	}
